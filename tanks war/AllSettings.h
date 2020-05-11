@@ -70,6 +70,7 @@ enum MapType//地图类型
 	Empty = 0x00,//空地
 	Wall = 0x0F,//砖块
 	Iron = 0x10,//铁块
+	Water = 0x12,//水面
 	Jungle = 0x22,//丛林
 	Border = 0x11,//地图边界
 	Home//0xC8、0xC9、0xCA、0xCB分别代表家的左上、左下、右上、右下
