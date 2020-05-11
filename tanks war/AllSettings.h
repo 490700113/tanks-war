@@ -4,48 +4,48 @@
 
 
 
-/*ºê¶¨Òå*/
-#define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000) //°´¼ü¼ì²â£¬ÊÇ·ñ±»°´ÏÂ
+/*å®å®šä¹‰*/
+#define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000) //æŒ‰é”®æ£€æµ‹ï¼Œæ˜¯å¦è¢«æŒ‰ä¸‹
 
 
 
-/*´°¿Ú²ÎÊı*/
-const int multiple_px = 3;//·Å´ó±¶Êı  --Èç¹ûÏÔÊ¾²»ÍêÈ«»òÕß¹ıĞ¡¿ÉÒÔÊÊµ±µ÷Õû
+/*çª—å£å‚æ•°*/
+const int multiple_px = 3;//æ”¾å¤§å€æ•°  --å¦‚æœæ˜¾ç¤ºä¸å®Œå…¨æˆ–è€…è¿‡å°å¯ä»¥é€‚å½“è°ƒæ•´
 
-//µØÍ¼ÏñËØµÄĞĞÁĞ
-const int map_row_px = 30;//ÏñËØx--ĞĞ
-const int map_col_px = 32;//ÏñËØy--ÁĞ
+//åœ°å›¾åƒç´ çš„è¡Œåˆ—
+const int map_row_px = 30;//åƒç´ x--è¡Œ
+const int map_col_px = 32;//åƒç´ y--åˆ—
 
-//Ô­Ê¼ÌùÖ½µÄÏñËØ´óĞ¡   --sourÔ­Ê¼
-const int sour_map_px = 8; //Ô­µØÍ¼µ¥Ôª¶ÔÓ¦µÄÏñËØ´óĞ¡
-const int sour_unit_px = sour_map_px * 2;//Ã¿¸öµ¥Ôª£¨Ì¹¿Ë¡¢µÀ¾ßµÈ£©Ô­Ê¼ËØ²ÄµÄÏñËØ´óĞ¡
-const int sour_boom_px = sour_unit_px * 2;//±¬Õ¨ÌùÍ¼µÄÏñËØ¿í¶È
-const int sour_bullet_px = sour_map_px / 2;//×Óµ¯Ô­Ê¼ËØ²ÄµÄÏñËØ´óĞ¡
+//åŸå§‹è´´çº¸çš„åƒç´ å¤§å°   --souråŸå§‹
+const int sour_map_px = 8; //åŸåœ°å›¾å•å…ƒå¯¹åº”çš„åƒç´ å¤§å°
+const int sour_unit_px = sour_map_px * 2;//æ¯ä¸ªå•å…ƒï¼ˆå¦å…‹ã€é“å…·ç­‰ï¼‰åŸå§‹ç´ æçš„åƒç´ å¤§å°
+const int sour_boom_px = sour_unit_px * 2;//çˆ†ç‚¸è´´å›¾çš„åƒç´ å®½åº¦
+const int sour_bullet_px = sour_map_px / 2;//å­å¼¹åŸå§‹ç´ æçš„åƒç´ å¤§å°
 
-//ÏÔÊ¾Ê±ÌùÍ¼µÄÏñËØ´óĞ¡
-const int map_px = multiple_px * sour_map_px;//ÏÔÊ¾Ê±Ã¿¸öµØÍ¼µ¥Ôª´óĞ¡
-const int unit_px = map_px * 2;//Ì¹¿Ë¡¢µÀ¾ßµÄ´óĞ¡
-const int boom_px = unit_px * 2;//Êµ¼Ê±¬Õ¨´óĞ¡
-const int bullet_px = map_px / 2;//×Óµ¯´óĞ¡
+//æ˜¾ç¤ºæ—¶è´´å›¾çš„åƒç´ å¤§å°
+const int map_px = multiple_px * sour_map_px;//æ˜¾ç¤ºæ—¶æ¯ä¸ªåœ°å›¾å•å…ƒå¤§å°
+const int unit_px = map_px * 2;//å¦å…‹ã€é“å…·çš„å¤§å°
+const int boom_px = unit_px * 2;//å®é™…çˆ†ç‚¸å¤§å°
+const int bullet_px = map_px / 2;//å­å¼¹å¤§å°
 
-//Ô­Ê¼ÓÎÏ·½çÃæµÄÏñËØ¿íºÍ¸ß
-const int sour_window_width = sour_map_px * map_row_px;//Ô­Ê¼ÓÎÏ·´°¿Ú¿í
-const int sour_window_height = sour_map_px * map_col_px;//Ô­Ê¼ÓÎÏ·´°¿Ú¸ß
+//åŸå§‹æ¸¸æˆç•Œé¢çš„åƒç´ å®½å’Œé«˜
+const int sour_window_width = sour_map_px * map_row_px;//åŸå§‹æ¸¸æˆçª—å£å®½
+const int sour_window_height = sour_map_px * map_col_px;//åŸå§‹æ¸¸æˆçª—å£é«˜
 
-//ÓÎÏ·½çÃæµÄÏñËØ¿íºÍ¸ß
-const int window_width = map_px * map_row_px;//ÕæÊµÓÎÏ·´°¿Ú¿í
-const int window_height = map_px * map_col_px;//ÕæÊµÓÎÏ·´°¿Ú¸ß
+//æ¸¸æˆç•Œé¢çš„åƒç´ å®½å’Œé«˜
+const int window_width = map_px * map_row_px;//çœŸå®æ¸¸æˆçª—å£å®½
+const int window_height = map_px * map_col_px;//çœŸå®æ¸¸æˆçª—å£é«˜
 
-//µ¥ÔªÊı×éµÄ´óĞ¡£¬ÒÔ±ã½«Ò»¸öÏñËØ·Ö³É¸üĞ¡µÄµ¥Ôª
-const int unit_row_px = map_row_px * 2;//µ¥ÔªĞĞ
-const int unit_col_px = map_col_px * 2;//µ¥ÔªÁĞ
-const int unit_size = 4;//»ù´¡µ¥Ôª´óĞ¡
-const int bullet_size = unit_size / 2;//×Óµ¯µ¥Ôª´óĞ¡
-const int map_size = unit_size / 2;//µØÍ¼µ¥Ôª´óĞ¡
+//å•å…ƒæ•°ç»„çš„å¤§å°ï¼Œä»¥ä¾¿å°†ä¸€ä¸ªåƒç´ åˆ†æˆæ›´å°çš„å•å…ƒ
+const int unit_row_px = map_row_px * 2;//å•å…ƒè¡Œ
+const int unit_col_px = map_col_px * 2;//å•å…ƒåˆ—
+const int unit_size = 4;//åŸºç¡€å•å…ƒå¤§å°
+const int bullet_size = unit_size / 2;//å­å¼¹å•å…ƒå¤§å°
+const int map_size = unit_size / 2;//åœ°å›¾å•å…ƒå¤§å°
 
 
 
-/*»æÍ¼µÄ×ø±ê*/
+/*ç»˜å›¾çš„åæ ‡*/
 typedef struct
 {
 	int x, y;
@@ -53,29 +53,29 @@ typedef struct
 
 
 
-/*ÓÎÏ·¿ªÊ¼Ò³ÃæÏÔÊ¾*/
+/*æ¸¸æˆå¼€å§‹é¡µé¢æ˜¾ç¤º*/
 
 
 
-/*ËÙÂÊµÄÉèÖÃ*/
-const int renewtime = 1000 / 60;//»­ÃæË¢ĞÂÖÜÆÚ
-int speed = (int)(3.5 * map_size * map_px) * renewtime;//Ã¿Ãë×ß3.5´ó¸ñ
+/*é€Ÿç‡çš„è®¾ç½®*/
+const int renewtime = 1000 / 60;//ç”»é¢åˆ·æ–°å‘¨æœŸ
+int speed = (int)(3.5 * map_size * map_px) * renewtime;//æ¯ç§’èµ°3.5å¤§æ ¼
 
 
 
-/*µ¥ÔªÏà¹Ø²ÎÊı*/
-//ÌùÖ½´úÂë
-enum maptype//µØÍ¼ÀàĞÍ
+/*å•å…ƒç›¸å…³å‚æ•°*/
+//è´´çº¸ä»£ç 
+enum maptype//åœ°å›¾ç±»å‹
 {
-	Empty,//¿ÕµØ
-	Wall = 0x0F,//×©¿é
-	Iron,//Ìú¿é --0x10(up) or 0x20(down)
-	Jungle = 0x22,//´ÔÁÖ
-	Border,//µØÍ¼±ß½ç
-	Home//0xC8¡¢0xC9¡¢0xCA¡¢0xCB·Ö±ğ´ú±í¼ÒµÄ×óÉÏ¡¢×óÏÂ¡¢ÓÒÉÏ¡¢ÓÒÏÂ
+	Empty,//ç©ºåœ°
+	Wall = 0x0F,//ç –å—
+	Iron,//é“å— --0x10(up) or 0x20(down)
+	Jungle = 0x22,//ä¸›æ—
+	Border,//åœ°å›¾è¾¹ç•Œ
+	Home//0xC8ã€0xC9ã€0xCAã€0xCBåˆ†åˆ«ä»£è¡¨å®¶çš„å·¦ä¸Šã€å·¦ä¸‹ã€å³ä¸Šã€å³ä¸‹
 };
 
-//µ¥ÔªÀàĞÍ
+//å•å…ƒç±»å‹
 enum unittype
 {
 	player = 300,
@@ -84,13 +84,13 @@ enum unittype
 	home = 0xC8
 };
 
-//·½Ïò
-enum direction//·½Ïò
+//æ–¹å‘
+enum direction//æ–¹å‘
 {
 	D_UP,D_LEFT,D_DOWN,D_RIGHT
 };
 
-//¼üÅÌÊäÈë
+//é”®ç›˜è¾“å…¥
 enum keycin
 {
 	K_UP = 'W',K_LEFT = 'A',K_DOWN = 'S',K_RIGHT = 'D',K_SHOOT = 'J',
@@ -99,12 +99,12 @@ enum keycin
 
 
 
-/*ÌáÈ¡Ö¸¶¨Ä£¿éÖĞµÄ×ÊÔ´ÎÄ¼ş*/
-// ²ÎÊı£º
-//		strDstFile:		Ä¿±êÎÄ¼şÃû¡£ÌáÈ¡µÄ×ÊÔ´½«±£´æÔÚÕâÀï£»
-//		strResType:		×ÊÔ´ÀàĞÍ£»
-//		strResName:		×ÊÔ´Ãû³Æ£»
-// ·µ»ØÖµ£º
-//		true: Ö´ĞĞ³É¹¦£»
-//		false: Ö´ĞĞÊ§°Ü¡£
+/*æå–æŒ‡å®šæ¨¡å—ä¸­çš„èµ„æºæ–‡ä»¶*/
+// å‚æ•°ï¼š
+//		strDstFile:		ç›®æ ‡æ–‡ä»¶åã€‚æå–çš„èµ„æºå°†ä¿å­˜åœ¨è¿™é‡Œï¼›
+//		strResType:		èµ„æºç±»å‹ï¼›
+//		strResName:		èµ„æºåç§°ï¼›
+// è¿”å›å€¼ï¼š
+//		true: æ‰§è¡ŒæˆåŠŸï¼›
+//		false: æ‰§è¡Œå¤±è´¥ã€‚
 //bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName);

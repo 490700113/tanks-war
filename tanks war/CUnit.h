@@ -2,7 +2,7 @@
 #include "AllSettings.h"
 class CUnit
 {
-	postion_xy pos_xy;//»æ»­×ø±ê
+	postion_xy pos_xy;//ç»˜ç”»åæ ‡
 
 };
 
