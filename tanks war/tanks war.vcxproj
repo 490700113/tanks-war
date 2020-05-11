@@ -138,6 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AllSettings.h" />
+    <ClInclude Include="CUnit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CUnit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

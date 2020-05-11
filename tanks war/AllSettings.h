@@ -18,15 +18,15 @@ const int map_col_px = 32;//像素y--列
 
 //原始贴纸的像素大小   --sour原始
 const int sour_map_px = 8; //原地图单元对应的像素大小
-const int sour_unit_px = sour_map_px * 2;//每个单位（坦克、道具等）原始素材的像素大小
+const int sour_unit_px = sour_map_px * 2;//每个单元（坦克、道具等）原始素材的像素大小
 const int sour_boom_px = sour_unit_px * 2;//爆炸贴图的像素宽度
 const int sour_bullet_px = sour_map_px / 2;//子弹原始素材的像素大小
 
 //显示时贴图的像素大小
-const int map_px = multiple_px * sour_map_px;//显示时每个地图单元的实际像素大小
-const int unit_px = map_px * 2;//坦克、道具的绘图大小
-const int boom_px = unit_px * 2;//实际爆炸贴图大小
-const int bullet_px = map_px / 2;//子弹绘图大小
+const int map_px = multiple_px * sour_map_px;//显示时每个地图单元大小
+const int unit_px = map_px * 2;//坦克、道具的大小
+const int boom_px = unit_px * 2;//实际爆炸大小
+const int bullet_px = map_px / 2;//子弹大小
 
 //原始游戏界面的像素宽和高
 const int sour_window_width = sour_map_px * map_row_px;//原始游戏窗口宽
@@ -45,8 +45,66 @@ const int map_size = unit_size / 2;//地图单元大小
 
 
 
+/*绘图的坐标*/
+typedef struct
+{
+	int x, y;
+}postion_xy;
+
+
+
 /*游戏开始页面显示*/
+
 
 
 /*速率的设置*/
 const int renewtime = 1000 / 60;//画面刷新周期
+int speed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
+
+
+
+/*单元相关参数*/
+//贴纸代码
+enum maptype//地图类型
+{
+	Empty,//空地
+	Wall = 0x0F,//砖块
+	Iron,//铁块 --0x10(up) or 0x20(down)
+	Jungle = 0x22,//丛林
+	Border,//地图边界
+	Home//0xC8、0xC9、0xCA、0xCB分别代表家的左上、左下、右上、右下
+};
+
+//单元类型
+enum unittype
+{
+	player = 300,
+	computer = 400,
+	bullet = 500,
+	home = 0xC8
+};
+
+//方向
+enum direction//方向
+{
+	D_UP,D_LEFT,D_DOWN,D_RIGHT
+};
+
+//键盘输入
+enum keycin
+{
+	K_UP = 'W',K_LEFT = 'A',K_DOWN = 'S',K_RIGHT = 'D',K_SHOOT = 'J',
+	K_PAUSE = 'P',K_ESC = VK_ESCAPE
+};
+
+
+
+/*提取指定模块中的资源文件*/
+// 参数：
+//		strDstFile:		目标文件名。提取的资源将保存在这里；
+//		strResType:		资源类型；
+//		strResName:		资源名称；
+// 返回值：
+//		true: 执行成功；
+//		false: 执行失败。
+//bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName);
