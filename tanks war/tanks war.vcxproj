@@ -139,10 +139,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllSettings.h" />
-    <ClInclude Include="CUnit.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CUnit.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="mian.cpp" />
+    <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

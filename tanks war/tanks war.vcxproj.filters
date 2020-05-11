@@ -18,12 +18,21 @@
     <ClInclude Include="AllSettings.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CUnit.h">
+    <ClInclude Include="Unit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CUnit.cpp">
+    <ClCompile Include="Unit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mian.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

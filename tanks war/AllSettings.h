@@ -49,7 +49,7 @@ const int map_size = unit_size / 2;//地图单元大小
 typedef struct
 {
 	int x, y;
-}postion_xy;
+}paint_pos;
 
 
 
@@ -65,18 +65,18 @@ int speed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
 
 /*单元相关参数*/
 //贴纸代码
-enum maptype//地图类型
+enum MapType//地图类型
 {
-	Empty,//空地
+	Empty = 0x00,//空地
 	Wall = 0x0F,//砖块
-	Iron,//铁块 --0x10(up) or 0x20(down)
+	Iron = 0x10,//铁块
 	Jungle = 0x22,//丛林
-	Border,//地图边界
+	Border = 0x11,//地图边界
 	Home//0xC8、0xC9、0xCA、0xCB分别代表家的左上、左下、右上、右下
 };
 
 //单元类型
-enum unittype
+enum UnitType
 {
 	player = 300,
 	computer = 400,
@@ -85,13 +85,13 @@ enum unittype
 };
 
 //方向
-enum direction//方向
+enum Direction//方向
 {
 	D_UP,D_LEFT,D_DOWN,D_RIGHT
 };
 
 //键盘输入
-enum keycin
+enum KeyCin
 {
 	K_UP = 'W',K_LEFT = 'A',K_DOWN = 'S',K_RIGHT = 'D',K_SHOOT = 'J',
 	K_PAUSE = 'P',K_ESC = VK_ESCAPE
