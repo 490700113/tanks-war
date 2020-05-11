@@ -14,6 +14,7 @@ class Map
 {
 private:
 	char map[map_row_px][map_col_px];//地图数组
+//	int Level;//关卡数    --后期设置一个关卡选择界面
 public:
 	Map();//构造函数
 
