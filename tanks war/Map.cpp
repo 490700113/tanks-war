@@ -5,5 +5,10 @@
 
 Map::Map()
 {
-	loadmap();
+	chooseMap();
+}
+
+void Map::ChangeLevel(int level)
+{
+	chooseMap(level);
 }

@@ -12,7 +12,7 @@ private:
 	UnitType type;//单元的类型
 	Direction dir;//方向
 public:
-	Unit(UnitType type, Direction dierction, paint_pos pos);//构造函数
+	Unit(UnitType type, Direction direction, paint_pos pos);//构造函数
 	virtual ~Unit();//虚析构函数
 
 	/*set函数*/
