@@ -6,18 +6,18 @@ const paint_pos P_bron_pos = { 26,10 };
 class Player :public Tank
 {
 private:
-	IMAGE img[0][4][2];
+	IMAGE img[0][4][2]; //加载图片  就是想看看怎么贴图
 public:
 	Player(UnitType type = player, Direction direction = D_UP, paint_pos pos = P_bron_pos);
 
-	//��ʾ
+	//显示
 	void show()
 	{
 		paint_pos pos = GetPosXY();
 		putimage(pos.x, pos.y, &img[0][GetDirection()][0], SRCPAINT);
 	};
 
-	void load()
+	void load()     //加载图片没填完的坑
 	{
 		for (int i = 0; i < 4; i++)
 		{

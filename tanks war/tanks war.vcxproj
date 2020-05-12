@@ -140,12 +140,20 @@
   <ItemGroup>
     <ClInclude Include="AllSettings.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="mian.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Unit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="tanks war.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
