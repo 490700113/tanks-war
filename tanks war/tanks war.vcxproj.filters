@@ -33,6 +33,12 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Windows.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Picture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Unit.cpp">
@@ -48,6 +54,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Picture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

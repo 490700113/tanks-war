@@ -6,7 +6,7 @@
 
 /*宏定义*/
 #define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000) //按键检测，是否被按下
-
+typedef long long ll;
 
 
 /*窗口参数*/
@@ -88,7 +88,7 @@ enum UnitType
 //方向
 enum Direction//方向
 {
-	D_UP,D_LEFT,D_DOWN,D_RIGHT
+	D_UP,D_LEFT,D_DOWN,D_RIGHT,Dcount
 };
 
 //键盘输入
