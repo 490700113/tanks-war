@@ -7,7 +7,7 @@ class Unit
 {
 private:
 	Draw_pos pos_xy;//绘画坐标
-//	map_pos pos_rc;//地图坐标    --后面再整这玩意儿
+//	Map_pos pos_rc;/地图坐标    --后面再整这玩意儿
 	UnitType type;//单元的类型
 	Direction dir;//方向
 public:

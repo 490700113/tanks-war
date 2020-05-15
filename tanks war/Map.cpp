@@ -1,7 +1,7 @@
-#include "Map.h"
 #include <iostream>
 #include <fstream>
-
+#include "Map.h"
+#include "Picture.h"
 
 Map::Map()
 {

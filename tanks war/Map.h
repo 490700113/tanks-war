@@ -6,7 +6,7 @@
 typedef struct
 {
 	int row, col;
-}map_pos;
+}Map_pos;
 
 
 //地图的类
