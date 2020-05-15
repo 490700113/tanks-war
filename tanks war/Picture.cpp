@@ -82,7 +82,7 @@ Picture::~Picture()
 /*绘制图片*/
 void Picture::drawTank(const Tank& tank)//绘制坦克
 {
-	paint_pos pos = tank.GetPosXY();//获取坐标
+	Draw_pos pos = tank.GetPosXY();//获取坐标
 	UnitType type = tank.GetType();//获取类型
 	Direction dir = tank.GetDirection();//获取方向
 	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营

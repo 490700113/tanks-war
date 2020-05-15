@@ -1,7 +1,7 @@
 #include "Tank.h"
 
 
-Tank::Tank(UnitType type, Direction direction, paint_pos pos)
+Tank::Tank(UnitType type, Direction direction, Draw_pos pos)
 	:Unit(type, direction, pos)
 {
 

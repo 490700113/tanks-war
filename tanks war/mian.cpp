@@ -12,7 +12,7 @@ int main()
 	{
 		if (KEY_DOWN(K_DOWN))
 		{
-			paint_pos pos = P1.GetPosXY();
+			Draw_pos pos = P1.GetPosXY();
 			pos.y++;
 			P1.SetPosXY(pos);
 		}

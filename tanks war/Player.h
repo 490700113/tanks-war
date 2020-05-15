@@ -1,14 +1,14 @@
 #pragma once
 #include "Tank.h"
 
-const paint_pos P_bron_pos = { 26,10 };
+const Draw_pos P_bron_pos = { 26,10 };
 
 class Player :public Tank
 {
 private:
 	//IMAGE img[0][4][2]; //加载图片  就是想看看怎么贴图
 public:
-	Player(UnitType type = player, Direction direction = D_UP, paint_pos pos = P_bron_pos);
+	Player(UnitType type = player, Direction direction = D_UP, Draw_pos pos = P_bron_pos);
 
 	////显示
 	//void show()
