@@ -7,18 +7,18 @@ Tank::Tank(UnitType type, Direction direction, paint_pos pos)
 
 }
 
-/*getº¯Êı*/
-bool Tank::GetTrackState() const//»ñÈ¡ÂÄ´ø×´Ì¬
+/*getå‡½æ•°*/
+bool Tank::GetTrackState() const//è·å–å±¥å¸¦çŠ¶æ€
 {
 	return Trackdisplay;
 }
-int Tank::GetTankspeed() const//»ñÈ¡Ì¹¿ËËÙ¶È
+int Tank::GetTankspeed() const//è·å–å¦å…‹é€Ÿåº¦
 {
 	return Tankspeed;
 }
 
-/*¿ØÖÆº¯Êı*/
-bool Tank::move(Direction direction, const Map& map)//Ì¹¿ËÒÆ¶¯
+/*æ§åˆ¶å‡½æ•°*/
+bool Tank::move(Direction direction, const Map& map)//å¦å…‹ç§»åŠ¨
 {
 
 }
