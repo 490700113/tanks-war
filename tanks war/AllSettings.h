@@ -80,8 +80,8 @@ enum MapType//地图类型
 enum UnitType
 {
 	player = 300,
-	computer = 400,
 	bullet = 500,
+	computer = 600,
 	home = 0xC8
 };
 
