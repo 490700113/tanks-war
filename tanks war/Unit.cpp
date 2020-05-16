@@ -2,8 +2,8 @@
 
 
 
-Unit::Unit(UnitType type, Direction direction, Draw_pos pos) 
-	:type(type),dir(direction),pos_xy(pos)
+Unit::Unit(UnitType type, Direction direction, Map_pos pos) 
+	:type(type),dir(direction),pos_rc(pos)
 {
 
 }

@@ -7,11 +7,11 @@ class Unit
 {
 private:
 	Draw_pos pos_xy;//绘画坐标
-//	Map_pos pos_rc;/地图坐标    --后面再整这玩意儿
+	Map_pos pos_rc;//地图坐标
 	UnitType type;//单元的类型
 	Direction dir;//方向
 public:
-	Unit(UnitType type, Direction direction, Draw_pos pos);//构造函数
+	Unit(UnitType type, Direction direction, Map_pos pos);//构造函数
 	virtual ~Unit();//虚析构函数
 
 	/*set函数*/

@@ -7,7 +7,7 @@ Picture::Picture() {
 	initgraph(window_width, window_height);//定义窗口大小
 	//整个标题
 	HWND hWnd = GetHWnd();
-	SetWindowText(hWnd, _T("tlstxdy"));
+	SetWindowText(hWnd, _T("Tanks War"));
 
 	//设置窗口居中
 	//获取屏幕大小
@@ -92,12 +92,61 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 {
 	//初始化变量
-	ul* dst = GetImageBuffer(dstimg);
-	ul* src = GetImageBuffer(srcimg);
-	int src_width = srcimg->getwidth();
-	int src_height = srcimg->getheight();
-	int dst_width = (dstimg == NULL ? 0 : dstimg->getwidth());
-	int dst_height = (dstimg == NULL ? 0 : dstimg->getheight());
+	DWORD* dst = GetImageBuffer(dstimg);//获取绘画窗口指针
+	DWORD* src = GetImageBuffer(srcimg);//获取图片指针
+	int sour_src_width = srcimg->getwidth();
+	int sour_src_height = srcimg->getheight();
+	int sour_dst_width = (dstimg == NULL ? 0 : dstimg->getwidth());
+	int sour_dst_height = (dstimg == NULL ? 0 : dstimg->getheight());
 
-	//
+	//计算贴图区域的参数
+	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界
+	int dst_height = (x + sour_src_height * multiple_px > sour_dst_height) ? sour_dst_height - x : sour_src_height * multiple_px;//处理超出下边界
+	if (x < 0)//处理超出左边界
+	{
+		src += -x / multiple_px;
+		dst_width -= x;
+		x = 0;
+	}
+	if (y < 0)//处理超出上边界
+	{
+		src += (-y / multiple_px) * sour_src_width;
+		dst_height -= y;
+		y = 0;
+	}
+	dst += sour_dst_width * y + x;//修正目标贴图区起始位置
+
+	//实现透明贴纸
+	for (int sy = 0; sy < dst_height / multiple_px; sy++)
+	{
+		for (int sx = 0; sx < dst_width / multiple_px; sx++)
+		{
+			/*以下来自网络*/
+			//取出素材数据
+			int sa = ((src[sx] & 0xff000000) >> 24);
+			int sr = ((src[sx] & 0xff0000) >> 16);	// 源值已经乘过了透明系数
+			int sg = ((src[sx] & 0xff00) >> 8);		// 源值已经乘过了透明系数
+			int sb = src[sx] & 0xff;				// 源值已经乘过了透明系数
+			//接下来处理绘图显存，把每个源的像素，扩充到目标绘图区中，放大数倍
+			for (int dy = 0; dy < multiple_px; dy++)//一个像素绘制多行
+			{
+				for (int dx = 0; dx < multiple_px; dx++)//一个像素绘制多列
+				{
+					//计算实际绘图的RGB色
+					int dr = ((dst[dy * dst_width + dx] & 0xff0000) >> 16);
+					int dg = ((dst[dy * dst_width + dx] & 0xff00) >> 8);
+					int db = dst[dy * dst_width + dx] & 0xff;
+					//应用到目标显存中
+					dst[dy * dst_width + dx] = ((sr + dr * (255 - sa) / 255) << 16)
+						| ((sg + dg * (255 - sa) / 255) << 8)
+						| (sb + db * (255 - sa) / 255);
+				}
+			}
+			dst += multiple_px;//修正目标绘图区到下一个位置
+		}
+		//进行下一行的绘制
+		dst += multiple_px * sour_dst_width - dst_width;
+		src += sour_src_width;
+	}
+	
 }
