@@ -12,3 +12,8 @@ void Map::ChangeLevel(int level)
 {
 	chooseMap(level);
 }
+
+void Map::chooseMap(int level)
+{
+
+}

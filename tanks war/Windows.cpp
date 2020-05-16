@@ -63,7 +63,7 @@ void Windows::renewStart()
 
 void Windows::controlUnit(Unit& unit, Map& map)
 {
-	Direction key_state;//保存
+	Direction key_state = D_UP;//保存
 	if (KEY_DOWN(K_UP)) {
 		key_state = D_UP;
 	}

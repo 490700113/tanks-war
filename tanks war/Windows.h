@@ -19,7 +19,7 @@ protected:
 	void renwePicture();//刷新游戏页面
 	void renewStart();//刷新开始游戏页面
 	void controlUnit(Unit& unit, Map& map);//控制函数
-	void shoot();//射击函数
+//	void shoot();//射击函数
 
 public:
 	Windows();
