@@ -1,13 +1,13 @@
 #pragma once
-#include <cmath>
+#include <math.h>
 #include <graphics.h>
 
 
 
 /*宏定义*/
 #define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000) //按键检测，是否被按下
-typedef long long ll;
-typedef unsigned long ull;
+#define ll long long
+#define ul unsigned long
 
 
 /*窗口参数*/

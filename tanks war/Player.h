@@ -1,4 +1,6 @@
 #pragma once
+#include "AllSettings.h"
+#include "Player.h"
 #include "Tank.h"
 
 const Draw_pos P_bron_pos = { 26,10 };

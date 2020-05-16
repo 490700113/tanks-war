@@ -1,6 +1,7 @@
 #include "Unit.h"
 
 
+
 Unit::Unit(UnitType type, Direction direction, Draw_pos pos) 
 	:type(type),dir(direction),pos_xy(pos)
 {
