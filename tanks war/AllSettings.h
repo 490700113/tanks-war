@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <math.h>
 #include <graphics.h>
 
@@ -52,6 +52,11 @@ typedef struct
 	int x, y;
 }Draw_pos;
 
+//行列坐标
+typedef struct
+{
+	int r, c;
+}Map_pos;
 
 
 /*游戏开始页面显示*/
@@ -60,7 +65,7 @@ typedef struct
 
 /*速率的设置*/
 const int renewtime = 1000 / 60;//画面刷新周期
-int speed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
+int Movespeed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
 
 
 

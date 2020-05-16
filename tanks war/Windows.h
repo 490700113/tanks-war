@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "AllSettings.h"
 #include "Picture.h"
 #include "Player.h"

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Windows.h"
 
 Windows::Windows()

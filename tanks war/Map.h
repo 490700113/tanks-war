@@ -1,12 +1,5 @@
-#pragma once
+﻿#pragma once
 #include "AllSettings.h"
-
-
-//行列坐标
-typedef struct
-{
-	int row, col;
-}Map_pos;
 
 
 //地图的类

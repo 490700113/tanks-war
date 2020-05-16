@@ -1,4 +1,4 @@
-#include "Picture.h"
+﻿#include "Picture.h"
 
 Picture::Picture() {
 
@@ -92,8 +92,8 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 {
 	//初始化变量
-	ull* dst = GetImageBuffer(dstimg);
-	ull* src = GetImageBuffer(srcimg);
+	ul* dst = GetImageBuffer(dstimg);
+	ul* src = GetImageBuffer(srcimg);
 	int src_width = srcimg->getwidth();
 	int src_height = srcimg->getheight();
 	int dst_width = (dstimg == NULL ? 0 : dstimg->getwidth());

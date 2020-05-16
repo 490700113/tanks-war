@@ -1,4 +1,4 @@
-#include "Unit.h"
+﻿#include "Unit.h"
 
 
 
@@ -62,4 +62,5 @@ bool Unit::move(Direction direction, const Map& map)
 	default:
 		break;
 	}
+	return true;
 }

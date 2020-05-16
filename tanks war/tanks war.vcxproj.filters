@@ -15,51 +15,51 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllSettings.h">
+    <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Unit.h">
+    <ClInclude Include="AllSettings.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Tank.h">
+    <ClInclude Include="Picture.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="Tank.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Windows.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Picture.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Unit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="mian.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Tank.cpp">
+    <ClCompile Include="Picture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Windows.cpp">
+    <ClCompile Include="Tank.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Picture.cpp">
+    <ClCompile Include="Unit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

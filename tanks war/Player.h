@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "AllSettings.h"
 #include "Player.h"
 #include "Tank.h"
