@@ -65,7 +65,7 @@ typedef struct
 
 /*速率的设置*/
 const int renewtime = 1000 / 60;//画面刷新周期
-int Movespeed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
+const int Movespeed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
 
 
 
