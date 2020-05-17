@@ -1,40 +1,40 @@
-#pragma once
+ï»¿#pragma once
 #include"Unit.h"
 #include"AllSettings.h"
 
-enum MapLayer {//Ã¿¿é×©¿´³ÉÁ½²ã
+enum MapLayer {//æ¯å—ç –çœ‹æˆä¸¤å±‚
 	firl, secl, lcount
 };
 
-enum MapIndex {//ÅÚµ¯»á»÷ÖĞÁ½¿é×©
+enum MapIndex {//ç‚®å¼¹ä¼šå‡»ä¸­ä¸¤å—ç –
 	firm, secm, mcount
 };
 
-enum corner {//Ã¿¿é×©·ÖÎª4¸ö½ÇÂä
+enum corner {//æ¯å—ç –åˆ†ä¸º4ä¸ªè§’è½
 	ul = 0xf1, ur = 0xf2, dl = 0xf4, dr = 0xf8
 };
 
 class Bullet : public Unit{
 	public:
 		Bullet(const Unit& tank);
-		virtual bool move(Direction dir, const Map& map);//×Óµ¯ÏòÇ°ÒÆ¶¯£¬·¢ÉúµØĞÎÅö×²¾Í·µ»Øtrue
-		virtual float getspeed()const;//»ñµÃÒÆ¶¯ËÙ¶È
-		virtual bool touch(const Map& map);//ÊÇ·ñÅö×²
-		unsigned int getowner()const;//»ñÈ¡×Óµ¯ËùÓĞÕß
+		virtual bool move(Direction dir, const Map& map);//å­å¼¹å‘å‰ç§»åŠ¨ï¼Œå‘ç”Ÿåœ°å½¢ç¢°æ’å°±è¿”å›true
+		virtual float getspeed()const;//è·å¾—ç§»åŠ¨é€Ÿåº¦
+		virtual bool touch(const Map& map);//æ˜¯å¦ç¢°æ’
+		unsigned int getowner()const;//è·å–å­å¼¹æ‰€æœ‰è€…
 
-		const Map_pos(*GetCheckPointsPos() const)[mcount];//»ñÈ¡¼ì²éµã×ø±ê
-		const char(*GetChectPointsVal() const)[mcount];//»ñÈ¡¼ì²éµãµÄÖµ
-		const bool(*GetTouchFlags() const)[lcount][mcount];//»ñÈ¡µØĞÎÅö×²±ê¼Ç
-		virtual const Draw_pos GetBoomXYPos()const;//»ñÈ¡±¬Õ¨ÌùÍ¼×ø±ê
+		const Map_pos(*GetCheckPointsPos() const)[mcount];//è·å–æ£€æŸ¥ç‚¹åæ ‡
+		const char(*GetChectPointsVal() const)[mcount];//è·å–æ£€æŸ¥ç‚¹çš„å€¼
+		const bool(*GetTouchFlags() const)[lcount][mcount];//è·å–åœ°å½¢ç¢°æ’æ ‡è®°
+		virtual const Draw_pos GetBoomXYPos()const;//è·å–çˆ†ç‚¸è´´å›¾åæ ‡
 
 	protected:
-		void recheckpoint(const Map& map);//Ë¢ĞÂ¼ì²éµã
-		void recheckpos();//Ë¢ĞÂ¼ì²éµã×ø±ê
-		void recheckval(const Map& map);//Ë¢ĞÂ¼ì²éµãÊıÖµ
-		void retouchflag();//Ë¢ĞÂÅö×²¼ì²é±ê¼Ç
+		void recheckpoint(const Map& map);//åˆ·æ–°æ£€æŸ¥ç‚¹
+		void recheckpos();//åˆ·æ–°æ£€æŸ¥ç‚¹åæ ‡
+		void recheckval(const Map& map);//åˆ·æ–°æ£€æŸ¥ç‚¹æ•°å€¼
+		void retouchflag();//åˆ·æ–°ç¢°æ’æ£€æŸ¥æ ‡è®°
 	private:
-		UnitType owner;//Ë­Éä¡áµÄ
-		Map_pos chechpos[mcount];//¼ì²éµã×ø±ê
-		char checkval[mcount];//¼ì²éµãÊı¾İ
-		bool flag[lcount][mcount];//µØĞÎÅö×²±ê¼Ç£¨ÅÚµ¯»áÅö×²Á½¸öµØÍ¼µ¥Î»£¬Ã¿¸öµØÍ¼µ¥Î»Ö»Åö×²Ò»¸ö½ÇÂä£©
+		UnitType owner;//è°å°„â™‚çš„
+		Map_pos chechpos[mcount];//æ£€æŸ¥ç‚¹åæ ‡
+		char checkval[mcount];//æ£€æŸ¥ç‚¹æ•°æ®
+		bool flag[lcount][mcount];//åœ°å½¢ç¢°æ’æ ‡è®°ï¼ˆç‚®å¼¹ä¼šç¢°æ’ä¸¤ä¸ªåœ°å›¾å•ä½ï¼Œæ¯ä¸ªåœ°å›¾å•ä½åªç¢°æ’ä¸€ä¸ªè§’è½ï¼‰
 };

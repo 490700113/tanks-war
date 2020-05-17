@@ -1,14 +1,14 @@
-#include "bullet.h"
+ï»¿#include "bullet.h"
 
 Bullet::Bullet(const Unit& tank) :
 	Unit(tank.GetMapPos(), bullet, tank.GetDirection()), owner(tank.GetType()) {
-	Map_pos unitpos = tank.GetUnitPos();//´æĞŞÕıºóµÄunit×ø±ê£¨Õâ¸öº¯Êı´ı²¹£©
-	Draw_pos pxpos = GetPosXY();//´æĞŞÕıºóµÄ»æÍ¼×ø±ê
-	//ÏÂÃæĞŞÕı×Óµ¯×ø±ê
+	Map_pos unitpos = tank.GetUnitPos();//å­˜ä¿®æ­£åçš„unitåæ ‡ï¼ˆè¿™ä¸ªå‡½æ•°å¾…è¡¥ï¼‰
+	Draw_pos pxpos = GetPosXY();//å­˜ä¿®æ­£åçš„ç»˜å›¾åæ ‡
+	//ä¸‹é¢ä¿®æ­£å­å¼¹åæ ‡
 	switch (GetDirection()) {
 		case UP:
 			unitpos.c++;
 			//pxpos.x=(float)unitpos.c*
-				//ÏÂÃæÏÈ²»Ğ´ÁË ±äÁ¿Ì«¶à¸ã²»Çå³ş¡£¡£Ã÷ÌìÅªÇå³şÁËÔÙÕû°É
+				//ä¸‹é¢å…ˆä¸å†™äº† å˜é‡å¤ªå¤šæä¸æ¸…æ¥šã€‚ã€‚æ˜å¤©å¼„æ¸…æ¥šäº†å†æ•´å§
 	}
 }
