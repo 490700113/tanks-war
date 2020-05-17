@@ -80,6 +80,8 @@ Picture::~Picture()
 }
 
 /*绘制图片*/
+
+
 void Picture::drawTank(const Tank& tank)//绘制坦克
 {
 	Draw_pos pos = tank.GetPosXY();//获取坐标

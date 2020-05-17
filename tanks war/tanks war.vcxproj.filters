@@ -62,6 +62,9 @@
     <ClCompile Include="Windows.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AllSettings.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="tanks war.rc">

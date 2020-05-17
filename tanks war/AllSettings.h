@@ -102,8 +102,23 @@ enum KeyCin
 	K_PAUSE = 'P',K_ESC = VK_ESCAPE
 };
 
+enum MapNum//地图类型
+{
+	FM_wall, FM_iorn, FM_border, FM_water, FM_no_use1, FM_no_use2, FM_jungle, FMcount
+};
+
+enum TankCamp//坦克阵营
+{
+	Tank_player, Tank_computer, Campcount
+};
+
+enum HomeState//家的状态
+{
+	HomeLive, Homeover, Statecount
+};
 
 
+//以下参考自网络
 /*提取指定模块中的资源文件*/
 // 参数：
 //		strDstFile:		目标文件名。提取的资源将保存在这里；
@@ -112,4 +127,4 @@ enum KeyCin
 // 返回值：
 //		true: 执行成功；
 //		false: 执行失败。
-//bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName);
+bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName);

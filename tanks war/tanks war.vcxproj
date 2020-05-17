@@ -148,6 +148,7 @@
     <ClInclude Include="Windows.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllSettings.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="mian.cpp" />
     <ClCompile Include="Picture.cpp" />

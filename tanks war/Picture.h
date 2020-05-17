@@ -3,20 +3,6 @@
 #include "Tank.h"
 #include "Map.h"
 
-enum MapNum//地图类型
-{
-	FM_wall,FM_iorn,FM_border,FM_water,FM_no_use1,FM_no_use2,FM_jungle,FMcount
-};
-
-enum TankCamp//坦克阵营
-{
-	Tank_player,Tank_computer,Campcount
-};
-
-enum HomeState//家的状态
-{
-	HomeLive,Homeover,Statecount
-};
 
 /*爆炸参数*/
 //晚点填坑
