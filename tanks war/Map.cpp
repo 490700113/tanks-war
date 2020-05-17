@@ -55,7 +55,7 @@ void Map::ChangeLevel(int level)
 }
 
 /*get函数*/
-const char(*Map::GetMPos())[map_row_px][map_col_px]
+const char(*Map::GetPos())[map_row_px][map_col_px]
 {
 	return &map;
 }

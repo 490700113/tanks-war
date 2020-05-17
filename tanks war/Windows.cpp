@@ -53,7 +53,7 @@ void Windows::Playgame()
 void Windows::renwePicture()
 {
 	cleardevice();//清屏
-	pictures.drawMap(map.GetMPos());//绘制地图
+	pictures.drawMap(map.GetPos());//绘制地图
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
 }
 
