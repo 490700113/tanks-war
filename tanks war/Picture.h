@@ -33,6 +33,6 @@ public:
 	void drawMap(const char(*map)[map_row_px][map_col_px]);//绘制地图
 	void drawTank(const Tank& tank);//绘制坦克
 	void drawJungle(const char(*map)[map_row_px][map_col_px]);//绘制丛林
-
+	void drawInformation();//绘制信息
 };
 

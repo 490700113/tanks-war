@@ -77,7 +77,12 @@ enum MapType//地图类型
 	Water = 0x12,//水面
 	Jungle = 0x22,//丛林
 	Border = 0x11,//地图边界
-	Home//0xC8、0xC9、0xCA、0xCB分别代表家的左上、左下、右上、右下
+	//0xC8、0xC9、0xCA、0xCB分别代表家的左上、左下、右上、右下
+	Home_Live_LU = 0xC8,
+	Home_Live_LD = 0xC9,
+	Home_Live_RU = 0xCA,
+	Home_Live_RD = 0xCB,
+	Home_Die_LU = 0xCC,
 };
 
 //单元类型
@@ -104,7 +109,7 @@ enum KeyCin
 
 enum MapNum//地图类型
 {
-	FM_wall, FM_iorn, FM_border, FM_water, FM_no_use1, FM_no_use2, FM_jungle, FMcount
+	FM_wall, FM_iron, FM_border, FM_water, FM_no_use1, FM_no_use2, FM_jungle, FMcount
 };
 
 enum TankCamp//坦克阵营

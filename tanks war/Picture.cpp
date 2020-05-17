@@ -46,7 +46,7 @@ Picture::Picture() {
 	cleardevice();//清空对象
 
 	//加载地图图片
-	loadimage(&tmpe, _T("PNG"), _T("MAP"), Dcount * sour_map_px, sour_map_px, true);
+	loadimage(&tmpe, _T("PNG"), _T("MAP"), FMcount * sour_map_px, sour_map_px, true);
 	for (int i = 0; i < FMcount; i++) {
 		int x = i * sour_map_px;//左上角x值
 		int y = 0;//左上角y值
@@ -56,19 +56,19 @@ Picture::Picture() {
 
 	//加载子弹图片
 	loadimage(&tmpe, _T("PNG"), _T("BULLET"), Dcount * sour_bullet_px, sour_bullet_px, true);
-	for (int i = 0; i < FMcount; i++) {
+	for (int i = 0; i < Dcount; i++) {
 		int x = i * sour_bullet_px;//左上角x值
 		int y = 0;//左上角y值
-		getimage(MapPic + i, x, y, sour_bullet_px, sour_bullet_px);
+		getimage(BulletPic + i, x, y, sour_bullet_px, sour_bullet_px);
 	}
 	cleardevice();//清空对象
 
 	//加载家的图片
 	loadimage(&tmpe, _T("PNG"), _T("HOME"), Statecount * sour_unit_px, sour_unit_px, true);
-	for (int i = 0; i < FMcount; i++) {
+	for (int i = 0; i < Statecount; i++) {
 		int x = i * sour_unit_px;//左上角x值
 		int y = 0;//左上角y值
-		getimage(MapPic + i, x, y, sour_unit_px, sour_unit_px);
+		getimage(HomePic + i, x, y, sour_unit_px, sour_unit_px);
 	}
 	cleardevice();//清空对象
 }
@@ -82,16 +82,7 @@ Picture::~Picture()
 /*绘制图片*/
 
 
-void Picture::drawTank(const Tank& tank)//绘制坦克
-{
-	Draw_pos pos = tank.GetPosXY();//获取坐标
-	UnitType type = tank.GetType();//获取类型
-	Direction dir = tank.GetDirection();//获取方向
-	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营
-	half_transimage(NULL, pos.x,pos.y,&TankPic[camp][dir][tank.GetTrackState()]);
-}
-
-void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
+void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半透明化贴纸
 {
 	//初始化变量
 	DWORD* dst = GetImageBuffer(dstimg);//获取绘画窗口指针
@@ -151,4 +142,76 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 		src += sour_src_width;
 	}
 	
+}
+
+void Picture::drawTank(const Tank& tank)//绘制坦克
+{
+	Draw_pos pos = tank.GetPosXY();//获取坐标
+	UnitType type = tank.GetType();//获取类型
+	Direction dir = tank.GetDirection();//获取方向
+	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营
+	half_transimage(NULL, pos.x,pos.y,&TankPic[camp][dir][tank.GetTrackState()]);
+}
+
+
+void Picture::drawMap(const char(*map)[map_row_px][map_col_px])//绘制地图
+{
+	for (int r = 0; r < map_row_px; r++)
+	{
+		for (int c = 0; c < map_col_px; c++) 
+		{
+			char temp = (*map)[r][c];
+			switch (temp)
+			{
+			case Wall:
+				putimage(c * sour_map_px, r * sour_map_px, MapPic + FM_wall);
+				break;
+			case Iron:
+				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_iron);
+				break;
+			case Border:
+				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_border);
+				break;
+			case Water:
+				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_water);
+				break;
+			//无冰面
+			//jungle另弄一个弄一个函数,否则坦克会在丛林上面
+			case Home_Live_LU:
+				half_transimage(NULL, c * map_px, r * map_px, HomePic + HomeLive);
+				break;
+			case Home_Die_LU:
+				half_transimage(NULL, c * map_px, r * map_px, HomePic + Homeover);
+				break;
+			default:
+				break;
+			}
+			//if (temp<Wall && temp>Empty)//绘制残缺的砖块
+			//{
+			//	putimage(c * sour_map_px, r * sour_map_px, MapPic + FM_wall);//先绘制一个地图，然后再裁减
+			//   还没写完
+			//}
+		}
+	}
+	drawInformation();
+}
+
+void Picture::drawJungle(const char(*map)[map_row_px][map_col_px])//绘制丛林
+{
+	for (int r = 0; r < map_row_px; r++)
+	{
+		for (int c = 0; c < map_col_px; c++)
+		{
+			char temp = (*map)[r][c];
+			if (temp == Jungle)
+			{
+				half_transimage(NULL, c * map_px, r * map_px, MapPic + FM_jungle);
+			}
+		}
+	}
+}
+
+void Picture::drawInformation()
+{
+
 }

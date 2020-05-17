@@ -54,8 +54,6 @@ void Windows::renwePicture()
 {
 	cleardevice();//清屏
 	pictures.drawMap(map.GetMPos());//绘制地图
-
-	//这里有bug--应该是map的问题--map还没有定义完  导致指针指向出错
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
 }
 
