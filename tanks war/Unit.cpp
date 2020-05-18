@@ -20,6 +20,15 @@ void Unit::SetDirection(Direction direction)
 {
 	this->dir = direction;
 }
+void Unit::SetPosU(const Map_pos& pu) {
+	this->posu = pu;
+	pos_xy_end.x = (float)pu.c * half_map_px;
+	pos_xy_end.y = (float)pu.r * half_map_px;
+}
+
+void Unit::SetPosMap(const Map_pos& pu) {
+	this->pos_map = pu;
+}
 
 /*get函数*/
 const Draw_pos& Unit::GetPosXY()const
@@ -33,6 +42,14 @@ const UnitType& Unit::GetType()const
 const Direction& Unit::GetDirection()const
 {
 	return dir;
+}
+
+const Map_pos& Unit::GetPosMap()const {
+	return pos_map;
+}
+
+const Map_pos& Unit::GetPosU()const {
+	return pos_unit;
 }
 
 /*控制类函数*/

@@ -34,7 +34,7 @@ class Bullet : public Unit{
 		void retouchflag();//刷新碰撞检查标记
 	private:
 		UnitType owner;//谁射♂的
-		Map_pos chechpos[mcount];//检查点坐标
+		Map_pos checkpos[mcount];//检查点坐标
 		char checkval[mcount];//检查点数据
 		bool flag[lcount][mcount];//地形碰撞标记（炮弹会碰撞两个地图单位，每个地图单位只碰撞一个角落）
 };
