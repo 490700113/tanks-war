@@ -156,41 +156,55 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 
 void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 {
-	for (int r = 0; r < map_row_px; r++)
+	for (int c = 0; c < map_row_px; c++)
 	{
-		for (int c = 0; c < map_col_px; c++) 
+		for (int r = 0; r < map_col_px; r++) 
 		{
-			char temp = (*map)[r][c];
+			char temp = (*map)[c][r];
 			switch (temp)
 			{
 			case Wall:
-				putimage(c * sour_map_px, r * sour_map_px, MapPic + FM_wall);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_wall);
 				break;
 			case Iron:
-				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_iron);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_iron);
 				break;
 			case Border:
-				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_border);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_border);
 				break;
 			case Water:
-				putimage(c * sour_map_px, r * sour_map_px, MapPic + +FM_water);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_water);
 				break;
 			//无冰面
 			//jungle另弄一个弄一个函数,否则坦克会在丛林上面
 			case Home_Live_LU:
-				half_transimage(NULL, c * map_px, r * map_px, HomePic + HomeLive);
+				half_transimage(NULL, r * map_px, c * map_px, HomePic + HomeLive);
 				break;
 			case Home_Die_LU:
-				half_transimage(NULL, c * map_px, r * map_px, HomePic + Homeover);
+				half_transimage(NULL, r * map_px, c * map_px, HomePic + Homeover);
 				break;
 			default:
 				break;
 			}
-			//if (temp<Wall && temp>Empty)//绘制残缺的砖块
-			//{
-			//	putimage(c * sour_map_px, r * sour_map_px, MapPic + FM_wall);//先绘制一个地图，然后再裁减
-			//   还没写完
-			//}
+			if (temp<Wall && temp>Empty)//绘制残缺的砖块
+			{
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_wall);//先绘制一个地图，然后再裁减
+				for (int dc = 0; dc < 2; dc++)
+				{
+					for (int dr = 0; dr < 2; dr++)
+					{
+						if (!(temp & 1))//如果末尾为0
+						{
+							int up = c * sour_map_px + dc * sour_map_px / 2;
+							int left = r * sour_map_px + dr * sour_map_px / 2;
+							int down = c * sour_map_px + (dc + 1) * sour_map_px / 2;
+							int right = r * sour_map_px + (dr + 1) * sour_map_px / 2;
+							clearrectangle(left, up, right, down);//擦除不存在的砖
+						}
+						temp >>= 1;
+					}
+				}
+			}
 		}
 	}
 	drawInformation();
