@@ -6,7 +6,7 @@
 
 /*宏定义*/
 #define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000) //按键检测，是否被按下
-
+#define uc unsigned char
 
 /*窗口参数*/
 const int multiple_px = 3;//放大倍数  --如果显示不完全或者过小可以适当调整

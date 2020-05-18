@@ -2,8 +2,8 @@
 
 
 
-Tank::Tank(UnitType type, Direction direction, Map_pos pos)
-	:Unit(type, direction, pos)
+Tank::Tank(UnitType type, Map_pos pos, Direction direction)
+	:Unit(type, pos, direction)
 {
 	Trackdisplay = false;
 	time_Trackdisplay = 0;

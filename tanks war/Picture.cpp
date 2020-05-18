@@ -154,7 +154,7 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 }
 
 
-void Picture::drawMap(const char(*map)[map_row_px][map_col_px])//绘制地图
+void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 {
 	for (int r = 0; r < map_row_px; r++)
 	{
@@ -196,7 +196,7 @@ void Picture::drawMap(const char(*map)[map_row_px][map_col_px])//绘制地图
 	drawInformation();
 }
 
-void Picture::drawJungle(const char(*map)[map_row_px][map_col_px])//绘制丛林
+void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 {
 	for (int r = 0; r < map_row_px; r++)
 	{

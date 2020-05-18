@@ -9,7 +9,7 @@ private:
 	DWORD time_Trackdisplay;//履带切换时间点
 	//int Tankspeed;//记录坦克类的速度
 public:
-	Tank(UnitType type, Direction direction, Map_pos pos);
+	Tank(UnitType type, Map_pos pos, Direction direction = D_DOWN);
 
 	/*get函数*/
 	bool GetTrackState()const;//获取履带状态

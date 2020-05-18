@@ -1,7 +1,7 @@
 ﻿#include "Player.h"
 
 
-Player::Player(UnitType type, Direction direction, Map_pos pos)
-	:Tank(type, direction, pos)
+Player::Player(UnitType type, Map_pos pos, Direction direction)
+	:Tank(type, pos, direction)
 {
 }

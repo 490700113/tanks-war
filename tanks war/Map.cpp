@@ -35,9 +35,9 @@ void Map::chooseMap(int level)
 	file_map.seekg(level * map_row_px * map_col_px * 3 + level);//将文件制定到制定字节
 
 	int temp_num;//暂存文件读取的整数，
-	for (int r = 0; r < map_row_px; r++)
+	for (size_t r = 0; r < map_row_px; r++)
 	{
-		for (int c = 0; c < map_col_px; c++)
+		for (size_t c = 0; c < map_col_px; c++)
 		{
 			file_map >> hex >> temp_num;
 			map[r][c] = temp_num;
@@ -55,18 +55,18 @@ void Map::ChangeLevel(int level)
 }
 
 /*get函数*/
-const char(*Map::GetPos())[map_row_px][map_col_px]
+const uc(*Map::GetPos())[map_row_px][map_col_px]
 {
 	return &map;
 }
 
-char Map::GetMPos(const Map_pos& Mpos)const
+uc Map::GetMPos(const Map_pos& Mpos)const
 {
 	return map[Mpos.r][Mpos.c];
 }
 
 /*set函数*/
-void Map::SetMPos(const Map_pos& Mpos, char mpos)
+void Map::SetMPos(const Map_pos& Mpos, uc mpos)
 {
 	map[Mpos.r][Mpos.c] = mpos;
 }

@@ -36,16 +36,9 @@ void Windows::Playgame()
 		if (KEY_DOWN(K_PAUSE))//查看是否按下暂停键
 		{
 			HWND pause = GetHWnd();
-			int button = MessageBox(pause, _T("是否要继续游戏？（按P继续）"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
+			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 		}
 		controlUnit(*unit, map);//查看是否按下动作键
-	}
-	else
-	{
-		if (KEY_DOWN(K_PAUSE))//按下
-		{
-			game_state = true;
-		}
 	}
 	renwePicture();//更新图片
 }
@@ -64,18 +57,30 @@ void Windows::renewStart()
 
 void Windows::controlUnit(Unit& unit, Map& map)
 {
-	Direction key_state = D_UP;//保存
-	if (KEY_DOWN(K_UP)) {
+	Direction key_state;//保存
+	int flag = 0;
+	if (KEY_DOWN(K_UP))
+	{
 		key_state = D_UP;
+		flag++;
 	}
-	if (KEY_DOWN(K_LEFT)) {
+	if (KEY_DOWN(K_LEFT))
+	{
 		key_state = D_LEFT;
+		flag++;
 	}
-	if (KEY_DOWN(K_DOWN)) {
+	if (KEY_DOWN(K_DOWN))
+	{
 		key_state = D_DOWN;
+		flag++;
 	}
-	if (KEY_DOWN(K_RIGHT)) {
+	if (KEY_DOWN(K_RIGHT))
+	{
 		key_state = D_RIGHT;
+		flag++;
 	}
-	unit.move(key_state, map);//移动坦克
+	if (flag == 1)
+	{
+		unit.move(key_state, map);//移动坦克
+	}
 }
