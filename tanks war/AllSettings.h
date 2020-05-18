@@ -26,6 +26,7 @@ const int map_px = multiple_px * sour_map_px;//显示时每个地图单元大小
 const int unit_px = map_px * 2;//坦克、道具的大小
 const int boom_px = unit_px * 2;//实际爆炸大小
 const int bullet_px = map_px / 2;//子弹大小
+const int half_map_px = map_px / 2; // 子弹绘图大小
 
 //原始游戏界面的像素宽和高
 const int sour_window_width = sour_map_px * map_row_px;//原始游戏窗口宽
