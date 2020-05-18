@@ -43,6 +43,9 @@ const int unit_size = 4;//基础单元大小
 const int bullet_size = unit_size / 2;//子弹单元大小
 const int map_size = unit_size / 2;//地图单元大小
 
+//总地图数
+const int max_level = 35;
+
 
 
 /*绘图的坐标*/
@@ -85,6 +88,15 @@ enum MapType//地图类型
 	Home_Live_RD = 0xCB,
 	Home_Die_LU = 0xCC,
 };
+enum HalfWall//用于消除砖块，通过按位与实现
+{
+	Wall_no = 0xF0,//消除整块
+	Wall_up = 0xF3,//保留上半部分
+	Wall_left = 0xF5,//保留左半部分
+	Wall_down = 0xFC,//保留下半部分
+	Wall_right = 0xFA//保留右半部分
+};
+
 
 //单元类型
 enum UnitType
@@ -121,6 +133,13 @@ enum TankCamp//坦克阵营
 enum HomeState//家的状态
 {
 	HomeLive, Homeover, Statecount
+};
+
+enum Destoryunit//破换程度
+{
+	wonderful,//没破坏
+	justsoso,//至少还有一点点存在
+	omg//全完了
 };
 
 

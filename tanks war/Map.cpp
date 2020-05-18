@@ -54,6 +54,106 @@ void Map::ChangeLevel(int level)
 	chooseMap(level);
 }
 
+void Map::DestroyMap(const Map_pos& Mpos, const Direction& dir, const Destoryunit& destory)
+{
+	if (destory == wonderful) return;
+	if (destory == omg)
+	{
+		SetMPos(Mpos, Empty);
+		return;
+	}
+	uc temp = map[Mpos.r][Mpos.c];//保存地图坐标
+	bool flag[4] = { 0 };//分别判断四个方向还在不在
+	if (temp & 1)
+	{
+		flag[D_UP] = 1;
+		flag[D_LEFT] = 1;
+	}
+	temp >>= 1;
+	if (temp & 1)
+	{
+		flag[D_UP] = true;
+		flag[D_RIGHT] = true;
+	}
+	temp >>= 1;
+	if (temp & 1)
+	{
+		flag[D_DOWN] = true;
+		flag[D_LEFT] = true;
+	}
+	temp >>= 1;
+	if (temp & 1)
+	{
+		flag[D_DOWN] = true;
+		flag[D_RIGHT] = true;
+	}
+	//开始销毁砖块了
+	switch (dir)
+	{
+	case D_UP:
+		if (flag[D_DOWN])
+		{
+			//如果下半部分存在那么就消除下半部分
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_up;
+		}
+		else
+		{
+			//下半部分不在证明全部玩完了
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_no;
+		}
+		break;
+	case D_LEFT:
+		if (flag[D_RIGHT])
+		{
+			//如果左半部分存在那么就消除下半部分
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_left;
+		}
+		else
+		{
+			//左半部分不在证明全部玩完了
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_no;
+		}
+		break;
+	case D_DOWN:
+		if (flag[D_UP])
+		{
+			//如果上半部分存在那么就消除下半部分
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_down;
+		}
+		else
+		{
+			//上半部分不在证明全部玩完了
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_no;
+		}
+		break;
+	case D_RIGHT:
+		if (flag[D_LEFT])
+		{
+			//如果右半部分存在那么就消除下半部分
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_right;
+		}
+		else
+		{
+			//右半部分不在证明全部玩完了
+			map[Mpos.r][Mpos.c] = map[Mpos.r][Mpos.c] & Wall_no;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Map::DestoryHome()
+{
+	for (int c = 0; c < 2; c++)
+	{
+		for (int r = 0; r < 2; r++)
+		{
+			map[Home_pos.r + r][Home_pos.c + c] = Homeover + r + c;
+		}
+	}
+}
+
 /*get函数*/
 const uc(*Map::GetPos())[map_row_px][map_col_px]
 {
