@@ -1,5 +1,14 @@
 ﻿#include "AllSettings.h"
 
+bool operator ==(const Map_pos& a, const Map_pos& b)
+{
+	if (a.c == b.c && a.r == b.r)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName)
 {
 	// 创建文件

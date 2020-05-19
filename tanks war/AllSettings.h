@@ -29,12 +29,12 @@ const int bullet_px = map_px / 2;//子弹大小
 const int half_map_px = map_px / 2; // 子弹绘图大小
 
 //原始游戏界面的像素宽和高
-const int sour_window_width = sour_map_px * map_row_px;//原始游戏窗口宽
-const int sour_window_height = sour_map_px * map_col_px;//原始游戏窗口高
+const int sour_window_width = sour_map_px * map_col_px;//原始游戏窗口宽
+const int sour_window_height = sour_map_px * map_row_px;//原始游戏窗口高
 
 //游戏界面的像素宽和高
-const int window_width = map_px * map_row_px;//真实游戏窗口宽
-const int window_height = map_px * map_col_px;//真实游戏窗口高
+const int window_width = map_px * map_col_px;//真实游戏窗口宽
+const int window_height = map_px * map_row_px;//真实游戏窗口高
 
 //单元数组的大小，以便将一个像素分成更小的单元
 const int unit_row_px = map_row_px * 2;//单元行
@@ -59,7 +59,7 @@ typedef struct
 {
 	int r, c;
 }Map_pos;
-
+bool operator ==(const Map_pos& a, const Map_pos& b);
 
 /*游戏开始页面显示*/
 
