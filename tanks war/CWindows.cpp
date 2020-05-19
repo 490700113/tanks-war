@@ -1,15 +1,15 @@
 ﻿#include <iostream>
-#include "Windows.h"
+#include "CWindows.h"
 using namespace std;
 
-Windows::Windows()
+CWindows::CWindows()
 {
 	game_state = true;
 }
 
-void Windows::Loadgame()
+void CWindows::Loadgame()
 {
-	renewStart();
+	//renewStart();
 	while (true)
 	{
 		if (KEY_DOWN(K_ESC))//查看是否按下退出键
@@ -27,7 +27,7 @@ void Windows::Loadgame()
 	}
 }
 
-void Windows::Playgame()
+void CWindows::Playgame()
 {
 	Unit* unit = &play1;
 
@@ -40,22 +40,24 @@ void Windows::Playgame()
 		}
 		controlUnit(*unit, map);//查看是否按下动作键
 	}
+	//cleardevice();//清屏
+	//清屏好像有问题
 	renwePicture();//更新图片
 }
 
-void Windows::renwePicture()
+void CWindows::renwePicture()
 {
-	cleardevice();//清屏
-	pictures.drawMap(map.GetPos());//绘制地图
+	//pictures.drawMap(map.GetPos());//绘制地图
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
+	//pictures.drawJungle(map.GetPos());//绘制丛林
 }
 
-void Windows::renewStart()
+void CWindows::renewStart()
 {
 
 }
 
-void Windows::controlUnit(Unit& unit, Map& map)
+void CWindows::controlUnit(Unit& unit, Map& map)
 {
 	Direction key_state;//保存
 	int flag = 0;

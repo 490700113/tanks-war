@@ -6,7 +6,7 @@
 
 
 
-class Windows
+class CWindows
 {
 private:
 	Picture pictures;//图像
@@ -22,7 +22,7 @@ protected:
 //	void shoot();//射击函数
 
 public:
-	Windows();
+	CWindows();
 
 	void Loadgame();//进入游戏
 	void Playgame();//玩游戏

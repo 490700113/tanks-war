@@ -1,10 +1,18 @@
 ﻿#include <Windows.h>
 #include "AllSettings.h"
-#include "Windows.h"
+#include "CWindows.h"
 
 int main()
 {
-	Windows* playthegame = new Windows;
+	CWindows* playthegame = new CWindows;
 	playthegame->Loadgame();
 	delete playthegame;
 }
+
+//int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+//{
+//	CWindows* playthegame = new CWindows;
+//	playthegame->Loadgame();
+//	delete playthegame;
+//	return 0;
+//}

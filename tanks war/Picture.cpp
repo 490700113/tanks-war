@@ -18,7 +18,7 @@ Picture::Picture() {
 	GetWindowRect(hWnd, &rect);
 	//设置rect的值
 	rect.left = (scrwidth - rect.right + rect.left) / 2;
-	rect.top = (scrheight - rect.bottom + rect.top) / 2;//原版为3
+	rect.top = (scrheight - rect.bottom + rect.top) / 3;//原版为3
 	//移动窗口到中间
 	SetWindowPos(hWnd, HWND_TOP, rect.left, rect.top, rect.right, rect.bottom, SWP_NOSIZE);
 
@@ -75,6 +75,7 @@ Picture::Picture() {
 
 Picture::~Picture()
 {
+	//下面这个好像也有点问题
 	EndBatchDraw();//结束批量绘图模式
 	closegraph();//关闭绘图界面
 }
@@ -89,8 +90,8 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半�
 	DWORD* src = GetImageBuffer(srcimg);//获取图片指针
 	int sour_src_width = srcimg->getwidth();
 	int sour_src_height = srcimg->getheight();
-	int sour_dst_width = (dstimg == NULL ? 0 : dstimg->getwidth());
-	int sour_dst_height = (dstimg == NULL ? 0 : dstimg->getheight());
+	int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
+	int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
 
 	//计算贴图区域的参数
 	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界
@@ -150,7 +151,7 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 	UnitType type = tank.GetType();//获取类型
 	Direction dir = tank.GetDirection();//获取方向
 	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营
-	half_transimage(NULL, pos.x,pos.y,&TankPic[camp][dir][tank.GetTrackState()]);
+	half_transimage(NULL, pos.x, pos.y, &TankPic[camp][dir][tank.GetTrackState()]);
 }
 
 
@@ -227,5 +228,5 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 
 void Picture::drawInformation()
 {
-
+	
 }

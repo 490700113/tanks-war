@@ -145,7 +145,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Unit.h" />
-    <ClInclude Include="Windows.h" />
+    <ClInclude Include="CWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllSettings.cpp" />
@@ -155,7 +155,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="Windows.cpp" />
+    <ClCompile Include="CWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="tanks war.rc" />

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <math.h>
 #include <graphics.h>
+#pragma comment(lib,"Winmm.lib")
 
 
 
