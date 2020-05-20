@@ -27,10 +27,12 @@ public:
 
 	/*get函数*/
 	const Draw_pos& GetPosXY()const;//获取当前绘画坐标
+	const Draw_pos& GetEndPosXY()const;//获取终点绘画坐标
 	const UnitType& GetType()const;//获取单元类型
 	const Direction& GetDirection()const;//获取方向
 	const Map_pos& GetPosMap()const;//获取地图坐标
 	const Map_pos& GetPosU()const;//获取更加精细的地图坐标
+
 
 	/*控制类函数*/
 	virtual bool move(Direction direction, const Map& map);//移动函数

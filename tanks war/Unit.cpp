@@ -1,7 +1,5 @@
 ﻿#include "Unit.h"
 
-
-
 Unit::Unit(UnitType type, Map_pos pos, Direction direction) 
 	:type(type),pos_rc(pos),dir(direction)
 {
@@ -35,6 +33,11 @@ const Draw_pos& Unit::GetPosXY()const
 {
 	return pos_xy;
 }
+
+const Draw_pos& Unit::GetEndPosXY()const {
+	return pos_xy_end;
+}
+
 const UnitType& Unit::GetType()const
 {
 	return type;

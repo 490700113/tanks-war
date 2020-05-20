@@ -22,16 +22,16 @@ class Bullet : public Unit{
 		virtual bool touch(const Map& map);//是否碰撞
 		unsigned int getowner()const;//获取子弹所有者
 
-		const Map_pos(*GetCheckPointsPos() const)[mcount];//获取检查点坐标
-		const char(*GetChectPointsVal() const)[mcount];//获取检查点的值
-		const bool(*GetTouchFlags() const)[lcount][mcount];//获取地形碰撞标记
-		virtual const Draw_pos GetBoomXYPos()const;//获取爆炸贴图坐标
+		const Map_pos(*GetCPos() const)[mcount];//获取检查点坐标
+		const char(*GetCVal() const)[mcount];//获取检查点的值
+		const bool(*GetTouch() const)[lcount][mcount];//获取地形碰撞标记
+		virtual const Draw_pos GetBoomPos()const;//获取爆炸贴图坐标
 
 	protected:
 		void recheckpoint(const Map& map);//刷新检查点
 		void recheckpos();//刷新检查点坐标
 		void recheckval(const Map& map);//刷新检查点数值
-		void retouchflag();//刷新碰撞检查标记
+		void recheckflag();//刷新碰撞检查标记
 	private:
 		UnitType owner;//谁射♂的
 		Map_pos checkpos[mcount];//检查点坐标
