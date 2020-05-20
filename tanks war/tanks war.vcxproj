@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AllSettings.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Picture.h" />
     <ClInclude Include="Player.h" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllSettings.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="mian.cpp" />
     <ClCompile Include="Picture.cpp" />

@@ -39,6 +39,9 @@
     <ClInclude Include="CWindows.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mian.cpp">
@@ -63,6 +66,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CWindows.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
