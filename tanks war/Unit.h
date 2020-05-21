@@ -36,5 +36,6 @@ public:
 
 	/*控制类函数*/
 	virtual bool move(Direction direction, const Map& map);//移动函数
-
+	virtual bool to_next();//判断能否进行下一步移动
+	virtual bool touch(const Map& map)const;//判断是否有碰撞
 };

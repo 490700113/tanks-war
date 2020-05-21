@@ -85,4 +85,53 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	{
 		unit.move(key_state, map);//移动坦克
 	}
+
+	//发射子弹
+	if (KEY_DOWN(K_SHOOT))
+	{
+		static DWORD shoot_time = time::Gettime() - bullet_cd;
+		WORD now = time::Gettime();
+		if (now - shoot_time >= bullet_cd)
+		{
+			shoot_time = now;
+			shoot(unit);
+		}
+	}
 }
+
+void CWindows::shoot(const Unit& tank)
+{
+	if (tank.GetType() == player)
+	{
+		if (play_bullet >= max_num_bullets) return;
+		play_bullet++;
+	}
+	bullet.push_back(Bullet(tank));
+}
+void CWindows::renewBullet()
+{
+	if (!bullet.empty())
+	{
+		for (auto it = bullet.begin(); it != bullet.end(); it++)
+		{
+			if (it->to_next())
+			{
+				if (it->move(it->GetDirection(), map))//如果子弹有碰撞
+				{
+					if (it->getowner() == player)
+					{
+						play_bullet--;
+					}
+					destoryWall(*it);
+					pictures.addboom(it->GetBoomPos());
+					it = bullet.erase(it);
+					it--;
+				}
+			}
+		}
+	}
+}
+//void CWindows::destoryWall(const Bullet& bullet)
+//{
+//
+//}

@@ -232,6 +232,7 @@ void Picture::drawInformation()
 	
 }
 
+
 void Picture::reboompoint() {
 	ull now = time::Gettime();
 	for (auto it = points.begin(); it != points.end();) {
@@ -261,7 +262,8 @@ void Picture::fill(IMAGE& dstimg, const IMAGE& srcimg) {
 
 void Picture::drawBullet(Bullet& bullet) {
 	const Draw_pos& pos = bullet.GetPosXY();
-	half_transimage(NULL, pos.x, pos.y, &BulletPic2[bullet.GetDirection()]);
+	//half_transimage(NULL, pos.x, pos.y, &BulletPic2[bullet.GetDirection()]);
+	half_transimage(NULL, pos.x, pos.y, &BulletPic[bullet.GetDirection()]);
 }
 
 void Picture::drawBoom() {
@@ -270,6 +272,26 @@ void Picture::drawBoom() {
 	for (auto it = points.begin(); it != points.end(); it++) {
 		int passtime = now - it->nowtime;//获取爆炸贴图已经经过的时间
 		int index = abs(it->picnum - abs(it->time / 2 - passtime) / (it->time / 2 / it->picnum) - 1);
-		half_transimage(NULL, it->pos.x, it->pos.y, BoomPic2 + index);
+		//half_transimage(NULL, it->pos.x, it->pos.y, BoomPic2 + index);
+		half_transimage(NULL, it->pos.x, it->pos.y, BoomPic + index);
 	}
 }
+
+void Picture::addboom(const Draw_pos& pos, bool flag)
+{
+	boomnode temp;
+	temp.nowtime = time::Gettime();
+	temp.pos = pos;
+	if (flag) //如果是大爆炸
+	{
+		temp.time = bigtime;
+		temp.picnum = bigcount;
+	}
+	else
+	{
+		temp.time = smalltime;
+		temp.picnum = smallcount;
+	}
+	points.push_back(temp);
+}
+

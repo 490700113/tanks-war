@@ -84,3 +84,12 @@ bool Unit::move(Direction direction, const Map& map)
 	}
 	return true;
 }
+
+//bool to_next()
+//{
+//
+//}
+//bool touch(const Map& map)
+//{
+//
+//}

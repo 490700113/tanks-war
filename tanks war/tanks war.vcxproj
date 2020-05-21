@@ -145,6 +145,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="time.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="CWindows.h" />
   </ItemGroup>
@@ -156,6 +157,7 @@
     <ClCompile Include="Picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="time.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="CWindows.cpp" />
   </ItemGroup>

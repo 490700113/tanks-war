@@ -70,7 +70,8 @@ bool operator ==(const Map_pos& a, const Map_pos& b);
 const int renewtime = 1000 / 60;//画面刷新周期
 const int Movespeed = (int)(3.5 * map_size * map_px) * renewtime;//每秒走3.5大格
 
-
+/*子弹参数设置*/
+const int max_num_bullets = 2;//子弹存在的上限
 
 /*单元相关参数*/
 //贴纸代码
