@@ -1,5 +1,6 @@
 ﻿#include "Picture.h"
-
+#include "time.h"
+#define ull unsigned long long
 Picture::Picture() {
 
 
@@ -229,4 +230,46 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 void Picture::drawInformation()
 {
 	
+}
+
+void Picture::reboompoint() {
+	ull now = time::Gettime();
+	for (auto it = points.begin(); it != points.end();) {
+		if (now - it->nowtime > (ull)it->time) it = points.erase(it);
+		else it++;
+	}
+}
+
+void Picture::fill(IMAGE& dstimg, const IMAGE& srcimg) {
+	int dstw = dstimg.getwidth();
+	int dsth = dstimg.getheight();
+	int srcw = srcimg.getwidth();
+	int srch = srcimg.getheight();
+	int limit;//循环上限
+	IMAGE tmp;//图片的临时变量
+	if (dstw <= 0 || dsth <= 0 || srcw <= 0 || srch <= 0) return;
+	Resize(&tmp, dstw, srcw);
+	SetWorkingImage(&tmp);
+	limit = dstw / srcw;
+	if (dstw % srcw != 0) limit++;
+	for (int i = 0; i < limit; i++) putimage(i * srcw, 0, &srcimg);
+	SetWorkingImage(&dstimg);
+	limit = dsth/srch;
+	if (dsth % srch != 0) limit++;
+	for (int i = 0; i < limit; i++) putimage(0, i * srch, &tmp);
+}
+
+void Picture::drawBullet(Bullet& bullet) {
+	const Draw_pos& pos = bullet.GetPosXY();
+	half_transimage(NULL, pos.x, pos.y, &BulletPic2[bullet.GetDirection()]);
+}
+
+void Picture::drawBoom() {
+	reboompoint();
+	ull now = time::Gettime();
+	for (auto it = points.begin(); it != points.end(); it++) {
+		int passtime = now - it->nowtime;//获取爆炸贴图已经经过的时间
+		int index = abs(it->picnum - abs(it->time / 2 - passtime) / (it->time / 2 / it->picnum) - 1);
+		half_transimage(NULL, it->pos.x, it->pos.y, BoomPic2 + index);
+	}
 }
