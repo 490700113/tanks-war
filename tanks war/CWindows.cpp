@@ -9,8 +9,7 @@ CWindows::CWindows()
 
 void CWindows::Loadgame()
 {
-	pictures.drawMap(map.GetPos()); 
-	renewStart();
+	//renewStart();
 	while (true)
 	{
 		if (KEY_DOWN(K_ESC))//查看是否按下退出键
@@ -41,7 +40,7 @@ void CWindows::Playgame()
 		}
 		controlUnit(*unit, map);//查看是否按下动作键
 	}
-	cleardevice();//清屏
+	//cleardevice();//清屏
 	//清屏好像有问题
 	renwePicture();//更新图片
 }
@@ -132,7 +131,6 @@ void CWindows::renewBullet()
 		}
 	}
 }
-
 void CWindows::destoryWall(const Bullet& bullet)
 {
 	Destoryunit destory = justsoso;
@@ -148,7 +146,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 	{
 		return;
 	}
-	 
+
 	bool first_wall = false;//查看第一层是否碰撞
 	bool home_alive = false;//记录家的状态
 
@@ -164,7 +162,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 					map.DestroyMap((*pos)[m], dir, destory);
 				}
 			}
-			if (!home_alive && (*val)[m] >= Home_Live_LU&& (*val)[m] <= Home_Live_LU)
+			if (!home_alive && (*val)[m] >= Home_Live_LU && (*val)[m] <= Home_Live_LU)
 			{
 				home_alive = true;
 				map.DestoryHome();
