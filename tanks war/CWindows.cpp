@@ -48,9 +48,9 @@ void CWindows::Playgame()
 
 void CWindows::renwePicture()
 {
-	//pictures.drawMap(map.GetPos());//绘制地图
+	pictures.drawMap(map.GetPos());//绘制地图
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
-	//pictures.drawJungle(map.GetPos());//绘制丛林
+	pictures.drawJungle(map.GetPos());//绘制丛林
 }
 
 void CWindows::renewStart()
@@ -90,8 +90,8 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
 	{
-		static DWORD shoot_time = time::Gettime() - bullet_cd;
-		WORD now = time::Gettime();
+		static ull shoot_time = time::Gettime() - bullet_cd;
+		ull now = time::Gettime();
 		if (now - shoot_time >= bullet_cd)
 		{
 			shoot_time = now;
@@ -132,6 +132,7 @@ void CWindows::renewBullet()
 		}
 	}
 }
+
 void CWindows::destoryWall(const Bullet& bullet)
 {
 	Destoryunit destory = justsoso;

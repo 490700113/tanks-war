@@ -89,7 +89,7 @@ enum MapType//地图类型
 	Home_Live_LD = 0xC9,
 	Home_Live_RU = 0xCA,
 	Home_Live_RD = 0xCB,
-	Home_Die_LU = 0xCC，
+	Home_Die_LU = 0xCC,
 	Home_Die_LD = 0xCD,
 	Home_Die_RU = 0xCE,
 	Home_Die_RD = 0xCF
