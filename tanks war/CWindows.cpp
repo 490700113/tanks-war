@@ -10,22 +10,22 @@ CWindows::CWindows()
 void CWindows::Loadgame()
 {
 	pictures.drawMap(map.GetPos()); 
-	//renewStart();
-	//while (true)
-	//{
-	//	if (KEY_DOWN(K_ESC))//查看是否按下退出键
-	//	{
-	//		HWND esc = GetHWnd();
-	//		int button = MessageBox(esc, _T("是否要退出游戏？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
-	//		if (button == IDYES)
-	//		{
-	//			break;
-	//		}
-	//	}
+	renewStart();
+	while (true)
+	{
+		if (KEY_DOWN(K_ESC))//查看是否按下退出键
+		{
+			HWND esc = GetHWnd();
+			int button = MessageBox(esc, _T("是否要退出游戏？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
+			if (button == IDYES)
+			{
+				break;
+			}
+		}
 
-	//	Playgame();
+		Playgame();
 
-	//}
+	}
 }
 
 void CWindows::Playgame()
@@ -90,8 +90,8 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
 	{
-		static DWORD shoot_time = time::Gettime() - bullet_cd;
-		WORD now = time::Gettime();
+		static ull shoot_time = time::Gettime() - bullet_cd;
+		ull now = time::Gettime();
 		if (now - shoot_time >= bullet_cd)
 		{
 			shoot_time = now;
@@ -183,5 +183,4 @@ void CWindows::destoryWall(const Bullet& bullet)
 			}
 		}
 	}
-
 }

@@ -3,8 +3,13 @@
 Unit::Unit(UnitType type, Map_pos pos, Direction direction) 
 	:type(type),pos_rc(pos),dir(direction)
 {
-
+	posu.r = pos_rc.r / 2;
+	posu.c = pos_rc.c / 2;
+	pos_xy.x = (float)pos_rc.c * map_px;
+	pos_xy.y = (float)pos_rc.r * map_px;
+	pos_xy_end = pos_xy;
 }
+
 Unit::~Unit() 
 {
 }
@@ -14,6 +19,10 @@ void Unit::SetPosXY(const Draw_pos& pos)
 {
 	this->pos_xy = pos;
 }
+void Unit::SetEndPXY(const Draw_pos& pos) {
+	this->pos_xy_end = pos;
+}
+
 void Unit::SetDirection(Direction direction)
 {
 	this->dir = direction;
@@ -25,7 +34,7 @@ void Unit::SetPosU(const Map_pos& pu) {
 }
 
 void Unit::SetPosMap(const Map_pos& pu) {
-	this->pos_map = pu;
+	this->pos_rc = pu;
 }
 
 /*get函数*/
@@ -48,11 +57,15 @@ const Direction& Unit::GetDirection()const
 }
 
 const Map_pos& Unit::GetPosMap()const {
-	return pos_map;
+	return pos_rc;
 }
 
 const Map_pos& Unit::GetPosU()const {
-	return pos_unit;
+	return posu;
+}
+
+float Unit::GetSpeed()const {
+	return 0;//由继承类完成，默认设为0 
 }
 
 /*控制类函数*/
@@ -60,29 +73,95 @@ bool Unit::move(Direction direction, const Map& map)
 {
 	Draw_pos pos = GetPosXY();
 	Direction dir = GetDirection();
+	Map_pos pos_map = GetPosMap();
+	Map_pos u_map = GetPosU();
+	if ((direction - dir) % 2 != 0) {//转90度时，对齐地图坐标
+		switch (dir) {
+			case D_UP:
+				if (u_map.r % 2) u_map.r -= 1;
+				break;
+
+			case D_LEFT:
+				if (u_map.c % 2) u_map.c -= 1;
+				break;
+			
+			case D_DOWN:
+				if (u_map.r % 2) u_map.r += 1;
+				break;
+
+			case D_RIGHT:
+				if (u_map.c % 2) u_map.c += 1;
+				break;
+			default:
+				break;
+		}
+		pos_map.r = u_map.r / 2;
+		pos_map.c = u_map.c / 2;
+		SetPosU(u_map);
+		SetPosMap(pos_map);
+		SetPosXY(GetEndPosXY());
+	}
+
+	switch (direction) {//根据移动方向再修正一次位置
+		case D_UP:
+			pos_map.r = u_map.r / 2 + u_map.r % 2;
+			break;
+		case D_LEFT:
+			pos_map.c = u_map.c / 2 + u_map.c % 2;
+			break;
+		case D_DOWN:
+			pos_map.r = u_map.r / 2;
+			break;
+		case D_RIGHT:
+			pos_map.c = u_map.c / 2;
+			break;
+		default:
+			break;
+	}
+	SetPosMap(pos_map);
 
 	switch (dir)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
-		pos.y--;
+		if(!touch(map)) pos.y--;
 		break;
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
-		pos.x--;
+		if (!touch(map)) pos.x--;
 		break;
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
-		pos.y++;
+		if (!touch(map)) pos.y++;
 		break;
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
-		pos.x++;
+		if (!touch(map)) pos.x++;
 		break;
 	default:
 		break;
 	}
-	return true;
+	if(u_map==GetPosU()) return true;//有碰撞
+	SetPosU(u_map);
+	dir = GetDirection();
+	switch (dir) {//再根据方向刷新地图坐标位置
+		case D_UP:
+			pos_map.r = u_map.r / 2 + u_map.r % 2;
+			break;
+		case D_LEFT:
+			pos_map.c = u_map.c / 2 + u_map.c % 2;
+			break;
+		case D_DOWN:
+			pos_map.r = u_map.r / 2;
+			break;
+		case D_RIGHT:
+			pos_map.c = u_map.c / 2;
+			break;
+		default:
+			break;
+	}
+	SetPosMap(pos_map);
+	return false;
 }
 
 bool Unit::to_next()
@@ -92,4 +171,78 @@ bool Unit::to_next()
 bool Unit::touch(const Map& map)const
 {
 	return true;
+	Draw_pos st = GetPosXY();
+	Draw_pos ed = GetEndPosXY();
+	float v = GetSpeed();
+	Direction dir = GetDirection();
+	switch (dir) {//判断是否刷新当前坐标
+		case D_UP:
+			if (st.y > ed.y) st.y = st.y - v;
+			break;
+		case D_LEFT:
+			if (st.x > ed.x)	st.x = st.x - v;
+			break;
+		case D_DOWN:
+			if (st.y < ed.y) st.y = st.y + v;
+			break;
+		case D_RIGHT:
+			if (st.x < ed.x)	st.x = st.x + v;
+			break;
+		default:
+			break;
+	}
+	SetPosXY(st);
+	switch (dir) {//判断是否刷新当前坐标
+		case D_UP:
+			if (st.y <= ed.y) return true;
+			break;
+		case D_LEFT:
+			if (st.x <= ed.x)	return true;
+			break;
+		case D_DOWN:
+			if (st.y >= ed.y) return true;
+			break;
+		case D_RIGHT:
+			if (st.x >= ed.x)	return true;
+			break;
+		default:
+			break;
+	}
+	return false;
+}
+bool Unit::touch(const Map& map)const
+{
+	Map_pos r = GetPosMap();
+	Map_pos check[2] = { r,r };
+	Direction dir = GetDirection();
+	switch (dir) {
+		case D_UP:
+			check[0].r--;
+			check[1].r--;
+			check[1].c++;
+			break;
+		case D_LEFT:
+			check[0].c--;
+			check[1].c--;
+			check[1].r++;
+			break;
+		case D_DOWN:
+			check[0].r = check[0].r + 2;
+			check[1].r = check[1].r + 2;
+			check[1].c++;
+		case D_RIGHT:
+			check[0].c = check[0].c + 2;
+			check[1].c = check[1].c + 2;
+			check[1].r++;
+			break;
+		default:
+			break;
+	}
+
+	for (int i = 0; i < 2; i++) {
+		uc cmp = map.GetMPos(check[i]);
+		if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
+	}
+	return false;
+>>>>>>> ea3a80a5acada1b78a4d9e0da0d5cc37f033b29c
 }
