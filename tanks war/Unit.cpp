@@ -85,11 +85,11 @@ bool Unit::move(Direction direction, const Map& map)
 	return true;
 }
 
-//bool to_next()
-//{
-//
-//}
-//bool touch(const Map& map)
-//{
-//
-//}
+bool Unit::to_next()
+{
+	return true;
+}
+bool Unit::touch(const Map& map)const
+{
+	return true;
+}
