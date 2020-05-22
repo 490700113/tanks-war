@@ -166,11 +166,6 @@ bool Unit::move(Direction direction, const Map& map)
 
 bool Unit::to_next()
 {
-	return true;
-}
-bool Unit::touch(const Map& map)const
-{
-	return true;
 	Draw_pos st = GetPosXY();
 	Draw_pos ed = GetEndPosXY();
 	float v = GetSpeed();
@@ -244,5 +239,4 @@ bool Unit::touch(const Map& map)const
 		if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
 	}
 	return false;
->>>>>>> ea3a80a5acada1b78a4d9e0da0d5cc37f033b29c
 }
