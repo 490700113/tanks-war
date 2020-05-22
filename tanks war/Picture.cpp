@@ -91,8 +91,10 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半�
 	DWORD* src = GetImageBuffer(srcimg);//获取图片指针
 	int sour_src_width = srcimg->getwidth();
 	int sour_src_height = srcimg->getheight();
-	int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
-	int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
+	//int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
+	//int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
+	int sour_dst_width = (dstimg == NULL ? 768 : dstimg->getwidth());
+	int sour_dst_height = (dstimg == NULL ? 720 : dstimg->getheight());
 
 	//计算贴图区域的参数
 	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界
@@ -100,13 +102,13 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半�
 	if (x < 0)//处理超出左边界
 	{
 		src += -x / multiple_px;
-		dst_width -= x;
+		dst_width -= -x;
 		x = 0;
 	}
 	if (y < 0)//处理超出上边界
 	{
 		src += (-y / multiple_px) * sour_src_width;
-		dst_height -= y;
+		dst_height -= -y;
 		y = 0;
 	}
 	dst += sour_dst_width * y + x;//修正目标贴图区起始位置
@@ -128,11 +130,11 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半�
 				for (int dx = 0; dx < multiple_px; dx++)//一个像素绘制多列
 				{
 					//计算实际绘图的RGB色
-					int dr = ((dst[dy * dst_width + dx] & 0xff0000) >> 16);
-					int dg = ((dst[dy * dst_width + dx] & 0xff00) >> 8);
-					int db = dst[dy * dst_width + dx] & 0xff;
+					int dr = ((dst[dy * sour_dst_width + dx] & 0xff0000) >> 16);
+					int dg = ((dst[dy * sour_dst_width + dx] & 0xff00) >> 8);
+					int db = dst[dy * sour_dst_width + dx] & 0xff;
 					//应用到目标显存中
-					dst[dy * dst_width + dx] = ((sr + dr * (255 - sa) / 255) << 16)
+					dst[dy * sour_dst_width + dx] = ((sr + dr * (255 - sa) / 255) << 16)
 						| ((sg + dg * (255 - sa) / 255) << 8)
 						| (sb + db * (255 - sa) / 255);
 				}
