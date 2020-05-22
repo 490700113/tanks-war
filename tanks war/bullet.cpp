@@ -164,7 +164,7 @@ void Bullet::recheckval(const Map& map) {
 void Bullet::recheckflag() {
 	//初始化
 	for (int i = 0; i < lcount; i++)
-		for (int j = 0; j < mcount; i++) flag[i][j] = 0;
+		for (int j = 0; j < mcount; j++) flag[i][j] = 0;
 	Direction dir = GetDirection();
 	switch (dir) {
 		case D_UP:

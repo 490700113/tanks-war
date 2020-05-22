@@ -18,8 +18,8 @@ Picture::Picture() {
 	RECT rect;//定义一个矩形
 	GetWindowRect(hWnd, &rect);
 	//设置rect的值
-	rect.left = (scrwidth - rect.right + rect.left) / 2;
-	rect.top = (scrheight - rect.bottom + rect.top) / 3;//原版为3
+	rect.left = (scrwidth - (rect.right - rect.left)) / 2;
+	rect.top = (scrheight - (rect.bottom - rect.top)) / 3;//原版为3
 	//移动窗口到中间
 	SetWindowPos(hWnd, HWND_TOP, rect.left, rect.top, rect.right, rect.bottom, SWP_NOSIZE);
 
@@ -77,8 +77,8 @@ Picture::Picture() {
 Picture::~Picture()
 {
 	//下面这个好像也有点问题
-	EndBatchDraw();//结束批量绘图模式
-	closegraph();//关闭绘图界面
+	//EndBatchDraw();//结束批量绘图模式
+	//closegraph();//关闭绘图界面
 }
 
 /*绘制图片*/
