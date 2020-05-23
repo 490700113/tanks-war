@@ -247,9 +247,16 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 
 void Picture::drawInformation()
 {
-	
+	RECT r = { 15,0,223,15 };
+	drawtext(_T("ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS); 
+	r = { 15,223,223,239 };
+	drawtext(_T("WASD：方向控制\tJ：开火"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	TCHAR gamestr[32] = { 0 };//van游戏的时间
+	ull gametime = time::Gettime() / 1000;
+	_stprintf_s(gamestr, _T("游戏时间：%02ld:%02ld:%02ld"), gametime / (60 * 60), gametime / 60, gametime % 60);
+	r = { 15,0,255,15 };
+	drawtext(gamestr, &r, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 }
-
 
 void Picture::reboompoint() {
 	ull now = time::Gettime();

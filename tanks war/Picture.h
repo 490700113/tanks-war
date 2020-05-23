@@ -30,14 +30,6 @@ private:
 	IMAGE HomePic[Statecount];//家图片
 	IMAGE BoomPic[5];//爆炸图片
 	IMAGE logo;
-	
-	////经过处理的图片：
-	//IMAGE TankPic2[Campcount][Dcount][2];
-	//IMAGE MapPic2[FMcount];
-	//IMAGE BulletPic2[Dcount];
-	//IMAGE HomePic2[Statecount];
-	//IMAGE BoomPic2[5];
-	//IMAGE logo2;
 
 	float bkcolor[3];//背景颜色
 	float chacolor[3];//文字颜色
