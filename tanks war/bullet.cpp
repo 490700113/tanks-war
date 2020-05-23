@@ -92,7 +92,7 @@ bool Bullet::touch(const Map& map) {
 	Direction dir = GetDirection();
 	recheckpoint(map);//计算需要进行体积碰撞判定的点
 	for (int i = 0; i < lcount; i++) {
-		for (int j = 0; j < mcount; i++) {
+		for (int j = 0; j < mcount; j++) {
 			if (checkval[j] > 0 && checkval[j] < Border) {
 				if (flag[i][j])  return true;
 			}

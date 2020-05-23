@@ -21,6 +21,10 @@ void CWindows::Loadgame()
 			{
 				break;
 			}
+			if (button == IDNO)
+			{
+				time::resysclk();
+			}
 		}
 
 		Playgame();
@@ -45,13 +49,13 @@ void CWindows::Playgame()
 			time::resysclk();
 		}
 		controlUnit(*unit, map);//查看是否按下动作键
-		if (unit)
-		{
-			if (unit->to_next())
-			{
-				controlUnit(*unit, map);//查看是否按下动作键
-			}
-		}
+		//if (unit)
+		//{
+		//	if (unit->to_next())
+		//	{
+		//		controlUnit(*unit, map);//查看是否按下动作键
+		//	}
+		//}
 		renewBullet();
 	}
 	cleardevice();//清屏
@@ -64,6 +68,13 @@ void CWindows::renwePicture()
 {
 	pictures.drawMap(map.GetPos());//绘制地图
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
+	if (!bullet.empty())//绘制子弹
+	{
+		for (int i = 0; i < bullet.size(); i++)
+		{
+			pictures.drawBullet(bullet[i]);
+		}
+	}
 	pictures.drawJungle(map.GetPos());//绘制丛林
 }
 
@@ -106,8 +117,8 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
 	{
-		static ull shoot_time = time::Gettime() - bullet_cd;
-		ull now = time::Gettime();
+		static DWORD shoot_time = time::Gettime() - bullet_cd;
+		DWORD now = time::Gettime();
 		if (now - shoot_time >= bullet_cd)
 		{
 			shoot_time = now;
