@@ -169,7 +169,7 @@ bool Unit::to_next()
 {
 	Draw_pos st = GetPosXY();
 	Draw_pos ed = GetEndPosXY();
-	float v = Movespeed;
+	float v = Movespeed / 1000.0f;
 	Direction dir = GetDirection();
 	switch (dir) {//判断是否刷新当前坐标
 		case D_UP:

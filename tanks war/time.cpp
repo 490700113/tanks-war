@@ -1,4 +1,4 @@
-#include"time.h"
+ï»¿#include"time.h"
 LARGE_INTEGER time::clk = { 0 };
 ll time::oldclk = 0;
 int time::freq = 0;
@@ -8,29 +8,29 @@ ll time::gameclk = 0;
 void time::Sleep(int ms) {
 	if (oldclk == 0) {
 		QueryPerformanceCounter(&clk);
-		oldclk = clk.QuadPart;//»ñµÃ¿ªÊ¼Ê±ÖÓ
+		oldclk = clk.QuadPart;//è·å¾—å¼€å§‹æ—¶é’Ÿ
 	}
 	int c = ms * freq;
 	oldclk += c;
 	QueryPerformanceCounter(&clk);
 	if (clk.QuadPart > oldclk) oldclk = clk.QuadPart;
 	else do {
-		::Sleep(1);//ÑÓÊ±
-		QueryPerformanceCounter(&clk);//»ñµÃÖÕÖ¹Ê±ÖÓ
+		::Sleep(1);//å»¶æ—¶
+		QueryPerformanceCounter(&clk);//è·å¾—ç»ˆæ­¢æ—¶é’Ÿ
 	} while (clk.QuadPart < oldclk);
 }
 
 void time::inittimer() {
 	QueryPerformanceFrequency(&clk);
-	freq = (int)clk.QuadPart / 1000;//»ñÈ¡¼ÆÊıÆ÷Ê±ÖÓÆµÂÊ
+	freq = (int)clk.QuadPart / 1000;//è·å–è®¡æ•°å™¨æ—¶é’Ÿé¢‘ç‡
 	resysclk();
 }
 
 void time::GameSleep(int ms) {
 	Sleep(ms);
-	QueryPerformanceCounter(&clk);//Ë¢ĞÂÒ»´ÎÓÎÏ·Êµ¼Ê¾­¹ıµÄÖÜÆÚÊı
+	QueryPerformanceCounter(&clk);//åˆ·æ–°ä¸€æ¬¡æ¸¸æˆå®é™…ç»è¿‡çš„å‘¨æœŸæ•°
 	gameclk += clk.QuadPart - sysclk;
-	resysclk();//ÑÓÊ±ºóË¢ĞÂÒ»´ÎÏµÍ³ÖÜÆÚÊı£¬±ãÓÚÖ®ºóÊ±¼äÍ³¼Æ
+	resysclk();//å»¶æ—¶ååˆ·æ–°ä¸€æ¬¡ç³»ç»Ÿå‘¨æœŸæ•°ï¼Œä¾¿äºä¹‹åæ—¶é—´ç»Ÿè®¡
 }
 
 DWORD time::Gettime() {

@@ -48,15 +48,15 @@ void CWindows::Playgame()
 			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 			time::resysclk();
 		}
-		controlUnit(*unit, map);//查看是否按下动作键
-		//unit = &play1;
-		//if (unit)
-		//{
-		//	if (unit->to_next())
-		//	{
-		//		controlUnit(*unit, map);//查看是否按下动作键
-		//	}
-		//}
+		//controlUnit(*unit, map);//查看是否按下动作键
+		unit = &play1;
+		if (unit)
+		{
+			if (unit->to_next())
+			{
+				controlUnit(*unit, map);//查看是否按下动作键
+			}
+		}
 		renewBullet();
 	}
 	cleardevice();//清屏

@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 #include<Windows.h>
 #define ll long long
 #define ull unsigned long long 
-class time {//ÒÔÏÂ£¨°üÀ¨time.cpp)À´Ô´×Ô»¥ÁªÍø£¬ÒÔÓÃÀ´½â¾öÊ±¼ä»ñÈ¡ÎÊÌâºÍÔİÍ£Ê±Ê±¼ä¼ÆËãµÈÎÊÌâ
+class time {//ä»¥ä¸‹ï¼ˆåŒ…æ‹¬time.cpp)æ¥æºè‡ªäº’è”ç½‘ï¼Œä»¥ç”¨æ¥è§£å†³æ—¶é—´è·å–é—®é¢˜å’Œæš‚åœæ—¶æ—¶é—´è®¡ç®—ç­‰é—®é¢˜
 	private:
-		static LARGE_INTEGER clk;//Ê±ÖÓĞÅÏ¢
-		static ll oldclk;//¿ªÊ¼Ê±ÖÓºÍ½áÊøÊ±ÖÓ
-		static int freq;//Ê±ÖÓÆµÂÊ
-		static ll sysclk;//Ñ­»·¿ªÊ¼Ê±ÒªË¢ĞÂÕâ¸ö±äÁ¿
-		static ll gameclk;//Êµ¼ÊÓÎÏ·¾­¹ıµÄÖÜÆÚÊı£¨ÅÅ³ıÁËÔİÍ£Ê±¼ä£©
+		static LARGE_INTEGER clk;//æ—¶é’Ÿä¿¡æ¯
+		static ll oldclk;//å¼€å§‹æ—¶é’Ÿå’Œç»“æŸæ—¶é’Ÿ
+		static int freq;//æ—¶é’Ÿé¢‘ç‡
+		static ll sysclk;//å¾ªç¯å¼€å§‹æ—¶è¦åˆ·æ–°è¿™ä¸ªå˜é‡
+		static ll gameclk;//å®é™…æ¸¸æˆç»è¿‡çš„å‘¨æœŸæ•°ï¼ˆæ’é™¤äº†æš‚åœæ—¶é—´ï¼‰
 	public:
 		static void Sleep(int ms);
-		static void inittimer();//³õÊ¼»¯Ê±¼ä
-		static void GameSleep(int ms);//ÓÎÏ·×¨ÓÃÑÓ³Ù(²ÎÊıfalse¼´±íÊ¾Ã»ÔİÍ£)
-		static DWORD Gettime();//»ñÈ¡ÏÖÔÚÒÑ¾­¾­¹ıµÄÊ±¼ä
-		static void resysclk();//Ë¢ĞÂÓÎÏ·Ñ­»·¿ªÊ¼Ç°µÄÏµÍ³ÖÜÆÚÊı
+		static void inittimer();//åˆå§‹åŒ–æ—¶é—´
+		static void GameSleep(int ms);//æ¸¸æˆä¸“ç”¨å»¶è¿Ÿ(å‚æ•°falseå³è¡¨ç¤ºæ²¡æš‚åœ)
+		static DWORD Gettime();//è·å–ç°åœ¨å·²ç»ç»è¿‡çš„æ—¶é—´
+		static void resysclk();//åˆ·æ–°æ¸¸æˆå¾ªç¯å¼€å§‹å‰çš„ç³»ç»Ÿå‘¨æœŸæ•°
 };
