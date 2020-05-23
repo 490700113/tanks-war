@@ -120,23 +120,23 @@ bool Unit::move(Direction direction, const Map& map)
 	}
 	SetPosMap(pos_map);
 
-	switch (dir)
+	switch (direction)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
-		if(!touch(map)) u_map.c--;
+		if(!touch(map)) u_map.r--;
 		break;
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
-		if (!touch(map)) u_map.r--;
+		if (!touch(map)) u_map.c--;
 		break;
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
-		if (!touch(map)) u_map.c++;
+		if (!touch(map)) u_map.r++;
 		break;
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
-		if (!touch(map)) u_map.r++;
+		if (!touch(map)) u_map.c++;
 		break;
 	default:
 		break;
