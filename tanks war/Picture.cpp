@@ -9,7 +9,7 @@ Picture::Picture() {
 	//整个标题
 	HWND hWnd = GetHWnd();
 	SetWindowText(hWnd, _T("Tanks War"));
-
+	LOGFONT f;
 	//设置窗口居中
 	//获取屏幕大小
 	int scrwidth = GetSystemMetrics(SM_CXSCREEN);
@@ -18,8 +18,8 @@ Picture::Picture() {
 	RECT rect;//定义一个矩形
 	GetWindowRect(hWnd, &rect);
 	//设置rect的值
-	rect.left = (scrwidth - (rect.right - rect.left)) / 2;
-	rect.top = (scrheight - (rect.bottom - rect.top)) / 3;//原版为3
+	rect.left = (scrwidth - rect.right + rect.left) / 2;
+	rect.top = (scrheight - rect.bottom + rect.top) / 3;//原版为3
 	//移动窗口到中间
 	SetWindowPos(hWnd, HWND_TOP, rect.left, rect.top, rect.right, rect.bottom, SWP_NOSIZE);
 
@@ -72,13 +72,29 @@ Picture::Picture() {
 		getimage(HomePic + i, x, y, sour_unit_px, sour_unit_px);
 	}
 	cleardevice();//清空对象
+
+	//其他设置
+	SetWorkingImage();
+	settextcolor(HSLtoRGB(chacolor[0], chacolor[1],chacolor[2]));
+	gettextstyle(&f);
+	f.lfQuality = ANTIALIASED_QUALITY;
+	f.lfHeight = 8;
+	_tcscpy_s(f.lfFaceName, _T("楷体"));
+	f.lfWeight = FW_BOLD;
+	settextstyle(&f);
+
+	//其它设置
+	srand(timeGetTime());//设置一个随机种子，主要用于特效切换
+	BeginBatchDraw();//开启批量绘图模式
+	setbkmode(TRANSPARENT);//透明背景模式（应用于文字输出等）
+	setaspectratio(multiple_px,multiple_px);//设置绘图缩放因子（会影响到贴图坐标，所以putimage时以素材大小计算坐标）
 }
 
 Picture::~Picture()
 {
 	//下面这个好像也有点问题
-	//EndBatchDraw();//结束批量绘图模式
-	//closegraph();//关闭绘图界面
+	EndBatchDraw();//结束批量绘图模式
+	closegraph();//关闭绘图界面
 }
 
 /*绘制图片*/
@@ -93,8 +109,8 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半�
 	int sour_src_height = srcimg->getheight();
 	//int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
 	//int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
-	int sour_dst_width = (dstimg == NULL ? 768 : dstimg->getwidth());
-	int sour_dst_height = (dstimg == NULL ? 720 : dstimg->getheight());
+	int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
+	int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
 
 	//计算贴图区域的参数
 	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界

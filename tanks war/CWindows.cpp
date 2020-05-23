@@ -21,10 +21,6 @@ void CWindows::Loadgame()
 			{
 				break;
 			}
-			if (button == IDNO)
-			{
-				time::resysclk();
-			}
 		}
 
 		Playgame();
@@ -48,7 +44,7 @@ void CWindows::Playgame()
 			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 			time::resysclk();
 		}
-		//controlUnit(*unit, map);//查看是否按下动作键
+		controlUnit(*unit, map);//查看是否按下动作键
 		if (unit)
 		{
 			if (unit->to_next())
@@ -73,9 +69,9 @@ void CWindows::renwePicture()
 
 void CWindows::renewStart()
 {
-	//RECT rect;//一个矩形
-	//rect = { 0,16 * sour_map_px,sour_window_width - 1,(16 + 3) * sour_map_px - 1 };
-	//drawtext(_T("按F进入坦克！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
+	RECT rect;//一个矩形
+	rect = { 0,16 * sour_map_px,sour_window_width - 1,(16 + 3) * sour_map_px - 1 };
+	drawtext(_T("按F进入坦克！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
 }
 
 void CWindows::controlUnit(Unit& unit, Map& map)

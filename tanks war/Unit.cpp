@@ -71,7 +71,7 @@ float Unit::GetSpeed()const {
 /*控制类函数*/
 bool Unit::move(Direction direction, const Map& map)
 {
-	Draw_pos pos = GetPosXY();
+	//Draw_pos pos = GetPosXY();
 	Direction dir = GetDirection();
 	Map_pos pos_map = GetPosMap();
 	Map_pos u_map = GetPosU();
@@ -124,19 +124,19 @@ bool Unit::move(Direction direction, const Map& map)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
-		if(!touch(map)) pos.y--;
+		if(!touch(map)) u_map.c--;
 		break;
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
-		if (!touch(map)) pos.x--;
+		if (!touch(map)) u_map.r--;
 		break;
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
-		if (!touch(map)) pos.y++;
+		if (!touch(map)) u_map.c++;
 		break;
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
-		if (!touch(map)) pos.x++;
+		if (!touch(map)) u_map.r++;
 		break;
 	default:
 		break;
