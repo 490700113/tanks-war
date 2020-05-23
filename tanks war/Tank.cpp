@@ -1,6 +1,6 @@
 ﻿#include "Tank.h"
 #include"time.h"
-
+#define ul unsigned long 
 Tank::Tank(UnitType type, Map_pos pos, Direction direction)
 	:Unit(type, pos, direction)
 {
@@ -22,8 +22,8 @@ bool Tank::move(Direction direction, const Map& map)//坦克移动
 }
 
 void Tank::retrackstate() {
-	ull renewclock = (ull)(multiple_px) / (Movespeed / 16);
-	ull cur = time::Gettime();
+	DWORD renewclock = (DWORD)(multiple_px) / (Movespeed / 16);
+	DWORD cur = time::Gettime();
 	if (cur - time_Trackdisplay >= renewclock) {
 		time_Trackdisplay = cur;
 		Trackdisplay = !Trackdisplay;

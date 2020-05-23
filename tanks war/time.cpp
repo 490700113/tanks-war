@@ -33,8 +33,8 @@ void time::GameSleep(int ms) {
 	resysclk();//延时后刷新一次系统周期数，便于之后时间统计
 }
 
-ull time::Gettime() {
-	return (ull)gameclk / freq;
+DWORD time::Gettime() {
+	return (DWORD)gameclk / freq;
 }
 
 void time::resysclk() {

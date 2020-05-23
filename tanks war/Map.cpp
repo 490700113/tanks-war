@@ -149,7 +149,7 @@ void Map::DestoryHome()
 	{
 		for (int r = 0; r < 2; r++)
 		{
-			map[Home_pos.r + r][Home_pos.c + c] = Homeover + r + c;
+			map[Home_pos.r + r][Home_pos.c + c] = Home_Die_LU + r + c;
 		}
 	}
 }

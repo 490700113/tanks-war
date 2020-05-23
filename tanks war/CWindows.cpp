@@ -179,7 +179,7 @@ void CWindows::renewBullet()
 {
 	if (!bullet.empty())
 	{
-		for (auto it = bullet.begin(); it != bullet.end(); it++)
+		for (auto it = bullet.begin(); it != bullet.end();)
 		{
 			if (it->to_next())
 			{
@@ -192,9 +192,10 @@ void CWindows::renewBullet()
 					destoryWall(*it);
 					pictures.addboom(it->GetBoomPos());
 					it = bullet.erase(it);
-					it--;
+					continue;
 				}
 			}
+			it++;
 		}
 	}
 }

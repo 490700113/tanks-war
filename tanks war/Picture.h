@@ -16,7 +16,7 @@ const int bigtime = showtime * bigcount;//大爆炸持续的时间
 typedef struct {
 	int picnum;//爆炸点所用贴图数目
 	int time;//爆炸持续时间
-	ull nowtime;//这次爆炸的时间
+	DWORD nowtime;//这次爆炸的时间
 	Draw_pos pos;//爆炸点坐标
 }boomnode;
 

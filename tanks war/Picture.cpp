@@ -5,7 +5,7 @@ Picture::Picture() {
 
 
 	//设置窗口
-	initgraph(window_width, window_height);//定义窗口大小
+	initgraph(window_width, window_height,NOCLOSE);//定义窗口大小
 	//整个标题
 	HWND hWnd = GetHWnd();
 	SetWindowText(hWnd, _T("Tanks War"));
@@ -170,7 +170,7 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 	UnitType type = tank.GetType();//获取类型
 	Direction dir = tank.GetDirection();//获取方向
 	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营
-	half_transimage(NULL, pos.x, pos.y, &TankPic[camp][dir][tank.GetTrackState()]);
+	half_transimage(NULL, (int)pos.x, (int)pos.y, &TankPic[camp][dir][tank.GetTrackState()]);
 }
 
 
@@ -253,7 +253,7 @@ void Picture::drawInformation()
 	drawtext(_T("WASD：方向控制\tJ：开火"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	TCHAR gamestr[32] = { 0 };//van游戏的时间
 	ull gametime = time::Gettime() / 1000;
-	_stprintf_s(gamestr, _T("游戏时间：%02ld:%02ld:%02ld"), gametime / (60 * 60), gametime / 60, gametime % 60);
+	_stprintf_s(gamestr, _T("游戏时间：%02lld:%02lld:%02lld"), gametime / (60 * 60), gametime / 60, gametime % 60);
 	r = { 15,0,255,15 };
 	drawtext(gamestr, &r, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 }
@@ -288,17 +288,17 @@ void Picture::fill(IMAGE& dstimg, const IMAGE& srcimg) {
 void Picture::drawBullet(Bullet& bullet) {
 	const Draw_pos& pos = bullet.GetPosXY();
 	//half_transimage(NULL, pos.x, pos.y, &BulletPic2[bullet.GetDirection()]);
-	half_transimage(NULL, pos.x, pos.y, &BulletPic[bullet.GetDirection()]);
+	half_transimage(NULL, (int)pos.x, (int)pos.y, &BulletPic[bullet.GetDirection()]);
 }
 
 void Picture::drawBoom() {
 	reboompoint();
-	ull now = time::Gettime();
+	DWORD now = time::Gettime();
 	for (auto it = points.begin(); it != points.end(); it++) {
 		int passtime = now - it->nowtime;//获取爆炸贴图已经经过的时间
 		int index = abs(it->picnum - abs(it->time / 2 - passtime) / (it->time / 2 / it->picnum) - 1);
 		//half_transimage(NULL, it->pos.x, it->pos.y, BoomPic2 + index);
-		half_transimage(NULL, it->pos.x, it->pos.y, BoomPic + index);
+		half_transimage(NULL, (int)it->pos.x, (int)it->pos.y, BoomPic + index);
 	}
 }
 

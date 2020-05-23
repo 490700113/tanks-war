@@ -13,6 +13,6 @@ class time {//ÒÔÏÂ£¨°üÀ¨time.cpp)À´Ô´×Ô»¥ÁªÍø£¬ÒÔÓÃÀ´½â¾öÊ±¼ä»ñÈ¡ÎÊÌâºÍÔİÍ£Ê±Ê±¼
 		static void Sleep(int ms);
 		static void inittimer();//³õÊ¼»¯Ê±¼ä
 		static void GameSleep(int ms);//ÓÎÏ·×¨ÓÃÑÓ³Ù(²ÎÊıfalse¼´±íÊ¾Ã»ÔİÍ£)
-		static ull Gettime();//»ñÈ¡ÏÖÔÚÒÑ¾­¾­¹ıµÄÊ±¼ä
+		static DWORD Gettime();//»ñÈ¡ÏÖÔÚÒÑ¾­¾­¹ıµÄÊ±¼ä
 		static void resysclk();//Ë¢ĞÂÓÎÏ·Ñ­»·¿ªÊ¼Ç°µÄÏµÍ³ÖÜÆÚÊı
 };

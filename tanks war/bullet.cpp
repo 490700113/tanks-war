@@ -84,8 +84,8 @@ bool Bullet::move(Direction dir, const Map& map) {
 }
 
 float Bullet::getspeed()const {
-	if (owner == computer) return 3.840;
-	else return 4.840;
+	if (owner == computer) return 3.840f;
+	else return 4.840f;
 }
 
 bool Bullet::touch(const Map& map) {
@@ -120,8 +120,8 @@ const bool(*Bullet::GetTouch() const)[lcount][mcount]{
 
 const Draw_pos Bullet::GetBoomPos()const {
 	Draw_pos pos = GetEndPosXY();
-	pos.x -= 40; //可能有问题
-	pos.y -= 40;
+	pos.x -= 26; //可能有问题
+	pos.y -= 26;
 	int offset[2] = { 0,0 };//坐标偏移，防止爆炸点重合
 	bool flag[2] = { 0,0 };//控制偏移是加法还是减法
 	for (int i = 0; i < 2; i++) {
