@@ -22,7 +22,7 @@ bool Tank::move(Direction direction, const Map& map)//坦克移动
 }
 
 void Tank::retrackstate() {
-	ull renewclock = (ull)(multiple_px) / (GetSpeed() / 16);
+	ull renewclock = (ull)(multiple_px) / (Movespeed / 16);
 	ull cur = time::Gettime();
 	if (cur - time_Trackdisplay >= renewclock) {
 		time_Trackdisplay = cur;

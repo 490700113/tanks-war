@@ -120,7 +120,7 @@ const bool(*Bullet::GetTouch() const)[lcount][mcount]{
 
 const Draw_pos Bullet::GetBoomPos()const {
 	Draw_pos pos = GetEndPosXY();
-	pos.x -= 40;
+	pos.x -= 40; //可能有问题
 	pos.y -= 40;
 	int offset[2] = { 0,0 };//坐标偏移，防止爆炸点重合
 	bool flag[2] = { 0,0 };//控制偏移是加法还是减法

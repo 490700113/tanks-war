@@ -3,10 +3,10 @@
 Unit::Unit(UnitType type, Map_pos pos, Direction direction) 
 	:type(type),pos_rc(pos),dir(direction)
 {
-	posu.r = pos_rc.r / 2;
-	posu.c = pos_rc.c / 2;
-	pos_xy.x = (float)pos_rc.c * map_px;
-	pos_xy.y = (float)pos_rc.r * map_px;
+	posu.r = pos.r * 2;
+	posu.c = pos.c * 2;
+	pos_xy.x = (float)pos.c * map_px;
+	pos_xy.y = (float)pos.r * map_px;
 	pos_xy_end = pos_xy;
 }
 
@@ -64,9 +64,9 @@ const Map_pos& Unit::GetPosU()const {
 	return posu;
 }
 
-float Unit::GetSpeed()const {
-	return 0;//由继承类完成，默认设为0 
-}
+//float Unit::GetSpeed()const {
+//	return 0;//由继承类完成，默认设为0 
+//}
 
 /*控制类函数*/
 bool Unit::move(Direction direction, const Map& map)
@@ -75,6 +75,7 @@ bool Unit::move(Direction direction, const Map& map)
 	Direction dir = GetDirection();
 	Map_pos pos_map = GetPosMap();
 	Map_pos u_map = GetPosU();
+
 	if ((direction - dir) % 2 != 0) {//转90度时，对齐地图坐标
 		switch (dir) {
 			case D_UP:
@@ -168,7 +169,7 @@ bool Unit::to_next()
 {
 	Draw_pos st = GetPosXY();
 	Draw_pos ed = GetEndPosXY();
-	float v = GetSpeed();
+	float v = Movespeed;
 	Direction dir = GetDirection();
 	switch (dir) {//判断是否刷新当前坐标
 		case D_UP:
@@ -207,8 +208,8 @@ bool Unit::to_next()
 }
 bool Unit::touch(const Map& map)const
 {
-	Map_pos r = GetPosMap();
-	Map_pos check[2] = { r,r };
+	Map_pos pos = GetPosMap();
+	Map_pos check[2] = { pos,pos };
 	Direction dir = GetDirection();
 	switch (dir) {
 		case D_UP:

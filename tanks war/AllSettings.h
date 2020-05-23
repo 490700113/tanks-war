@@ -52,7 +52,7 @@ const int max_level = 35;
 /*绘图的坐标*/
 typedef struct
 {
-	int x, y;
+	float x, y;
 }Draw_pos;
 
 //行列坐标

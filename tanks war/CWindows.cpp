@@ -10,7 +10,7 @@ CWindows::CWindows()
 
 void CWindows::Loadgame()
 {
-	renewStart();
+	//renewStart();
 	while (true)
 	{
 		if (KEY_DOWN(K_ESC))//查看是否按下退出键
@@ -49,6 +49,7 @@ void CWindows::Playgame()
 			time::resysclk();
 		}
 		controlUnit(*unit, map);//查看是否按下动作键
+		//unit = &play1;
 		//if (unit)
 		//{
 		//	if (unit->to_next())
@@ -113,6 +114,44 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	{
 		unit.move(key_state, map);//移动坦克
 	}
+
+	//bool key[Dcount] = { 0 };
+	//int num = 0;
+	//if (KEY_DOWN(K_DOWN))
+	//{
+	//	key[D_DOWN] = true;
+	//}
+	//if (KEY_DOWN(K_UP))
+	//{
+	//	key[D_UP] = true;
+	//}
+	//if (KEY_DOWN(K_LEFT))
+	//{
+	//	key[D_LEFT] = true;
+	//}
+	//if (KEY_DOWN(K_RIGHT))
+	//{
+	//	key[D_RIGHT] = true;
+	//}
+	//for (size_t i = 0; i < Dcount; i++)
+	//{
+	//	if (key[i])
+	//	{
+	//		num++;
+	//	}
+	//}
+	//if (num == 1)
+	//{
+	//	size_t i;
+	//	for (i = 0; i < Dcount; i++)//找出被按下的键对应的方向
+	//	{
+	//		if (key[i] == true)
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	unit.move((Direction)i, map);//坦克移动
+	//}
 
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
@@ -196,7 +235,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 				map.DestoryHome();
 
 				//添加爆炸效果
-				Draw_pos boom_pos = { (Home_pos.c - 1) * map_px,(Home_pos.r - 1) * map_px };
+				Draw_pos boom_pos = { (float)(Home_pos.c - 1) * map_px,(float)(Home_pos.r - 1) * map_px };
 				//偏移爆炸点
 				int leave_pos[2] = { 0 };//坐标偏移量
 				int leave_dir[2] = { 0 };//方向偏移量
@@ -207,6 +246,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 				}
 				boom_pos.x += leave_dir[0] * leave_pos[0];
 				boom_pos.y += leave_dir[1] * leave_pos[1];
+				pictures.addboom(boom_pos, true);
 			}
 		}
 	}

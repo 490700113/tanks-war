@@ -31,11 +31,11 @@ public:
 	const Direction& GetDirection()const;//获取方向
 	const Map_pos& GetPosMap()const;//获取地图坐标
 	const Map_pos& GetPosU()const;//获取更加精细的地图坐标
-	virtual float GetSpeed()const;//获取速度
+	//virtual float GetSpeed()const;//获取速度
 
 
 	/*控制类函数*/
-	virtual bool move(Direction direction, const Map& map);//移动函数
+	virtual bool move(Direction direction, const Map& map) = 0;//移动函数
 	virtual bool to_next();//判断能否进行下一步移动
 	virtual bool touch(const Map& map)const;//判断是否有碰撞
 };
