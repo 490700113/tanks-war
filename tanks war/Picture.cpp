@@ -180,20 +180,20 @@ void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 	{
 		for (int r = 0; r < map_col_px; r++) 
 		{
-			char temp = (*map)[c][r];
+			uc temp = (*map)[c][r];
 			switch (temp)
 			{
 			case Wall:
 				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_wall);
 				break;
 			case Iron:
-				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_iron);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_iron);
 				break;
 			case Border:
-				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_border);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_border);
 				break;
 			case Water:
-				putimage(r * sour_map_px, c * sour_map_px, MapPic + +FM_water);
+				putimage(r * sour_map_px, c * sour_map_px, MapPic + FM_water);
 				break;
 			//无冰面
 			//jungle另弄一个弄一个函数,否则坦克会在丛林上面
