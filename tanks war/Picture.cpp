@@ -249,7 +249,7 @@ void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 			}
 		}
 	}
-	drawInformation();
+	//drawInformation();
 }
 
 void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
@@ -267,17 +267,25 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 	}
 }
 
-void Picture::drawInformation()
+void Picture::drawInformation(int l)
 {
-	RECT r = { 15,0,223,15 };
-	drawtext(_T("ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS); 
-	r = { 15,223,223,239 };
-	drawtext(_T("WASD：方向控制\tJ：开火"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	RECT r = { 15,223,223,239 };
+	drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	TCHAR gamestr[32] = { 0 };//van游戏的时间
 	ull gametime = time::Gettime() / 1000;
 	_stprintf_s(gamestr, _T("游戏时间：%02lld:%02lld:%02lld"), gametime / (60 * 60), gametime / 60, gametime % 60);
 	r = { 15,0,255,15 };
 	drawtext(gamestr, &r, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	_stprintf_s(gamestr, _T("第 %lld 关"), l);
+	r = { 15,0,223,15 };
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 25,465,15 };
+	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 40,465,15 };
+	drawtext(_T("敌 人"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 55,465,15 };
+	_stprintf_s(gamestr, _T("%lld"),l);//敌人人数放这
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 }
 
 void Picture::reboompoint() {

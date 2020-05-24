@@ -102,6 +102,7 @@ void CWindows::renwePicture()
 	}
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
+	pictures.drawInformation(Level);
 }
 
 void CWindows::renewStart()
