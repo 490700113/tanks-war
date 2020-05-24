@@ -23,7 +23,7 @@ class Bullet : public Unit{
 		unsigned int getowner()const;//获取子弹所有者
 
 		const Map_pos(*GetCPos() const)[mcount];//获取检查点坐标
-		const char(*GetCVal() const)[mcount];//获取检查点的值
+		const uc(*GetCVal() const)[mcount];//获取检查点的值
 		const bool(*GetTouch() const)[lcount][mcount];//获取地形碰撞标记
 		virtual const Draw_pos GetBoomPos()const;//获取爆炸贴图坐标
 
@@ -35,6 +35,6 @@ class Bullet : public Unit{
 	private:
 		UnitType owner;//谁射♂的
 		Map_pos checkpos[mcount];//检查点坐标
-		char checkval[mcount];//检查点数据
+		uc checkval[mcount];//检查点数据
 		bool flag[lcount][mcount];//地形碰撞标记（炮弹会碰撞两个地图单位，每个地图单位只碰撞一个角落）
 };

@@ -110,7 +110,7 @@ const Map_pos(*Bullet::GetCPos() const)[mcount] {
 	return &checkpos;
 }
 
-const char(*Bullet::GetCVal() const)[mcount] {
+const uc(*Bullet::GetCVal() const)[mcount] {
 	return &checkval;
 }
 

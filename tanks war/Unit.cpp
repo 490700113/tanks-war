@@ -75,7 +75,7 @@ bool Unit::move(Direction direction, const Map& map)
 	Direction dir = GetDirection();
 	Map_pos pos_map = GetPosMap();
 	Map_pos u_map = GetPosU();
-
+	//《神·调试点》在这个点调试这么多次 决定给他一个调试专用点的称号！
 	if ((direction - dir) % 2 != 0) {//转90度时，对齐地图坐标
 		switch (dir) {
 			case D_UP:
@@ -226,6 +226,7 @@ bool Unit::touch(const Map& map)const
 			check[0].r = check[0].r + 2;
 			check[1].r = check[1].r + 2;
 			check[1].c++;
+			break;
 		case D_RIGHT:
 			check[0].c = check[0].c + 2;
 			check[1].c = check[1].c + 2;

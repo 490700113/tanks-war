@@ -77,6 +77,7 @@ void CWindows::renwePicture()
 		}
 	}
 	pictures.drawJungle(map.GetPos());//绘制丛林
+	pictures.drawBoom();//绘制爆炸效果
 }
 
 void CWindows::renewStart()
@@ -206,12 +207,12 @@ void CWindows::destoryWall(const Bullet& bullet)
 	Direction dir = bullet.GetDirection();
 
 	const Map_pos(*pos)[mcount] = bullet.GetCPos();
-	const char(*val)[mcount] = bullet.GetCVal();
+	const uc (*val)[mcount] = bullet.GetCVal();
 	const bool(*flags)[lcount][mcount] = bullet.GetTouch();
 
 	//触碰边界就退出
 	if (map.GetMPos((*pos)[0]) == Border)
-	{
+	{ 
 		return;
 	}
 
@@ -222,7 +223,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 	{
 		for (size_t m = 0; m < 2; m++)//区分两块砖
 		{
-			if ((*val)[m] == Wall)//判断是不是墙
+			if ((*val)[m] > Empty && (*val)[m] <= Border)//判断能否消除
 			{
 				if ((*flags)[l][m] == true)//发生碰撞
 				{
@@ -230,7 +231,7 @@ void CWindows::destoryWall(const Bullet& bullet)
 					map.DestroyMap((*pos)[m], dir, destory);
 				}
 			}
-			if (!home_alive && (*val)[m] >= Home_Live_LU && (*val)[m] <= Home_Live_LU)
+			if (!home_alive && (*val)[m] >= Home_Live_LU && (*val)[m] <= Home_Live_RD)
 			{
 				home_alive = true;
 				map.DestoryHome();
