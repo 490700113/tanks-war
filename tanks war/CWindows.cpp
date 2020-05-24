@@ -48,13 +48,28 @@ void CWindows::Playgame()
 			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 			time::resysclk();
 		}
-		//controlUnit(*unit, map);//查看是否按下动作键
+		//控制玩家
 		unit = &play1;
 		if (unit)
 		{
 			if (unit->to_next())
 			{
 				controlUnit(*unit, map);//查看是否按下动作键
+			}
+		}
+		//控制敌军
+		for (int i = 0; i < armynum; i++)
+		{
+			unit = &army[i];
+			if (unit)
+			{
+				if (unit->to_next())
+				{
+					Direction dir = unit->GetDirection();
+					Direction dir1 = army[i].ai_move(dir, map);
+					bool flag = army[i].ai_shoot(dir1);
+					conrrolArmy(*unit, map, dir1, flag);
+				}
 			}
 		}
 		renewBullet();
@@ -69,6 +84,10 @@ void CWindows::renwePicture()
 {
 	pictures.drawMap(map.GetPos());//绘制地图
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
+	for (int i = 0; i < armynum; i++)
+	{
+		pictures.drawTank(army[i]);//绘制敌人
+	}
 	if (!bullet.empty())//绘制子弹
 	{
 		for (int i = 0; i < bullet.size(); i++)
@@ -129,9 +148,30 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	}
 }
 
+void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
+{
+	if (dir != D_STOP)
+	{
+		unit.move(dir, map);
+	}
+	if (ai_shoot)
+	{
+		static DWORD shoot_time = time::Gettime() - bullet_cd;
+		DWORD now = time::Gettime();
+		if (now - shoot_time >= bullet_cd)
+		{
+			shoot_time = now;
+			shoot(unit);
+		}
+	}
+	//int n = rand() % 20;
+	//if (n == 1)
+	//	shoot(unit);
+}
+
 void CWindows::shoot(const Unit& tank)
 {
-	if (tank.GetType() == player)
+	if (tank.GetType() == player || tank.GetType() == computer)
 	{
 		if (play_bullet >= max_num_bullets) return;
 		play_bullet++;
@@ -148,7 +188,7 @@ void CWindows::renewBullet()
 			{
 				if (it->move(it->GetDirection(), map))//如果子弹有碰撞
 				{
-					if (it->getowner() == player)
+					if (it->getowner() == player || it->getowner() == computer)
 					{
 						play_bullet--;
 					}

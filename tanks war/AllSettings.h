@@ -47,7 +47,8 @@ const int map_size = unit_size / 2;//地图单元大小
 //总地图数
 const int max_level = 35;
 
-
+//敌人数
+const int armynum = 1;
 
 /*绘图的坐标*/
 typedef struct
@@ -115,7 +116,7 @@ enum UnitType
 //方向
 enum Direction//方向
 {
-	D_UP,D_LEFT,D_DOWN,D_RIGHT,Dcount
+	D_UP,D_LEFT,D_DOWN,D_RIGHT,Dcount,D_STOP
 };
 
 //键盘输入

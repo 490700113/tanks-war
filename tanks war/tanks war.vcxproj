@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI_army.h" />
     <ClInclude Include="AllSettings.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="Map.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="CWindows.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AI_army.cpp" />
     <ClCompile Include="AllSettings.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Map.cpp" />

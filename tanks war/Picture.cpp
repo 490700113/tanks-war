@@ -73,6 +73,15 @@ Picture::Picture() {
 	}
 	cleardevice();//清空对象
 
+	//加载爆炸图片
+	loadimage(&tmpe, _T("PNG"), _T("BOOM"), boomcount * sour_boom_px, sour_boom_px, true);
+	for (int i = 0; i < boomcount; i++) {
+		int x = i * sour_boom_px;
+		int y = 0;
+		getimage(BoomPic + i, x, y, sour_boom_px, sour_boom_px);
+	}
+	cleardevice();
+
 	//其他设置
 	SetWorkingImage();
 	settextcolor(HSLtoRGB(chacolor[0], chacolor[1],chacolor[2]));

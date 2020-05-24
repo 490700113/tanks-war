@@ -69,10 +69,6 @@ float Unit::getspeed()const
 	return 0;
 }
 
-//float Unit::GetSpeed()const {
-//	return 0;//由继承类完成，默认设为0 
-//}
-
 /*控制类函数*/
 bool Unit::move(Direction direction, const Map& map)
 {

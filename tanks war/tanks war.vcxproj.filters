@@ -45,6 +45,9 @@
     <ClInclude Include="time.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AI_army.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mian.cpp">
@@ -75,6 +78,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="time.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AI_army.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
