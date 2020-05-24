@@ -64,6 +64,11 @@ const Map_pos& Unit::GetPosU()const {
 	return posu;
 }
 
+float Unit::getspeed()const
+{
+	return 0;
+}
+
 //float Unit::GetSpeed()const {
 //	return 0;//由继承类完成，默认设为0 
 //}
@@ -169,7 +174,8 @@ bool Unit::to_next()
 {
 	Draw_pos st = GetPosXY();
 	Draw_pos ed = GetEndPosXY();
-	float v = Movespeed / 1000.0f;
+	//float v = Movespeed / 1000.0f;
+	float v = getspeed();//用于区分坦克和子弹的速度
 	Direction dir = GetDirection();
 	switch (dir) {//判断是否刷新当前坐标
 		case D_UP:

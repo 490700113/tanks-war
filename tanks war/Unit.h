@@ -31,7 +31,7 @@ public:
 	const Direction& GetDirection()const;//获取方向
 	const Map_pos& GetPosMap()const;//获取地图坐标
 	const Map_pos& GetPosU()const;//获取更加精细的地图坐标
-	//virtual float GetSpeed()const;//获取速度
+	virtual float getspeed()const;//获取速度
 
 
 	/*控制类函数*/

@@ -116,44 +116,6 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		unit.move(key_state, map);//移动坦克
 	}
 
-	//bool key[Dcount] = { 0 };
-	//int num = 0;
-	//if (KEY_DOWN(K_DOWN))
-	//{
-	//	key[D_DOWN] = true;
-	//}
-	//if (KEY_DOWN(K_UP))
-	//{
-	//	key[D_UP] = true;
-	//}
-	//if (KEY_DOWN(K_LEFT))
-	//{
-	//	key[D_LEFT] = true;
-	//}
-	//if (KEY_DOWN(K_RIGHT))
-	//{
-	//	key[D_RIGHT] = true;
-	//}
-	//for (size_t i = 0; i < Dcount; i++)
-	//{
-	//	if (key[i])
-	//	{
-	//		num++;
-	//	}
-	//}
-	//if (num == 1)
-	//{
-	//	size_t i;
-	//	for (i = 0; i < Dcount; i++)//找出被按下的键对应的方向
-	//	{
-	//		if (key[i] == true)
-	//		{
-	//			break;
-	//		}
-	//	}
-	//	unit.move((Direction)i, map);//坦克移动
-	//}
-
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
 	{
