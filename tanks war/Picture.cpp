@@ -179,6 +179,7 @@ void Picture::drawTank(const Tank& tank)//绘制坦克
 	UnitType type = tank.GetType();//获取类型
 	Direction dir = tank.GetDirection();//获取方向
 	TankCamp camp = type == computer ? Tank_computer : Tank_player;//判断阵营
+	//putimage(pos.x * sour_map_px, pos.y * sour_map_px, &TankPic[camp][dir][tank.GetTrackState()]);
 	half_transimage(NULL, (int)pos.x, (int)pos.y, &TankPic[camp][dir][tank.GetTrackState()]);
 }
 
@@ -211,6 +212,7 @@ void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 				break;
 			case Home_Die_LU:
 				half_transimage(NULL, r * map_px, c * map_px, HomePic + Homeover);
+				setHome(false);
 				break;
 			default:
 				break;
@@ -329,3 +331,13 @@ void Picture::addboom(const Draw_pos& pos, bool flag)
 	points.push_back(temp);
 }
 
+/*get函数*/
+bool Picture::getHome()const
+{
+	return home_state;
+}
+/*set函数*/
+void Picture::setHome(const bool setflag)
+{
+	this->home_state = setflag;
+}

@@ -16,10 +16,12 @@ private:
 	Map map;//地图
 	Player play1;//玩家
 	AI_army army[armynum];//敌军
-	vector<Bullet> bullet;
+	vector<Bullet> bullet[armynum+1];
 	int play_bullet;
+	int army_bullet[armynum];
 	const int bullet_cd = 100;
 	
+	int Level = 1;
 	bool game_state;//游戏状态
 
 protected:
@@ -30,12 +32,12 @@ protected:
 	void shoot(const Unit& tank);//射击函数
 	void renewBullet();//更新子弹的状态
 	void destoryWall(const Bullet& bullet);//改变地形
+	void checklevel();//判断关卡状态
 
 public:
 	CWindows();
 
 	void Loadgame();//进入游戏
 	void Playgame();//玩游戏
-
 };
 

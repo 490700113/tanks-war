@@ -8,6 +8,7 @@ CWindows::CWindows()
 	time::inittimer();
 }
 
+
 void CWindows::Loadgame()
 {
 	//renewStart();
@@ -78,22 +79,26 @@ void CWindows::Playgame()
 	//清屏好像有问题
 	renwePicture();//更新图片
 	FlushBatchDraw();//显示
+	checklevel();
 }
 
 void CWindows::renwePicture()
 {
 	pictures.drawMap(map.GetPos());//绘制地图
+	for (int n = 0; n < armynum + 1; n++)
+	{
+		if (!bullet[n].empty())//绘制子弹
+		{
+			for (int i = 0; i < bullet[n].size(); i++)
+			{
+				pictures.drawBullet(bullet[n][i]);
+			}
+		}
+	}
 	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
 	for (int i = 0; i < armynum; i++)
 	{
 		pictures.drawTank(army[i]);//绘制敌人
-	}
-	if (!bullet.empty())//绘制子弹
-	{
-		for (int i = 0; i < bullet.size(); i++)
-		{
-			pictures.drawBullet(bullet[i]);
-		}
 	}
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
@@ -164,41 +169,54 @@ void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 			shoot(unit);
 		}
 	}
-	//int n = rand() % 20;
-	//if (n == 1)
-	//	shoot(unit);
 }
 
 void CWindows::shoot(const Unit& tank)
 {
-	if (tank.GetType() == player || tank.GetType() == computer)
+	if (tank.GetType() == player)
 	{
 		if (play_bullet >= max_num_bullets) return;
 		play_bullet++;
+		bullet[0].push_back(Bullet(tank));
 	}
-	bullet.push_back(Bullet(tank));
+
+	//敌人坦克射击
+
+	if (tank.GetType() == computer)
+	{
+		if (army_bullet[0] >= max_num_bullets) return;
+		army_bullet[0]++;
+		bullet[1].push_back(Bullet(tank));
+	}
 }
 void CWindows::renewBullet()
 {
-	if (!bullet.empty())
+	for (int i = 0; i < armynum + 1; i++)
 	{
-		for (auto it = bullet.begin(); it != bullet.end();)
+		if (!bullet[i].empty())
 		{
-			if (it->to_next())
+			for (auto it = bullet[i].begin(); it != bullet[i].end();)
 			{
-				if (it->move(it->GetDirection(), map))//如果子弹有碰撞
+				if (it->to_next())
 				{
-					if (it->getowner() == player || it->getowner() == computer)
+					if (it->move(it->GetDirection(), map))//如果子弹有碰撞
 					{
-						play_bullet--;
+						if (it->getowner() == player)
+						{
+							play_bullet--;
+						}
+						if (it->getowner() == computer)
+						{
+							army_bullet[i - 1]--;
+						}
+						destoryWall(*it);
+						pictures.addboom(it->GetBoomPos());
+						it = bullet[i].erase(it);
+						continue;
 					}
-					destoryWall(*it);
-					pictures.addboom(it->GetBoomPos());
-					it = bullet.erase(it);
-					continue;
 				}
+				it++;
 			}
-			it++;
 		}
 	}
 }
@@ -254,4 +272,15 @@ void CWindows::destoryWall(const Bullet& bullet)
 			}
 		}
 	}
+}
+
+void CWindows::checklevel()//判断关卡状态
+{
+	if (!pictures.getHome())
+	{
+		map.ChangeLevel(++Level);
+		//显示下一关
+	}
+	//敌人数为0
+	//游戏失败
 }

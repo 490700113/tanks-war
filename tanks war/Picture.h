@@ -35,6 +35,8 @@ private:
 	float chacolor[3];//文字颜色
 	vector<boomnode>points;//爆炸点数据
 
+	bool home_state = true;//家的状态
+
 protected:
 	// 半透明贴图函数
 	// 参数：
@@ -61,5 +63,10 @@ public:
 	void addboom(const Draw_pos& pos, bool flag = false);//新增爆炸点,false小爆炸,true带爆炸
 	//void rebcolor();//变化背景颜色
 	//void reeffect();//转换图片颜色
+
+	/*get函数*/
+	bool getHome()const;
+	/*set函数*/
+	void setHome(const bool setflag);
 };
 
