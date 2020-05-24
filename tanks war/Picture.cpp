@@ -108,70 +108,81 @@ Picture::~Picture()
 
 /*绘制图片*/
 
-
-void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半透明化贴纸
+void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 {
-	//初始化变量
-	DWORD* dst = GetImageBuffer(dstimg);//获取绘画窗口指针
-	DWORD* src = GetImageBuffer(srcimg);//获取图片指针
-	int sour_src_width = srcimg->getwidth();
-	int sour_src_height = srcimg->getheight();
-	//int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
-	//int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
-	int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
-	int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
-
-	//计算贴图区域的参数
-	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界
-	int dst_height = (x + sour_src_height * multiple_px > sour_dst_height) ? sour_dst_height - x : sour_src_height * multiple_px;//处理超出下边界
-	if (x < 0)//处理超出左边界
-	{
-		src += -x / multiple_px;
-		dst_width -= -x;
-		x = 0;
-	}
-	if (y < 0)//处理超出上边界
-	{
-		src += (-y / multiple_px) * sour_src_width;
-		dst_height -= -y;
-		y = 0;
-	}
-	dst += sour_dst_width * y + x;//修正目标贴图区起始位置
-
-	//实现透明贴纸
-	for (int sy = 0; sy < dst_height / multiple_px; sy++)
-	{
-		for (int sx = 0; sx < dst_width / multiple_px; sx++)
-		{
-			/*以下来自网络*/
-			//取出素材数据
-			int sa = ((src[sx] & 0xff000000) >> 24);
-			int sr = ((src[sx] & 0xff0000) >> 16);	// 源值已经乘过了透明系数
-			int sg = ((src[sx] & 0xff00) >> 8);		// 源值已经乘过了透明系数
-			int sb = src[sx] & 0xff;				// 源值已经乘过了透明系数
-			//接下来处理绘图显存，把每个源的像素，扩充到目标绘图区中，放大数倍
-			for (int dy = 0; dy < multiple_px; dy++)//一个像素绘制多行
-			{
-				for (int dx = 0; dx < multiple_px; dx++)//一个像素绘制多列
-				{
-					//计算实际绘图的RGB色
-					int dr = ((dst[dy * sour_dst_width + dx] & 0xff0000) >> 16);
-					int dg = ((dst[dy * sour_dst_width + dx] & 0xff00) >> 8);
-					int db = dst[dy * sour_dst_width + dx] & 0xff;
-					//应用到目标显存中
-					dst[dy * sour_dst_width + dx] = ((sr + dr * (255 - sa) / 255) << 16)
-						| ((sg + dg * (255 - sa) / 255) << 8)
-						| (sb + db * (255 - sa) / 255);
-				}
-			}
-			dst += multiple_px;//修正目标绘图区到下一个位置
-		}
-		//进行下一行的绘制
-		dst += multiple_px * sour_dst_width - dst_width;
-		src += sour_src_width;
-	}
-	
+	HDC dstDC = GetImageHDC(dstimg);
+	HDC srcDC = GetImageHDC(srcimg);
+	int w = srcimg->getwidth();
+	int h = srcimg->getheight();
+	UINT transparentcolor = BLACK;
+	// 使用 Windows GDI 函数实现透明位图
+	TransparentBlt(dstDC, x / multiple_px, y / multiple_px, w, h, srcDC, 0, 0, w, h, transparentcolor);
 }
+
+
+//void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半透明化贴纸
+//{
+//	//初始化变量
+//	DWORD* dst = GetImageBuffer(dstimg);//获取绘画窗口指针
+//	DWORD* src = GetImageBuffer(srcimg);//获取图片指针
+//	int sour_src_width = srcimg->getwidth();
+//	int sour_src_height = srcimg->getheight();
+//	//int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
+//	//int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
+//	int sour_dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
+//	int sour_dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
+//
+//	//计算贴图区域的参数
+//	int dst_width = (x + sour_src_width * multiple_px > sour_dst_width) ? sour_dst_width - x : sour_src_width * multiple_px;//处理超出右边界
+//	int dst_height = (x + sour_src_height * multiple_px > sour_dst_height) ? sour_dst_height - x : sour_src_height * multiple_px;//处理超出下边界
+//	if (x < 0)//处理超出左边界
+//	{
+//		src += -x / multiple_px;
+//		dst_width -= -x;
+//		x = 0;
+//	}
+//	if (y < 0)//处理超出上边界
+//	{
+//		src += (-y / multiple_px) * sour_src_width;
+//		dst_height -= -y;
+//		y = 0;
+//	}
+//	dst += sour_dst_width * y + x;//修正目标贴图区起始位置
+//
+//	//实现透明贴纸
+//	for (int sy = 0; sy < dst_height / multiple_px; sy++)
+//	{
+//		for (int sx = 0; sx < dst_width / multiple_px; sx++)
+//		{
+//			/*以下来自网络*/
+//			//取出素材数据
+//			int sa = ((src[sx] & 0xff000000) >> 24);
+//			int sr = ((src[sx] & 0xff0000) >> 16);	// 源值已经乘过了透明系数
+//			int sg = ((src[sx] & 0xff00) >> 8);		// 源值已经乘过了透明系数
+//			int sb = src[sx] & 0xff;				// 源值已经乘过了透明系数
+//			//接下来处理绘图显存，把每个源的像素，扩充到目标绘图区中，放大数倍
+//			for (int dy = 0; dy < multiple_px; dy++)//一个像素绘制多行
+//			{
+//				for (int dx = 0; dx < multiple_px; dx++)//一个像素绘制多列
+//				{
+//					//计算实际绘图的RGB色
+//					int dr = ((dst[dy * sour_dst_width + dx] & 0xff0000) >> 16);
+//					int dg = ((dst[dy * sour_dst_width + dx] & 0xff00) >> 8);
+//					int db = dst[dy * sour_dst_width + dx] & 0xff;
+//					//应用到目标显存中
+//					dst[dy * sour_dst_width + dx] = ((sr + dr * (255 - sa) / 255) << 16)
+//						| ((sg + dg * (255 - sa) / 255) << 8)
+//						| (sb + db * (255 - sa) / 255);
+//				}
+//			}
+//			dst += multiple_px;//修正目标绘图区到下一个位置
+//		}
+//		//进行下一行的绘制
+//		dst += multiple_px * sour_dst_width - dst_width;
+//		src += sour_src_width;
+//	}
+//	
+//}
 
 void Picture::drawTank(const Tank& tank)//绘制坦克
 {

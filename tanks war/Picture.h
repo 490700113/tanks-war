@@ -43,9 +43,9 @@ protected:
 	//		dstimg：目标 IMAGE（NULL 表示默认窗体）
 	//		x, y:	目标贴图位置
 	//		srcimg: 源 IMAGE 对象指针
-	void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//半透明贴纸
-	//void cheffect(IMAGE* dstimg, IMAGE* srcimg);//修改图片素材的颜色//与变色有关
-	//void drawSea(int x, int y);//不做动态
+	//void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//半透明贴纸
+
+	void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg); 
 	void reboompoint();//刷新爆炸点
 	void fill(IMAGE& dstimg, const IMAGE& srcimg);//用一个图像填充另一个
 

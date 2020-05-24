@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include <math.h>
 #include <graphics.h>
-#pragma comment(lib,"Winmm.lib")
+#include <windows.h>
+#pragma comment(lib, "winmm.lib ")
+#pragma comment(lib,"msimg32.lib")
 
 
 /*宏定义*/

@@ -279,6 +279,7 @@ void CWindows::checklevel()//判断关卡状态
 	if (!pictures.getHome())
 	{
 		map.ChangeLevel(++Level);
+		pictures.setHome(true);
 		//显示下一关
 	}
 	//敌人数为0

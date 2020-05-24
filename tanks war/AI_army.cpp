@@ -11,16 +11,16 @@ Direction AI_army::ai_move(Direction dir, const Map& map)
 {
 	if (dir == D_STOP)//如果处于暂停状态
 	{ 
-		if (!(rand() % 5))
-		{
-			dir = (Direction)(rand() % 4);
-		}
+		//if (!(rand() % 5))
+		//{
+		//	dir = (Direction)(rand() % 4);
+		//}
 	}
 	else
 	{
 		if (!(rand() % 23))
 		{
-			int ran = rand() % 6;
+			int ran = rand() % 8;
 			if (ran > 3)
 			{
 				dir = D_STOP;
