@@ -46,6 +46,7 @@ protected:
 	//void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//半透明贴纸
 
 	void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg); 
+	//void Inf_half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//用于信息描绘
 	void reboompoint();//刷新爆炸点
 	void fill(IMAGE& dstimg, const IMAGE& srcimg);//用一个图像填充另一个
 

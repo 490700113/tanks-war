@@ -119,6 +119,17 @@ void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 	TransparentBlt(dstDC, x / multiple_px, y / multiple_px, w, h, srcDC, 0, 0, w, h, transparentcolor);
 }
 
+//void Picture::Inf_half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
+//{
+//	HDC dstDC = GetImageHDC(dstimg);
+//	HDC srcDC = GetImageHDC(srcimg);
+//	int w = srcimg->getwidth() / 2;
+//	int h = srcimg->getheight() / 2;
+//	UINT transparentcolor = BLACK;
+//	// 使用 Windows GDI 函数实现透明位图
+//	TransparentBlt(dstDC, x / multiple_px, y / multiple_px, w, h, srcDC, 0, 0, w, h, transparentcolor);
+//}
+
 
 //void Picture::half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)//半透明化贴纸
 //{
@@ -286,6 +297,7 @@ void Picture::drawInformation(int l)
 	r = { 15, 55,465,15 };
 	_stprintf_s(gamestr, _T("%lld"),l);//敌人人数放这
 	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	//Inf_half_transimage(NULL, 0, 0, &TankPic[1][2][0]);
 }
 
 void Picture::reboompoint() {
