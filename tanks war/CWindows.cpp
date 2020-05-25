@@ -134,7 +134,7 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	for (it = t.begin(); it != t.end(); it++) {
 		if (*it==mpos) {
 			it = t.erase(it);
-			maptank[mpos.c][mpos.r] = 0;
+			maptank.map2[mpos.c][mpos.r] = 0;
 			break;
 		}
 	}
@@ -164,8 +164,8 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	}
 	mpos = unit.GetPosMap();
 	t.push_back(mpos);//更新坦克位置
-	if (unit.GetType() == computer) maptank[mpos.r][mpos.c] = computer;
-	else if (unit.GetType() == player) maptank[mpos.r][mpos.c] = player;
+	if (unit.GetType() == computer) maptank.map2[mpos.r][mpos.c] = computer;
+	else if (unit.GetType() == player) maptank.map2[mpos.r][mpos.c] = player;
 
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
@@ -318,3 +318,4 @@ void CWindows::checklevel()//判断关卡状态
 
 	}
 }
+

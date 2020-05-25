@@ -1,6 +1,8 @@
 ﻿#include "Unit.h"
 #include"CWindows.h"
 #include"AllSettings.h"
+#include"Map.h"
+
 Unit::Unit(UnitType type, Map_pos pos, Direction direction) 
 	:type(type),pos_rc(pos),dir(direction)
 {
@@ -211,7 +213,7 @@ bool Unit::to_next()
 	}
 	return false;
 }
-bool Unit::touch(const Map& map)const
+bool Unit::touch(const Map& mapp)const
 {
 	Map_pos pos = GetPosMap();
 	Map_pos check[2] = { pos,pos };
@@ -242,41 +244,26 @@ bool Unit::touch(const Map& map)const
 	}
 
 	for (int i = 0; i < 2; i++) {
-		uc cmp = map.GetMPos(check[i]);
+		uc cmp = mapp.GetMPos(check[i]);
 		Map_pos mp = GetPosMap();
-		switch (dir) {
-			case D_UP:
-				if (maptank[mp.r - 1][mp.c]) return true;
-				break;
-			case D_DOWN:
-				if (maptank[mp.r + 1][mp.c]) return true;
-				break;
-			case D_LEFT:
-				if (maptank[mp.r][mp.c - 1]) return true;
-				break;
-			case D_RIGHT:
-				if (maptank[mp.r][mp.c - 1]) return true;
-				break;
-			default:
-				break;
-			}
+		switch (dir){
+		case D_UP:
+			if (mapp.map2[mp.r ][mp.c]) return true;
+			break;
+		case D_DOWN:
+			if (mapp.map2[mp.r ][mp.c])return true;
+			break;
+		case D_LEFT:
+			if (mapp.map2[mp.r][mp.c ]) return true;
+			break;
+		case D_RIGHT:
+			if (mapp.map2[mp.r][mp.c ]) return true;
+			break;
+		default:
+			break;
+		}
+
 		if (type == bullet) {
-			//switch (dir) {
-			//	case D_UP:
-			//		if (maptank[mp.r - 1][mp.c]) return true;
-			//		break;
-			//	case D_DOWN:
-			//		if (maptank[mp.r + 1][mp.c]) return true;
-			//		break;
-			//	case D_LEFT:
-			//		if (maptank[mp.r][mp.c - 1]) return true;
-			//		break;
-			//	case D_RIGHT:
-			//		if (maptank[mp.r][mp.c - 1]) return true;
-			//		break;
-			//	default:
-			//		break;
-			//}
 			if (cmp > Empty && cmp < Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
 		}
 		else if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD||cmp==computer||cmp==player) return true;

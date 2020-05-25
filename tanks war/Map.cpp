@@ -152,6 +152,7 @@ void Map::DestoryHome()
 			map[Home_pos.r + r][Home_pos.c + c] = Home_Die_LU + r + c;
 		}
 	}
+
 }
 
 /*get函数*/
@@ -165,8 +166,17 @@ uc Map::GetMPos(const Map_pos& Mpos)const
 	return map[Mpos.r][Mpos.c];
 }
 
+int Map::GetMPos2(const Map_pos& Mpos)const {
+	return map2[Mpos.r][Mpos.c];
+}
+
 /*set函数*/
 void Map::SetMPos(const Map_pos& Mpos, uc mpos)
 {
 	map[Mpos.r][Mpos.c] = mpos;
+}
+
+void Map::SetMPos2(const Map_pos& Mpos, int mpos)
+{
+	map2[Mpos.r][Mpos.c] = mpos;
 }
