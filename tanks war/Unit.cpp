@@ -1,5 +1,6 @@
 ﻿#include "Unit.h"
-
+#include"CWindows.h"
+#include"AllSettings.h"
 Unit::Unit(UnitType type, Map_pos pos, Direction direction) 
 	:type(type),pos_rc(pos),dir(direction)
 {
@@ -70,7 +71,7 @@ float Unit::getspeed()const
 }
 
 /*控制类函数*/
-bool Unit::move(Direction direction, const Map& map)
+bool Unit::move(Direction direction,const Map& mapp)
 {
 	//Draw_pos pos = GetPosXY();
 	Direction dir = GetDirection();
@@ -126,19 +127,19 @@ bool Unit::move(Direction direction, const Map& map)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
-		if(!touch(map)) u_map.r--;
+		if(!touch(mapp)) u_map.r--;
 		break;
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
-		if (!touch(map)) u_map.c--;
+		if (!touch(mapp)) u_map.c--;
 		break;
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
-		if (!touch(map)) u_map.r++;
+		if (!touch(mapp)) u_map.r++;
 		break;
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
-		if (!touch(map)) u_map.c++;
+		if (!touch(mapp)) u_map.c++;
 		break;
 	default:
 		break;
@@ -163,6 +164,8 @@ bool Unit::move(Direction direction, const Map& map)
 			break;
 	}
 	SetPosMap(pos_map);
+	
+	
 	return false;
 }
 
@@ -240,7 +243,43 @@ bool Unit::touch(const Map& map)const
 
 	for (int i = 0; i < 2; i++) {
 		uc cmp = map.GetMPos(check[i]);
-		if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
+		Map_pos mp = GetPosMap();
+		switch (dir) {
+			case D_UP:
+				if (maptank[mp.r - 1][mp.c]) return true;
+				break;
+			case D_DOWN:
+				if (maptank[mp.r + 1][mp.c]) return true;
+				break;
+			case D_LEFT:
+				if (maptank[mp.r][mp.c - 1]) return true;
+				break;
+			case D_RIGHT:
+				if (maptank[mp.r][mp.c - 1]) return true;
+				break;
+			default:
+				break;
+			}
+		if (type == bullet) {
+			//switch (dir) {
+			//	case D_UP:
+			//		if (maptank[mp.r - 1][mp.c]) return true;
+			//		break;
+			//	case D_DOWN:
+			//		if (maptank[mp.r + 1][mp.c]) return true;
+			//		break;
+			//	case D_LEFT:
+			//		if (maptank[mp.r][mp.c - 1]) return true;
+			//		break;
+			//	case D_RIGHT:
+			//		if (maptank[mp.r][mp.c - 1]) return true;
+			//		break;
+			//	default:
+			//		break;
+			//}
+			if (cmp > Empty && cmp < Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
+		}
+		else if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD||cmp==computer||cmp==player) return true;
 	}
 	return false;
 }

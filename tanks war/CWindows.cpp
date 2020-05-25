@@ -1,5 +1,7 @@
 ﻿#include <iostream>
+#include"map.h"
 #include "CWindows.h"
+#include"Unit.h"
 using namespace std;
 
 CWindows::CWindows()
@@ -28,6 +30,19 @@ void CWindows::Loadgame()
 			}
 		}
 
+		//if (game_state == false) {
+		//	HWND choose = GetHWnd();
+		//	int button = MessageBox(choose, _T("复活？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
+		//	if (button == IDYES) {
+		//		time::resysclk();
+		//		CWindows* playthegame = new CWindows;
+		//		playthegame->Loadgame();
+		//		delete playthegame;	
+		//	}
+		//	if (button == IDNO) {
+		//		break;
+		//	}
+		//}
 		Playgame();
 
 		time::GameSleep(renewtime);
@@ -76,7 +91,6 @@ void CWindows::Playgame()
 		renewBullet();
 	}
 	cleardevice();//清屏
-	//清屏好像有问题
 	renwePicture();//更新图片
 	FlushBatchDraw();//显示
 	checklevel();
@@ -102,7 +116,6 @@ void CWindows::renwePicture()
 	}
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
-	pictures.drawInformation(Level);
 }
 
 void CWindows::renewStart()
@@ -116,6 +129,15 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 {
 	Direction key_state;//保存
 	int flag = 0;
+	Map_pos mpos = unit.GetPosMap();
+	vector<Map_pos>::iterator it;
+	for (it = t.begin(); it != t.end(); it++) {
+		if (*it==mpos) {
+			it = t.erase(it);
+			maptank[mpos.c][mpos.r] = 0;
+			break;
+		}
+	}
 	if (KEY_DOWN(K_UP))
 	{
 		key_state = D_UP;
@@ -140,6 +162,10 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	{
 		unit.move(key_state, map);//移动坦克
 	}
+	mpos = unit.GetPosMap();
+	t.push_back(mpos);//更新坦克位置
+	if (unit.GetType() == computer) maptank[mpos.r][mpos.c] = computer;
+	else if (unit.GetType() == player) maptank[mpos.r][mpos.c] = player;
 
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
@@ -256,6 +282,8 @@ void CWindows::destoryWall(const Bullet& bullet)
 			{
 				home_alive = true;
 				map.DestoryHome();
+				//复活
+				
 
 				//添加爆炸效果
 				Draw_pos boom_pos = { (float)(Home_pos.c - 1) * map_px,(float)(Home_pos.r - 1) * map_px };
@@ -277,12 +305,16 @@ void CWindows::destoryWall(const Bullet& bullet)
 
 void CWindows::checklevel()//判断关卡状态
 {
-	if (!pictures.getHome())
-	{
-		map.ChangeLevel(++Level);
-		pictures.setHome(true);
-		//显示下一关
-	}
+	//if (!pictures.getHome())
+	//{
+	//	map.ChangeLevel(++Level);
+	//	pictures.setHome(true);
+	//	return;
+	//	显示下一关
+	//}
 	//敌人数为0
 	//游戏失败
+	if (!pictures.getHome()) {
+
+	}
 }

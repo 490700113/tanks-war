@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "AllSettings.h"
 #include "Map.h"
-
+#include<vector>
 
 class Unit
 {
@@ -16,6 +16,8 @@ private:
 public:
 	Unit(UnitType type, Map_pos pos, Direction direction);//构造函数
 	virtual ~Unit();//虚析构函数
+	vector<Map_pos>t;//存坦克数组
+	Map maptank;//另开一张图存坦克坐标
 
 	/*set函数*/
 	void SetPosXY(const Draw_pos& pos);//绘图像素点

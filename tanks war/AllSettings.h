@@ -125,7 +125,7 @@ enum Direction//方向
 enum KeyCin
 {
 	K_UP = 'W',K_LEFT = 'A',K_DOWN = 'S',K_RIGHT = 'D',K_SHOOT = 'J',
-	K_PAUSE = 'P',K_ESC = VK_ESCAPE
+	K_PAUSE = 'P',K_ESC = VK_ESCAPE,K_RESURRECT='R'
 };
 
 enum MapNum//地图类型
@@ -149,7 +149,8 @@ enum Destoryunit//破换程度
 	justsoso,//至少还有一点点存在
 	omg//全完了
 };
-
+//vector<Map_pos> t;//存坦克数组
+//Map maptank;//另开一张图存坦克坐标
 
 //以下参考自网络
 /*提取指定模块中的资源文件*/
