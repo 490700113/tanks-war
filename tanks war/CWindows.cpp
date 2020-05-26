@@ -60,6 +60,7 @@ void CWindows::Playgame()
 
 	if (game_state)
 	{
+		//renewBullet();
 		if (KEY_DOWN(K_PAUSE))//查看是否按下暂停键
 		{
 			HWND pause = GetHWnd();
@@ -72,12 +73,14 @@ void CWindows::Playgame()
 		{
 			if (unit->to_next())
 			{
-				controlUnit(*unit, map);//查看是否按下动作键
+				if(play1.life!=0) controlUnit(*unit, map);//查看是否按下动作键
 			}
 		}
+		renewBullet();
 		//控制敌军
 		for (int i = 0; i < armynum; i++)
 		{
+			if (army[i].life == 0) continue;
 			unit = &army[i];
 			if (unit)
 			{
@@ -111,14 +114,15 @@ void CWindows::renwePicture()
 			}
 		}
 	}
-	pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
+	if(play1.life) pictures.drawTank(play1);//绘制坦克，用于绘制所有坦克
 	for (int i = 0; i < armynum; i++)
 	{
-		pictures.drawTank(army[i]);//绘制敌人
+		if(army[i].life) pictures.drawTank(army[i]);//绘制敌人
 	}
+
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
-	pictures.drawInformation(Level);
+	pictures.drawInformation(Level,enemyleft,play1.life);
 }
 
 void CWindows::renewStart()
@@ -268,6 +272,35 @@ void CWindows::renewBullet()
 						{
 							army_bullet[i - 1]--;
 						}
+						Map_pos cmp = (*it).GetPosMap();
+						for (int j = 0; j < t.size(); j++) {
+							if (cmp == t[j]) {
+								map.map2[cmp.r][cmp.c] = 0;
+								vector<Map_pos>::iterator del;
+								for (del = t.begin(); del != t.end(); del++) {
+									Map_pos cmpp = *del;
+									if (cmpp == cmp) {
+										del = t.erase(del);
+										break;
+									}
+								}
+								if (play1.GetPosMap() == cmp) {
+									play1.life--;
+									/*Map_pos a;
+									a.r = 26, a.c = 10;
+									play1.SetPosMap(a);*/
+								}
+								for (int k = 0; k < armynum; k++) {
+									if (army[k].GetPosMap() == cmp) {
+										enemyleft--;
+										army[k].life = false;
+										map.map2[cmp.r][cmp.c] = 0;
+										break;
+									}
+								}
+							}
+						}
+
 						destoryWall(*it);
 						pictures.addboom(it->GetBoomPos());
 						it = bullet[i].erase(it);

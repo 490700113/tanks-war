@@ -260,7 +260,6 @@ void Picture::drawMap(const uc(*map)[map_row_px][map_col_px])//绘制地图
 			}
 		}
 	}
-	//drawInformation();
 }
 
 void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
@@ -278,7 +277,7 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 	}
 }
 
-void Picture::drawInformation(int l)
+void Picture::drawInformation(int l,int left,int life)
 {
 	RECT r = { 15,223,223,239 };
 	drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
@@ -295,7 +294,14 @@ void Picture::drawInformation(int l)
 	r = { 15, 40,465,15 };
 	drawtext(_T("敌 人"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	r = { 15, 55,465,15 };
-	_stprintf_s(gamestr, _T("%lld"),l);//敌人人数放这
+	_stprintf_s(gamestr, _T("%lld"),left);//敌人人数放这
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 85,465,15 };
+	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 100,465,15 };
+	drawtext(_T("生 命"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 115,465,15 };
+	_stprintf_s(gamestr, _T("%lld"), life);//敌人人数放这
 	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	//Inf_half_transimage(NULL, 0, 0, &TankPic[1][2][0]);
 }

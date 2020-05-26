@@ -66,6 +66,7 @@ bool Bullet::move(Direction dir, const Map& map) {
 			break;
 	}
 	SetPosMap(posm);
+	
 	switch (dir) {//开始移动
 		case D_UP:
 			if (!touch(map)) posu.r--;
@@ -92,7 +93,7 @@ float Bullet::getspeed()const {
 	else return 4.840f;
 }
 
-bool Bullet::touch(const Map& map) {
+int Bullet::touch(const Map& map) {
 	Direction dir = GetDirection();
 	recheckpoint(map);//计算需要进行体积碰撞判定的点
 	for (int i = 0; i < lcount; i++) {
@@ -100,29 +101,28 @@ bool Bullet::touch(const Map& map) {
 			if (checkval[j] > 0 && checkval[j] <= Border) {
 				if (flag[i][j])  return true;
 			}
-			if (checkval[j] >= Home_Live_LU && checkval[j] <= Home_Live_RD) return true;
+			if (checkval[j] >= Home_Live_LU && checkval[j] <= Home_Live_RD) return 2;
 		}
 	}
 
 	Map_pos pos = GetPosMap();
-	
+	bool flag = false;
 	switch (dir){
 	case D_UP:
-		if (map.map2[pos.r][pos.c]) return true;
+		if (map.map2[pos.r][pos.c])  flag = 1;
 		break;
 	case D_DOWN:
-		if (map.map2[pos.r][pos.c]) return true;
+		if (map.map2[pos.r][pos.c])  flag = 1;
 		break;
 	case D_LEFT:
-		if (map.map2[pos.r][pos.c]) return true;
+		if (map.map2[pos.r][pos.c])  flag = 1;
 		break;
 	case D_RIGHT:
-		if (map.map2[pos.r][pos.c]) return true;
+		if (map.map2[pos.r][pos.c])  flag = 1;
 		break;
 	default:
 		break;
 	}
-
 	//switch (dir) {
 	//case D_UP:
 	//	if (map.map2[pos.r - 1][pos.c] || map.map2[pos.r - 1][pos.c - 1] || map.map2[pos.r - 1][pos.c + 1]) return true;
@@ -139,7 +139,7 @@ bool Bullet::touch(const Map& map) {
 	//default:
 	//	break;
 	//}
-	return false;
+	return flag;
 }
 
 unsigned int Bullet::getowner()const {

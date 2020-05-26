@@ -20,7 +20,7 @@ private:
 	int play_bullet;
 	int army_bullet[armynum];
 	const int bullet_cd = 100;
-	
+	int enemyleft = 10;
 	int Level = 1;
 	bool game_state;//游戏状态
 

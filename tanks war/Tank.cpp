@@ -6,6 +6,7 @@ Tank::Tank(UnitType type, Map_pos pos, Direction direction)
 {
 	Trackdisplay = false;
 	time_Trackdisplay = 0;
+	life = max_life;
 }
 
 /*get函数*/

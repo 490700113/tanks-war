@@ -2,6 +2,7 @@
 #include"Unit.h"
 #include"AllSettings.h"
 
+
 enum MapLayer {//每块砖看成两层
 	firl, secl, lcount
 };
@@ -19,7 +20,7 @@ class Bullet : public Unit{
 		Bullet(const Unit& tank);
 		virtual bool move(Direction dir, const Map& map);//子弹向前移动，发生地形碰撞就返回true
 		virtual float getspeed()const;//获得移动速度
-		virtual bool touch(const Map& map);//是否碰撞
+		virtual int touch(const Map& map);//是否碰撞
 		unsigned int getowner()const;//获取子弹所有者
 
 		const Map_pos(*GetCPos() const)[mcount];//获取检查点坐标
