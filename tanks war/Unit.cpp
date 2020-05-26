@@ -250,25 +250,43 @@ bool Unit::touch(const Map& mapp)const
 		uc cmp = mapp.GetMPos(check[i]);
 		Map_pos mp = GetPosMap();
 
-		switch (dir){
+
+		switch (dir) {
 		case D_UP:
-			if (mapp.map2[mp.r - 1][mp.c]) return true;
+			if (mapp.map2[mp.r - 2][mp.c] || mapp.map2[mp.r - 2][mp.c - 1] || mapp.map2[mp.r - 2][mp.c + 1]) return true;
 			break;
 		case D_DOWN:
-			if (mapp.map2[mp.r + 1][mp.c])return true;
+			if (mapp.map2[mp.r + 2][mp.c] || mapp.map2[mp.r + 2][mp.c - 1] || mapp.map2[mp.r + 2][mp.c + 1])return true;
 			break;
 		case D_LEFT:
-			if (mapp.map2[mp.r][mp.c - 1]) return true;
+			if (mapp.map2[mp.r][mp.c - 2] || mapp.map2[mp.r - 1][mp.c - 2] || mapp.map2[mp.r + 1][mp.c - 2]) return true;
 			break;
 		case D_RIGHT:
-			if (mapp.map2[mp.r][mp.c + 1]) return true;
+			if (mapp.map2[mp.r][mp.c + 2] || mapp.map2[mp.r - 1][mp.c + 2] || mapp.map2[mp.r + 1][mp.c + 2]) return true;
 			break;
 		default:
 			break;
 		}
 
+		//switch (dir){
+		//case D_UP:
+		//	if (mapp.map2[mp.r - 2][mp.c]) return true;
+		//	break;
+		//case D_DOWN:
+		//	if (mapp.map2[mp.r + 2][mp.c])return true;
+		//	break;
+		//case D_LEFT:
+		//	if (mapp.map2[mp.r][mp.c - 2]) return true;
+		//	break;
+		//case D_RIGHT:
+		//	if (mapp.map2[mp.r][mp.c + 2]) return true;
+		//	break;
+		//default:
+		//	break;
+		//}
+
 		if (type == bullet) {
-			if (cmp > Empty && cmp < Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD) return true;
+			if (cmp > Empty && cmp < Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD || cmp == computer || cmp == player) return true;
 		}
 		else if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD||cmp==computer||cmp==player) return true;
 	}
