@@ -173,7 +173,7 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	for (auto it = t.begin(); it != t.end(); it++) {
 		Map_pos mpos = *it;
 		map.map2[mpos.r][mpos.c] = 1;
-		//map.map2[mpos.r][mpos.c] = 1;
+		map.map2[mpos.r][mpos.c] = 1;
 	}
 	//if (unit.GetType() == computer) map.map2[mpos.r][mpos.c] = computer;
 	//else if (unit.GetType() == player) map.map2[mpos.r][mpos.c] = player;
