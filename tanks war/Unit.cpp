@@ -11,6 +11,9 @@ Unit::Unit(UnitType type, Map_pos pos, Direction direction)
 	pos_xy.x = (float)pos.c * map_px;
 	pos_xy.y = (float)pos.r * map_px;
 	pos_xy_end = pos_xy;
+	if (type == computer || type == player) {
+		
+	}
 }
 
 Unit::~Unit() 
@@ -246,18 +249,19 @@ bool Unit::touch(const Map& mapp)const
 	for (int i = 0; i < 2; i++) {
 		uc cmp = mapp.GetMPos(check[i]);
 		Map_pos mp = GetPosMap();
+
 		switch (dir){
 		case D_UP:
-			if (mapp.map2[mp.r ][mp.c]) return true;
+			if (mapp.map2[mp.r - 1][mp.c]) return true;
 			break;
 		case D_DOWN:
-			if (mapp.map2[mp.r ][mp.c])return true;
+			if (mapp.map2[mp.r + 1][mp.c])return true;
 			break;
 		case D_LEFT:
-			if (mapp.map2[mp.r][mp.c ]) return true;
+			if (mapp.map2[mp.r][mp.c - 1]) return true;
 			break;
 		case D_RIGHT:
-			if (mapp.map2[mp.r][mp.c ]) return true;
+			if (mapp.map2[mp.r][mp.c + 1]) return true;
 			break;
 		default:
 			break;

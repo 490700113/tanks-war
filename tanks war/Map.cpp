@@ -6,6 +6,8 @@ using namespace std;
 
 Map::Map()
 {
+	//map2[2][2] = 1;
+	//map[26][14] = 1;
 	chooseMap();
 }
 

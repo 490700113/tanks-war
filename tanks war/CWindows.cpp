@@ -8,6 +8,8 @@ CWindows::CWindows()
 {
 	game_state = true;
 	time::inittimer();
+	t.push_back({ 2,2 });
+	t.push_back({ 26,14 });
 }
 
 
@@ -134,7 +136,7 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	for (it = t.begin(); it != t.end(); it++) {
 		if (*it==mpos) {
 			it = t.erase(it);
-			maptank.map2[mpos.c][mpos.r] = 0;
+			map.map2[mpos.c][mpos.r] = 0;
 			break;
 		}
 	}
@@ -164,8 +166,17 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	}
 	mpos = unit.GetPosMap();
 	t.push_back(mpos);//更新坦克位置
-	if (unit.GetType() == computer) maptank.map2[mpos.r][mpos.c] = computer;
-	else if (unit.GetType() == player) maptank.map2[mpos.r][mpos.c] = player;
+	for(int i=0;i<30;i++)
+		for (int j = 0; j < 32; j++) {
+			map.map2[i][j] = 0;
+		}
+	for (auto it = t.begin(); it != t.end(); it++) {
+		Map_pos mpos = *it;
+		map.map2[mpos.r][mpos.c] = 1;
+		map.map2[mpos.r][mpos.c] = 1;
+	}
+	//if (unit.GetType() == computer) map.map2[mpos.r][mpos.c] = computer;
+	//else if (unit.GetType() == player) map.map2[mpos.r][mpos.c] = player;
 
 	//发射子弹
 	if (KEY_DOWN(K_SHOOT))
@@ -182,9 +193,29 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 
 void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 {
+	Map_pos mpos = unit.GetPosMap();
+	vector<Map_pos>::iterator it;
+	for (it = t.begin(); it != t.end(); it++) {
+		if (*it == mpos) {
+			it = t.erase(it);
+			map.map2[mpos.c][mpos.r] = 0;
+			break;
+		}
+	}
 	if (dir != D_STOP)
 	{
 		unit.move(dir, map);
+	}
+	mpos = unit.GetPosMap();
+	t.push_back(mpos);//更新坦克位置
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 32; j++) {
+			map.map2[i][j] = 0;
+		}
+	for (auto it = t.begin(); it != t.end(); it++) {
+		Map_pos mpos = *it;
+		map.map2[mpos.r][mpos.c] = 1;
+		map.map2[mpos.r][mpos.c] = 1;
 	}
 	if (ai_shoot)
 	{

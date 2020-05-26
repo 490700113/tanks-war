@@ -37,9 +37,8 @@ protected:
 public:
 	CWindows();
 	vector<Map_pos> t;//存坦克数组
-	Map maptank;//另开一张图存坦克坐标
+	//Map maptank;//另开一张图存坦克坐标
 	void Loadgame();//进入游戏
 	void Playgame();//玩游戏
-	
 };
 
