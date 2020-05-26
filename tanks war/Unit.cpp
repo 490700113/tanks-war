@@ -246,27 +246,25 @@ bool Unit::touch(const Map& mapp)const
 			break;
 	}
 
+	switch (dir) {
+	case D_UP:
+		if (mapp.map2[pos.r - 2][pos.c] || mapp.map2[pos.r - 2][pos.c - 1] || mapp.map2[pos.r - 2][pos.c + 1]) return true;
+		break;
+	case D_DOWN:
+		if (mapp.map2[pos.r + 2][pos.c] || mapp.map2[pos.r + 2][pos.c - 1] || mapp.map2[pos.r + 2][pos.c + 1])return true;
+		break;
+	case D_LEFT:
+		if (mapp.map2[pos.r][pos.c - 2] || mapp.map2[pos.r - 1][pos.c - 2] || mapp.map2[pos.r + 1][pos.c - 2]) return true;
+		break;
+	case D_RIGHT:
+		if (mapp.map2[pos.r][pos.c + 2] || mapp.map2[pos.r - 1][pos.c + 2] || mapp.map2[pos.r + 1][pos.c + 2]) return true;
+		break;
+	default:
+		break;
+	}
+
 	for (int i = 0; i < 2; i++) {
 		uc cmp = mapp.GetMPos(check[i]);
-		Map_pos mp = GetPosMap();
-
-
-		switch (dir) {
-		case D_UP:
-			if (mapp.map2[mp.r - 2][mp.c] || mapp.map2[mp.r - 2][mp.c - 1] || mapp.map2[mp.r - 2][mp.c + 1]) return true;
-			break;
-		case D_DOWN:
-			if (mapp.map2[mp.r + 2][mp.c] || mapp.map2[mp.r + 2][mp.c - 1] || mapp.map2[mp.r + 2][mp.c + 1])return true;
-			break;
-		case D_LEFT:
-			if (mapp.map2[mp.r][mp.c - 2] || mapp.map2[mp.r - 1][mp.c - 2] || mapp.map2[mp.r + 1][mp.c - 2]) return true;
-			break;
-		case D_RIGHT:
-			if (mapp.map2[mp.r][mp.c + 2] || mapp.map2[mp.r - 1][mp.c + 2] || mapp.map2[mp.r + 1][mp.c + 2]) return true;
-			break;
-		default:
-			break;
-		}
 
 		//switch (dir){
 		//case D_UP:

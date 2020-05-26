@@ -8,21 +8,25 @@ Bullet::Bullet(const Unit& tank) :
 	switch (GetDirection()) {
 		case D_UP:
 			unitpos.c++;
+			unitpos.r--;
 			pxpos.x = (float)unitpos.c * half_map_px + half_map_px / 2;
 			break;
 		case D_LEFT:
 			unitpos.r++;
+			unitpos.c--;
 			pxpos.y = (float)unitpos.r * half_map_px + half_map_px / 2;
 			break;
 		case D_DOWN:
 			unitpos.c++;
 			unitpos.r = unitpos.r + 3;
+			unitpos.r++;
 			pxpos.y = (float)unitpos.r * half_map_px + half_map_px / 2;
 			pxpos.x = (float)unitpos.c * half_map_px + half_map_px / 2;
 			break;
 		case D_RIGHT:
 			unitpos.r++;
 			unitpos.c = unitpos.c + 3;
+			unitpos.c++;
 			pxpos.y = (float)unitpos.r * half_map_px + half_map_px / 2;
 			pxpos.x = (float)unitpos.c * half_map_px + half_map_px / 2;
 			break;
@@ -99,6 +103,42 @@ bool Bullet::touch(const Map& map) {
 			if (checkval[j] >= Home_Live_LU && checkval[j] <= Home_Live_RD) return true;
 		}
 	}
+
+	Map_pos pos = GetPosMap();
+	
+	switch (dir){
+	case D_UP:
+		if (map.map2[pos.r][pos.c]) return true;
+		break;
+	case D_DOWN:
+		if (map.map2[pos.r][pos.c]) return true;
+		break;
+	case D_LEFT:
+		if (map.map2[pos.r][pos.c]) return true;
+		break;
+	case D_RIGHT:
+		if (map.map2[pos.r][pos.c]) return true;
+		break;
+	default:
+		break;
+	}
+
+	//switch (dir) {
+	//case D_UP:
+	//	if (map.map2[pos.r - 1][pos.c] || map.map2[pos.r - 1][pos.c - 1] || map.map2[pos.r - 1][pos.c + 1]) return true;
+	//	break;
+	//case D_DOWN:
+	//	if (map.map2[pos.r + 1][pos.c] || map.map2[pos.r + 1][pos.c - 1] || map.map2[pos.r + 1][pos.c + 1])return true;
+	//	break;
+	//case D_LEFT:
+	//	if (map.map2[pos.r][pos.c - 1] || map.map2[pos.r - 1][pos.c - 1] || map.map2[pos.r + 1][pos.c - 1]) return true;
+	//	break;
+	//case D_RIGHT:
+	//	if (map.map2[pos.r][pos.c + 1] || map.map2[pos.r - 1][pos.c + 1] || map.map2[pos.r + 1][pos.c + 1]) return true;
+	//	break;
+	//default:
+	//	break;
+	//}
 	return false;
 }
 
