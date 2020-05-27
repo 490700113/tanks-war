@@ -15,7 +15,9 @@ Unit::Unit(UnitType type, Map_pos pos, Direction direction)
 		
 	}
 }
+Unit::Unit() {
 
+}
 Unit::~Unit() 
 {
 }

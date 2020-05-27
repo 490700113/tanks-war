@@ -2,14 +2,27 @@
 #include"map.h"
 #include "CWindows.h"
 #include"Unit.h"
+#include"Player.h"
+#include"Tank.h"
 using namespace std;
 
 CWindows::CWindows()
 {
 	game_state = false;
 	time::inittimer();
-	t.push_back({ 2,2 });
-	t.push_back({ 26,14 });
+	Map_pos a;
+	a.r = 26, a.c = 10;
+	t[0].type = player;
+	t[0].SetPosMap(a);
+	t[0].life = 3;
+	t[0].SetDirection(D_UP);
+	a.r = 2, a.c = 2;
+	for (int i = 1; i < armynum+1; i++) {
+		t[i].type = player;
+		t[i].SetPosMap(a);
+		t[i].life = 1;
+		t[i].SetDirection(D_DOWN);
+	}
 }
 
 void CWindows::Loadgame()
@@ -206,14 +219,32 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 	Direction key_state;//保存
 	int flag = 0;
 	Map_pos mpos = unit.GetPosMap();
-	vector<Map_pos>::iterator it;
-	for (it = t.begin(); it != t.end(); it++) {
-		if (*it==mpos) {
-			it = t.erase(it);
-			map.map2[mpos.c][mpos.r] = 0;
-			break;
+	for (int i = 0; i < armynum + 1; i++) {
+		if (t[i].GetPosMap() == mpos) {
+			t[i].SetPosMap({ 0,0 });
+			map.map2[mpos.r][mpos.c] = 0;
 		}
 	}
+	//for (int i = 0; i < armynum+1;i++) {
+	//	if (t[i].GetPosMap()==mpos) {
+	//		if (t[i].GetType() == player) {
+	//			t[i].life--;
+	//			Map_pos a;
+	//			a.r = 26, a.c = 10;
+	//			t[i].SetPosMap(a);
+	//			map.map2[26][10] = 1;
+	//		}
+	//		else if (t[i].GetType() == computer) {
+	//			if (armynum < enemyleft) t[i].life = 0;
+	//			Map_pos a;
+	//			a.r = 2, a.c = 2;
+	//			t[i].SetPosMap(a);
+	//			map.map2[2][2] = 1;
+	//		}
+	//		map.map2[mpos.c][mpos.r] = 0;
+	//		break;
+	//	}
+	//}
 	if (KEY_DOWN(K_UP))
 	{
 		key_state = D_UP;
@@ -239,13 +270,13 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		unit.move(key_state, map);//移动坦克
 	}
 	mpos = unit.GetPosMap();
-	t.push_back(mpos);//更新坦克位置
+	t[0].SetPosMap(mpos);
 	for(int i=0;i<30;i++)
 		for (int j = 0; j < 32; j++) {
 			map.map2[i][j] = 0;
 		}
-	for (auto it = t.begin(); it != t.end(); it++) {
-		Map_pos mpos = *it;
+	for (int i=0;i<armynum+1;i++) {
+		Map_pos mpos = t[i].GetPosMap();
 		map.map2[mpos.r][mpos.c] = 1;
 		//map.map2[mpos.r][mpos.c] = 1;
 	}
@@ -268,27 +299,49 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 {
 	Map_pos mpos = unit.GetPosMap();
-	vector<Map_pos>::iterator it;
-	for (it = t.begin(); it != t.end(); it++) {
-		if (*it == mpos) {
-			it = t.erase(it);
+	for (int i = 0; i < armynum + 1; i++) {
+		if (t[i].GetPosMap() == mpos) {
+			t[i].SetPosMap({ 0,0 });
+			map.map2[mpos.r][mpos.c] = 0;
+		}
+	}
+	/*for (int i = 0; i < armynum+1;i++) {
+		if (t[i].GetPosMap() == mpos) {
+			if (t[i].GetType() == player) {
+				Map_pos a;
+				a.r = 26, a.c = 10;
+				t[i].SetPosMap(a);
+				map.map2[26][10] = 1;
+			}
+			else if (t[i].GetType() == computer) {
+				if (armynum < enemyleft) t[i].life = 0;
+				Map_pos a;
+				a.r = 2, a.c = 2;
+				t[i].SetPosMap(a);
+				map.map2[2][2] = 1;
+			}
 			map.map2[mpos.c][mpos.r] = 0;
 			break;
 		}
-	}
+	}*/
 	if (dir != D_STOP)
 	{
 		unit.move(dir, map);
 	}
 	mpos = unit.GetPosMap();
-	t.push_back(mpos);//更新坦克位置
+	Map_pos cmp = { 0,0 };
+	for (int i = 0; i < armynum + 1; i++) {
+		if (t[i].GetPosMap() == cmp) {
+			t[i].SetPosMap(mpos);
+			break;
+		}
+	}
 	for (int i = 0; i < 30; i++)
 		for (int j = 0; j < 32; j++) {
 			map.map2[i][j] = 0;
 		}
-	for (auto it = t.begin(); it != t.end(); it++) {
-		Map_pos mpos = *it;
-		map.map2[mpos.r][mpos.c] = 1;
+	for (int i = 0; i < armynum+1;i++) {
+		Map_pos mpos = t[i].GetPosMap();
 		map.map2[mpos.r][mpos.c] = 1;
 	}
 	if (ai_shoot)
@@ -342,22 +395,32 @@ void CWindows::renewBullet()
 							army_bullet[i - 1]--;
 						}
 						Map_pos cmp = (*it).GetPosMap();
-						for (int j = 0; j < t.size(); j++) {
-							if (cmp == t[j]) {
+						for (int j = 0; j < armynum+1; j++) {
+							if (cmp == t[j].GetPosMap()) {
 								map.map2[cmp.r][cmp.c] = 0;
-								vector<Map_pos>::iterator del;
-								for (del = t.begin(); del != t.end(); del++) {
-									Map_pos cmpp = *del;
+								for (int i = 0; i < armynum+1;i++) {
+									Map_pos cmpp = t[i].GetPosMap();
 									if (cmpp == cmp) {
-										del = t.erase(del);
+										if (t[i].GetType() == player) {
+											Map_pos a;
+											a.r = 26, a.c = 10;
+											t[i].life--;
+											t[i].SetPosMap(a);
+											map.map2[26][10] = 1;
+										}
+										else if (t[i].GetType() == computer) {
+											Map_pos a;
+											a.r = 2, a.c = 2;
+											if (armynum < enemyleft) t[i].life = 0;
+											t[i].SetPosMap(a);
+											map.map2[2][2] = 1;
+										}
 										break;
 									}
 								}
 								if (play1.GetPosMap() == cmp) {
 									play1.life--;
-									/*Map_pos a;
-									a.r = 26, a.c = 10;
-									play1.SetPosMap(a);*/
+									play1.generateplayer();
 								}
 								for (int k = 0; k < armynum; k++) {
 									if (army[k].GetPosMap() == cmp) {

@@ -15,6 +15,7 @@ private:
 	
 public:
 	Unit(UnitType type, Map_pos pos, Direction direction);//构造函数
+	Unit();
 	virtual ~Unit();//虚析构函数
 	friend class CWindows;
 	/*set函数*/

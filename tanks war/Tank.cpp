@@ -9,6 +9,27 @@ Tank::Tank(UnitType type, Map_pos pos, Direction direction)
 	life = max_life;
 }
 
+Tank::Tank() {
+}
+
+//void Tank::generateenemy() {
+//	Map_pos a;
+//	a.r = 2, a.c = 2;
+//	Tank* newtank = new Tank(computer, a, D_DOWN);
+//	return *newtank;
+//}
+
+void Tank::generateplayer() {
+	Map_pos a;
+	a.r = 26, a.c = 10;
+	SetPosMap(a);
+
+}
+
+void deletetank(Tank &t) {
+	t.life = 0;
+}
+
 /*get函数*/
 bool Tank::GetTrackState() const//获取履带状态
 {

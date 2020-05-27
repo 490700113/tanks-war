@@ -11,8 +11,13 @@ private:
 	//int Tankspeed;//记录坦克类的速度
 public:
 	Tank(UnitType type, Map_pos pos, Direction direction = D_DOWN);
+	Tank();
 	int life;
+	void generateenemy();
+	void generateplayer();
+    void deletetank(Tank &t);
 	/*get函数*/
+
 	bool GetTrackState()const;//获取履带状态
 	//int GetTankspeed()const;//获取坦克速度
 	void retrackstate();
