@@ -60,7 +60,9 @@ public:
 	void drawBullet(Bullet& bullet);//绘制子弹
 	void drawBoom();//绘制爆炸
 	void drawInformation(int level,int left,int life);//绘制信息
-	void drawStart(int choosemodel);
+	void drawStart(int choosemodel);//开始信息
+	void fail();//绘制失败页面
+	void win();//绘制成功页面
 	void addboom(const Draw_pos& pos, bool flag = false);//新增爆炸点,false小爆炸,true带爆炸
 	//void rebcolor();//变化背景颜色
 	//void reeffect();//转换图片颜色

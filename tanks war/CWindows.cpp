@@ -448,8 +448,22 @@ void CWindows::checklevel()//判断关卡状态
 	//}
 	//敌人数为0
 	//游戏失败
-	if (!pictures.getHome()) {
-
+	if (!pictures.getHome() || play1.life == 0) {
+		game_state = false;
+		pictures.setHome(true);
+		pictures.fail();
+		FlushBatchDraw();//显示
+		Sleep(1000);
 	}
+	if (armynum == 0)
+	{
+		Level++;
+		Level = Level % max_level + 1;
+		map.ChangeLevel(Level);
+		pictures.win();
+		FlushBatchDraw();//显示
+		Sleep(1000);
+	}
+
 }
 

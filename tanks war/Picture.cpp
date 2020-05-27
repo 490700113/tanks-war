@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <conio.h>
 #include "AllSettings.h"
 #include "Picture.h"
 #include "time.h"
@@ -166,6 +167,24 @@ void Picture::drawInformation(int l, int left, int life)
 	_stprintf_s(gamestr, _T("%lld"), life);//自己人数放这
 	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	//Inf_half_transimage(NULL, 0, 0, &TankPic[1][2][0]);
+}
+
+void Picture::fail()
+{
+	RECT r;
+	r = { 15, 210,223,15 };
+	drawtext(_T("失   败!"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 250,223,15 };
+	drawtext(_T("即将返回主菜单"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+}
+
+void Picture::win()
+{
+	RECT r;
+	r = { 15, 210,223,15 };
+	drawtext(_T("胜   利!"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 250,223,15 };
+	drawtext(_T("即将进入下一关"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 }
 
 Picture::~Picture()
