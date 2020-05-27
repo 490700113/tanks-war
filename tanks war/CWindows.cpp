@@ -6,32 +6,44 @@ using namespace std;
 
 CWindows::CWindows()
 {
-	game_state = true;
+	game_state = false;
 	time::inittimer();
 	t.push_back({ 2,2 });
 	t.push_back({ 26,14 });
 }
 
-
 void CWindows::Loadgame()
 {
-	//renewStart();
 	while (true)
 	{
-		if (KEY_DOWN(K_ESC))//查看是否按下退出键
+		if (!game_state)
 		{
-			HWND esc = GetHWnd();
-			int button = MessageBox(esc, _T("是否要退出游戏？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
-			if (button == IDYES)
+			if (KEY_DOWN(K_ESC))//查看是否按下退出键
 			{
-				break;
-			}
-			if (button == IDNO)
-			{
-				time::resysclk();
+				HWND esc = GetHWnd();
+				int button = MessageBox(esc, _T("是否要退出游戏？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
+				if (button == IDYES)
+				{
+					break;
+				}
+				if (button == IDNO)
+				{
+					time::resysclk();
+				}
 			}
 		}
-
+		else
+		{
+			if (KEY_DOWN(K_ESC))//查看是否按下退出键
+			{
+				HWND esc = GetHWnd();
+				int button = MessageBox(esc, _T("是否要返回主菜单？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
+				if (button == IDYES)
+				{
+					game_state = 0;
+				}
+			}
+		}
 		//if (game_state == false) {
 		//	HWND choose = GetHWnd();
 		//	int button = MessageBox(choose, _T("复活？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
@@ -58,6 +70,8 @@ void CWindows::Playgame()
 	static DWORD pic_time = time::Gettime();
 	DWORD now = time::Gettime();
 
+	cleardevice();//清屏
+
 	if (game_state)
 	{
 		//renewBullet();
@@ -67,6 +81,8 @@ void CWindows::Playgame()
 			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 			time::resysclk();
 		}
+
+
 		//控制玩家
 		unit = &play1;
 		if (unit)
@@ -76,6 +92,7 @@ void CWindows::Playgame()
 				if(play1.life!=0) controlUnit(*unit, map);//查看是否按下动作键
 			}
 		}
+
 		renewBullet();
 		//控制敌军
 		for (int i = 0; i < armynum; i++)
@@ -94,12 +111,71 @@ void CWindows::Playgame()
 			}
 		}
 		renewBullet();
+		renwePicture();//更新图片
+		checklevel();
 	}
-	cleardevice();//清屏
-	renwePicture();//更新图片
+	else
+	{
+		renewStart();
+	}
 	FlushBatchDraw();//显示
-	checklevel();
 }
+
+
+void CWindows::renewStart()
+{
+	if (KEY_DOWN(K_UP))
+	{
+		if (choosemodel > 0)
+		{
+			choosemodel--;
+		}
+	}
+	Sleep(100);
+	if (KEY_DOWN(K_DOWN))
+	{
+		if (choosemodel < 2)
+		{
+			choosemodel++;
+		}
+	}
+	pictures.drawStart(choosemodel);
+	if (KEY_DOWN(K_IN))
+	{
+		if (choosemodel == 0)
+		{
+			canmove = 1;
+			bullet_cd = 100;
+			max_num_bullets = 2;
+			mod = 1;
+			enemyleft = 10;
+			play1.life = 3;
+			map.ChangeLevel(Level);
+		}
+		if (choosemodel == 1)
+		{
+			canmove = 1;
+			bullet_cd = 100;
+			max_num_bullets = 2;
+			mod = 1;//无界模式记得改一下，QAQ
+			enemyleft = 10;
+			play1.life = 3;
+			map.ChangeLevel(Level);
+		}
+		if (choosemodel == 2)
+		{
+			canmove = 0;
+			bullet_cd = 50;
+			max_num_bullets = 10;
+			mod = 1;
+			enemyleft = 10;
+			play1.life = 3;
+			map.ChangeLevel(Level);
+		}
+		game_state = true;
+	}
+}
+
 
 void CWindows::renwePicture()
 {
@@ -123,13 +199,6 @@ void CWindows::renwePicture()
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
 	pictures.drawInformation(Level,enemyleft,play1.life);
-}
-
-void CWindows::renewStart()
-{
-	RECT rect;//一个矩形
-	rect = { 0,16 * sour_map_px,sour_window_width - 1,(16 + 3) * sour_map_px - 1 };
-	drawtext(_T("按F进入坦克！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
 }
 
 void CWindows::controlUnit(Unit& unit, Map& map)
@@ -165,7 +234,7 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		key_state = D_RIGHT;
 		flag++;
 	}
-	if (flag == 1)
+	if (flag == 1 && canmove ==1)
 	{
 		unit.move(key_state, map);//移动坦克
 	}

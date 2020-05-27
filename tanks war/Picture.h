@@ -29,7 +29,7 @@ private:
 	IMAGE BulletPic[Dcount];//子弹图片
 	IMAGE HomePic[Statecount];//家图片
 	IMAGE BoomPic[5];//爆炸图片
-	IMAGE logo;
+	IMAGE StartPic, StartPic1;
 
 	float bkcolor[3];//背景颜色
 	float chacolor[3];//文字颜色
@@ -44,9 +44,8 @@ protected:
 	//		x, y:	目标贴图位置
 	//		srcimg: 源 IMAGE 对象指针
 	//void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//半透明贴纸
-
 	void half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg); 
-	//void Inf_half_transimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//用于信息描绘
+	void fill_image(IMAGE& dstimg, const IMAGE& srcimg);//填充照片
 	void reboompoint();//刷新爆炸点
 	void fill(IMAGE& dstimg, const IMAGE& srcimg);//用一个图像填充另一个
 
@@ -61,6 +60,7 @@ public:
 	void drawBullet(Bullet& bullet);//绘制子弹
 	void drawBoom();//绘制爆炸
 	void drawInformation(int level,int left,int life);//绘制信息
+	void drawStart(int choosemodel);
 	void addboom(const Draw_pos& pos, bool flag = false);//新增爆炸点,false小爆炸,true带爆炸
 	//void rebcolor();//变化背景颜色
 	//void reeffect();//转换图片颜色

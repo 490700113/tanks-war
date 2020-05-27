@@ -1,4 +1,6 @@
-﻿#include "Picture.h"
+﻿#include <iostream>
+#include "AllSettings.h"
+#include "Picture.h"
 #include "time.h"
 #define ull unsigned long long
 Picture::Picture() {
@@ -82,7 +84,26 @@ Picture::Picture() {
 	}
 	cleardevice();
 
-	//其他设置
+	//开始页图案
+	SetWorkingImage(&StartPic);//准备输出文字到该对象
+	cleardevice();
+	settextcolor(WHITE);
+	gettextstyle(&f);                     // 获取当前字体设置
+	f.lfQuality = NONANTIALIASED_QUALITY;    // 设置输出效果为抗锯齿  
+	f.lfHeight = 14 / 2 * sour_map_px;//字体高度
+	_tcscpy_s(f.lfFaceName, _T("楷体"));    // 设置字体为“楷体”
+	f.lfWeight = FW_BOLD;				//粗体
+	settextstyle(&f);
+	Resize(&StartPic, sour_map_px * 28, sour_map_px * 14);//设置logo
+	Resize(&StartPic1, sour_map_px * 28, sour_map_px * 14);//设置logo
+	rect = { 0,0,sour_map_px * 28 - 1, sour_map_px * 14 - 1 };
+	setfillcolor(WHITE);
+	drawtext(_T("Tanks\nWar"), &rect, DT_CENTER);
+	SetWorkingImage(&StartPic1);//准备填充砖块
+	fill_image(StartPic1, MapPic[FM_water]);
+	putimage(0, 0, &StartPic, SRCAND);
+
+	//恢复默认工作区
 	SetWorkingImage();
 	settextcolor(HSLtoRGB(chacolor[0], chacolor[1],chacolor[2]));
 	gettextstyle(&f);
@@ -97,6 +118,54 @@ Picture::Picture() {
 	BeginBatchDraw();//开启批量绘图模式
 	setbkmode(TRANSPARENT);//透明背景模式（应用于文字输出等）
 	setaspectratio(multiple_px,multiple_px);//设置绘图缩放因子（会影响到贴图坐标，所以putimage时以素材大小计算坐标）
+}
+
+void Picture::drawStart(int choosemodel)
+{
+	putimage((map_col_px - 28) / 2 * sour_map_px, 2 * sour_map_px, &StartPic, 0x00220326);//逆波兰表示法：DSna
+	putimage((map_col_px - 28) / 2 * sour_map_px, 2 * sour_map_px, &StartPic1, SRCPAINT);
+	settextcolor(WHITE);
+	TCHAR s1[] = _T("经典模式");
+	outtextxy(14 * sour_map_px, 19 * sour_map_px, s1);
+	TCHAR s2[] = _T("无界模式");
+	outtextxy(14 * sour_map_px, 21 * sour_map_px, s2);
+	TCHAR s3[] = _T("堡垒模式");
+	outtextxy(14 * sour_map_px, 23 * sour_map_px, s3);
+	half_transimage(NULL, 11 * map_px, 18.5 * map_px + 2 * choosemodel * map_px, &TankPic[0][3][0]);
+	//half_transimage(NULL, 15 * map_px, 19 * 2 * choosemodel * map_px, &TankPic[0][3][0]);
+	TCHAR s4[] = _T("按回车进入相应模式");
+	outtextxy(11.5 * sour_map_px, 26 * sour_map_px, s4);
+	TCHAR slast[] = _T("by zjl xrt");
+	outtextxy(13*sour_map_px, 28.5*sour_map_px, slast);
+}
+
+void Picture::drawInformation(int l, int left, int life)
+{
+	RECT r = { 15,223,223,239 };
+	drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	TCHAR gamestr[32] = { 0 };//van游戏的时间
+	ull gametime = time::Gettime() / 1000;
+	_stprintf_s(gamestr, _T("游戏时间：%02lld:%02lld:%02lld"), gametime / (60 * 60), gametime / 60, gametime % 60);
+	r = { 15,0,255,15 };
+	drawtext(gamestr, &r, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	_stprintf_s(gamestr, _T("第 %lld 关"), l);
+	r = { 15,0,223,15 };
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 50,465,15 };
+	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 65,465,15 };
+	drawtext(_T("敌 人"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 80,465,15 };
+	_stprintf_s(gamestr, _T("%lld"), left);//敌人人数放这
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 250,465,15 };
+	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 265,465,15 };
+	drawtext(_T("生 命"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	r = { 15, 280,465,15 };
+	_stprintf_s(gamestr, _T("%lld"), life);//自己人数放这
+	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	//Inf_half_transimage(NULL, 0, 0, &TankPic[1][2][0]);
 }
 
 Picture::~Picture()
@@ -277,35 +346,6 @@ void Picture::drawJungle(const uc(*map)[map_row_px][map_col_px])//绘制丛林
 	}
 }
 
-void Picture::drawInformation(int l,int left,int life)
-{
-	RECT r = { 15,223,223,239 };
-	drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	TCHAR gamestr[32] = { 0 };//van游戏的时间
-	ull gametime = time::Gettime() / 1000;
-	_stprintf_s(gamestr, _T("游戏时间：%02lld:%02lld:%02lld"), gametime / (60 * 60), gametime / 60, gametime % 60);
-	r = { 15,0,255,15 };
-	drawtext(gamestr, &r, DT_RIGHT | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	_stprintf_s(gamestr, _T("第 %lld 关"), l);
-	r = { 15,0,223,15 };
-	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 25,465,15 };
-	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 40,465,15 };
-	drawtext(_T("敌 人"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 55,465,15 };
-	_stprintf_s(gamestr, _T("%lld"),left);//敌人人数放这
-	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 85,465,15 };
-	drawtext(_T("剩 余"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 100,465,15 };
-	drawtext(_T("生 命"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	r = { 15, 115,465,15 };
-	_stprintf_s(gamestr, _T("%lld"), life);//敌人人数放这
-	drawtext(gamestr, &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
-	//Inf_half_transimage(NULL, 0, 0, &TankPic[1][2][0]);
-}
-
 void Picture::reboompoint() {
 	ull now = time::Gettime();
 	for (auto it = points.begin(); it != points.end();) {
@@ -366,6 +406,41 @@ void Picture::addboom(const Draw_pos& pos, bool flag)
 		temp.picnum = smallcount;
 	}
 	points.push_back(temp);
+}
+
+void Picture::fill_image(IMAGE& dstimg, const IMAGE& srcimg)
+{
+	//来自网络
+	//分别获取两张图片的宽高
+	int dst_width = dstimg.getwidth();
+	int dst_height = dstimg.getheight();
+	int src_width = srcimg.getwidth();
+	int src_height = srcimg.getheight();
+	int index;//控制循环上限
+	IMAGE tmp;//保存图片的临时变量
+
+	if (dst_width <= 0 || dst_height <= 0 || src_width <= 0 || src_height <= 0)
+	{
+		//如果图片任一图片宽高为0，直接退出
+		return;
+	}
+
+	Resize(&tmp, dst_width, src_width);
+	SetWorkingImage(&tmp);//设置当前绘图区准备填充
+	index = dst_width % src_width == 0 ? (dst_width / src_width) : (dst_width / src_width + 1);
+	for (int i_col = 0; i_col < index; i_col++)
+	{
+		//先填充一行图像到tmp中
+		putimage(i_col * src_width, 0, &srcimg);
+	}
+
+	SetWorkingImage(&dstimg);//准备将tmp中的内容填充到dstimg
+	index = dst_height % src_height == 0 ? (dst_height / src_height) : (dst_height / src_height + 1);
+	for (int i_row = 0; i_row < index; i_row++)
+	{
+		//把tmp中的内容，看作多行，填充到dstimg
+		putimage(0, i_row * src_height, &tmp);
+	}
 }
 
 /*get函数*/

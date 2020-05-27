@@ -19,10 +19,14 @@ private:
 	vector<Bullet> bullet[armynum+1];
 	int play_bullet;
 	int army_bullet[armynum];
-	const int bullet_cd = 100;
+	int bullet_cd = 100;
 	int enemyleft = 10;
-	int Level = 1;
+	int Level = 1;//关卡数
 	bool game_state;//游戏状态
+	int choosemodel = 0;//模式选择
+	int canmove = 1;//堡垒模式，能否移动
+	int mod = 1;//无界模式，用于边界取模
+	int max_num_bullets = 2;//子弹存在的上限
 
 protected:
 	void renwePicture();//刷新游戏页面
