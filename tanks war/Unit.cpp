@@ -29,7 +29,7 @@ void Unit::rebronset(Map_pos pos, Direction direction)
 	posu.c = pos.c * 2;
 	pos_xy.x = (float)pos.c * map_px;
 	pos_xy.y = (float)pos.r * map_px;
-	//pos_xy_end = pos_xy;
+	pos_xy_end = pos_xy;
 }
 
 /*set函数*/

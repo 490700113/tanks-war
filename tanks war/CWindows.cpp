@@ -359,7 +359,7 @@ void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 		if (now - shoot_time >= bullet_cd)
 		{
 			shoot_time = now;
-			//shoot(unit);
+			shoot(unit);
 		}
 	}
 }
@@ -417,8 +417,8 @@ void CWindows::renewBullet()
 							play1.life--;
 							Map_pos a;
 							a.r = 26, a.c = 10;
-							play1.rebronset(a, D_UP);
-							map.map2[26][10] = 1;
+							play1.rebronset(a, D_DOWN);
+						//	map.map2[26][10] = 1;
 						}
 
 						int last = 0;
@@ -434,8 +434,8 @@ void CWindows::renewBullet()
 								if (enemyleft - last < 0) army[j].life = false;
 								Map_pos a;
 								a.r = 2, a.c = 2;
-								army[i].rebronset(a,D_DOWN);
-								map.map2[2][2] = 1;
+								army[i].rebronset(a,D_UP);
+							//	map.map2[2][2] = 1;
 								break;
 								//for (int i = 0; i < armynum; i++) {
 								//	Map_pos cmpp = army[i].GetPosMap();
