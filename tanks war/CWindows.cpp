@@ -165,6 +165,10 @@ void CWindows::renewStart()
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
+			play1.rebronset({ 26,10 }, D_UP);
+			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
+			map.map2[2][2] = 1;
+			map.map2[26][10] = 1;
 		}
 		if (choosemodel == 1)
 		{
@@ -175,17 +179,25 @@ void CWindows::renewStart()
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
+			play1.rebronset({ 26,10 }, D_UP);
+			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
+			map.map2[2][2] = 1;
+			map.map2[26][10] = 1;
 		}
-		if (choosemodel == 2)
-		{
-			canmove = 0;
-			bullet_cd = 50;
-			max_num_bullets = 10;
-			mod = 1;
-			enemyleft = 10;
-			play1.life = 3;
-			map.ChangeLevel(Level);
-		}
+		//if (choosemodel == 2)
+		//{
+		//	canmove = 0;
+		//	bullet_cd = 50;
+		//	max_num_bullets = 10;
+		//	mod = 1;
+		//	enemyleft = 10;
+		//	play1.life = 3;
+		//	map.ChangeLevel(Level);
+		//	play1.rebronset({ 26,10 }, D_UP);
+		//	for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
+		//	map.map2[2][2] = 1;
+		//	map.map2[26][10] = 1;
+		//}
 		game_state = true;
 	}
 }
