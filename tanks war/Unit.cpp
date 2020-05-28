@@ -11,9 +11,6 @@ Unit::Unit(UnitType type, Map_pos pos, Direction direction)
 	pos_xy.x = (float)pos.c * map_px;
 	pos_xy.y = (float)pos.r * map_px;
 	pos_xy_end = pos_xy;
-	if (type == computer || type == player) {
-		
-	}
 }
 //Unit::Unit() {
 //
@@ -25,6 +22,7 @@ Unit::~Unit()
 void Unit::rebronset(Map_pos pos, Direction direction)
 {
 	dir = direction;
+	pos_rc = pos;
 	posu.r = pos.r * 2;
 	posu.c = pos.c * 2;
 	pos_xy.x = (float)pos.c * map_px;
@@ -295,7 +293,7 @@ bool Unit::touch(const Map& mapp)const
 		//	break;
 		//}
 
-		if (type == bullet) {
+		if (type == bulleet) {
 			if (cmp > Empty && cmp < Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD || cmp == computer || cmp == player) return true;
 		}
 		else if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD||cmp==computer||cmp==player) return true;

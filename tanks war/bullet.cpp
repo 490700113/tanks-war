@@ -1,7 +1,7 @@
 ﻿#include "bullet.h"
 
 Bullet::Bullet(const Unit& tank) :
-	Unit(bullet, tank.GetPosMap(), tank.GetDirection()), owner(tank.GetType()) {
+	Unit(bulleet, tank.GetPosMap(), tank.GetDirection()), owner(tank.GetType()) {
 	Map_pos unitpos = tank.GetPosU();//存修正后的unit坐标（这个函数待补）
 	Draw_pos pxpos = GetPosXY();//存修正后的绘图坐标
 	//下面修正子弹坐标

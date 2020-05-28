@@ -109,7 +109,7 @@ enum HalfWall//用于消除砖块，通过按位与实现
 enum UnitType
 {
 	player = 300,
-	bullet = 500,
+	bulleet = 500,
 	computer = 600,
 	home = 0xC8
 };

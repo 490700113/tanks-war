@@ -123,6 +123,7 @@ void CWindows::Playgame()
 				}
 			}
 		}
+		renwePicture();//更新图片
 		renewBullet();
 		renwePicture();//更新图片
 		checklevel();
@@ -390,6 +391,7 @@ void CWindows::shoot(const Unit& tank)
 		bullet[no].push_back(Bullet(tank));
 	}
 }
+
 void CWindows::renewBullet()
 {
 	for (int i = 0; i < armynum + 1; i++)
@@ -411,14 +413,15 @@ void CWindows::renewBullet()
 							army_bullet[i - 1]--;
 						}
 						Map_pos cmp = (*it).GetPosMap();
-						if (play1.GetPosMap() == cmp)   //碰到我们自己
+						if (play1.GetPosMap() == cmp&&(*it).getowner()!=player)   //碰到我们自己
 						{
 							map.map2[cmp.r][cmp.c] = 0;
 							play1.life--;
 							Map_pos a;
 							a.r = 26, a.c = 10;
 							play1.rebronset(a, D_DOWN);
-						//	map.map2[26][10] = 1;
+							//renwePicture();
+							map.map2[26][10] = 1;
 						}
 
 						int last = 0;
@@ -428,40 +431,20 @@ void CWindows::renewBullet()
 						}
 
 						for (int j = 0; j < armynum; j++) {
-							if (cmp == army[j].GetPosMap()) {
+							if (cmp == army[j].GetPosMap()&&(*it).getowner()!=computer) {
 								map.map2[cmp.r][cmp.c] = 0;
 								enemyleft--;
 								if (enemyleft - last < 0) army[j].life = false;
 								Map_pos a;
 								a.r = 2, a.c = 2;
 								army[i].rebronset(a,D_UP);
-							//	map.map2[2][2] = 1;
+								//renwePicture();
+								map.map2[2][2] = 1;
 								break;
-								//for (int i = 0; i < armynum; i++) {
-								//	Map_pos cmpp = army[i].GetPosMap();
-								//	if (cmpp == cmp) {
-								//		Map_pos a;
-								//		a.r = 2, a.c = 2;
-								//		if (armynum < enemyleft) army[i].life = 0;
-								//		army[i].SetPosMap(a);
-								//		map.map2[2][2] = 1;
-								//		break;
-								//	}
-								//}
-								//if (play1.GetPosMap() == cmp) {
-								//	play1.life--;
-								//	play1.generateplayer();
-								//}
-								//for (int k = 0; k < armynum; k++) {
-								//	if (army[k].GetPosMap() == cmp) {
-								//		enemyleft--;
-								//		army[k].life = false;
-								//		map.map2[cmp.r][cmp.c] = 0;
-								//		break;
-								//	}
-								//}
 							}
 						}
+						long long aaaa;
+						aaaa=bullet[i].size();
 						destoryWall(*it);
 						pictures.addboom(it->GetBoomPos());
 						it = bullet[i].erase(it);
@@ -552,12 +535,14 @@ void CWindows::checklevel()//判断关卡状态
 		enemyleft = 10;
 		play1.life = 3;
 		play1.rebronset({ 26,10 },D_UP);
+		//renwePicture();
 		for (int i = 0; i < armynum; i++)
 		{
 			army[i].life = true;
 		}
 		Level++;
-		Level = Level % max_level + 1;
+		Level = Level % max_level;
+		if (Level == 0) Level = 1;
 		map.ChangeLevel(Level);
 		pictures.win();
 		FlushBatchDraw();//显示
