@@ -227,7 +227,7 @@ void CWindows::renwePicture()
 
 	pictures.drawJungle(map.GetPos());//绘制丛林
 	pictures.drawBoom();//绘制爆炸效果
-	pictures.drawInformation(Level,enemyleft,play1.life);
+	pictures.drawInformation(Level,enemyleft,play1.life,bastion);
 }
 
 void CWindows::controlUnit(Unit& unit, Map& map)

@@ -130,7 +130,7 @@ void Picture::drawStart(int choosemodel)
 	outtextxy(14 * sour_map_px, 19 * sour_map_px, s1);
 	TCHAR s2[] = _T("无界模式");
 	outtextxy(14 * sour_map_px, 21 * sour_map_px, s2);
-	TCHAR s3[] = _T("堡垒模式");
+	TCHAR s3[] = _T("神秘模式");
 	outtextxy(14 * sour_map_px, 23 * sour_map_px, s3);
 	half_transimage(NULL, 11 * map_px, 18.5 * map_px + 2 * choosemodel * map_px, &TankPic[0][3][0]);
 	//half_transimage(NULL, 15 * map_px, 19 * 2 * choosemodel * map_px, &TankPic[0][3][0]);
@@ -140,10 +140,17 @@ void Picture::drawStart(int choosemodel)
 	outtextxy(13*sour_map_px, 28.5*sour_map_px, slast);
 }
 
-void Picture::drawInformation(int l, int left, int life)
+void Picture::drawInformation(int l, int left, int life,int bastion)
 {
 	RECT r = { 15,223,223,239 };
-	drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	if(bastion)
+	{
+		drawtext(_T("WASD：方向控制\tJ：开火    B:切换坦克模式"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	}
+	else
+	{
+		drawtext(_T("WASD：方向控制\tJ：开火    ESC：退出\tP：暂停"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	}
 	TCHAR gamestr[32] = { 0 };//van游戏的时间
 	ull gametime = time::Gettime() / 1000;
 	_stprintf_s(gamestr, _T("游戏时间：%02lld:%02lld:%02lld"), gametime / (60 * 60), gametime / 60, gametime % 60);

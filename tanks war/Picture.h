@@ -59,7 +59,7 @@ public:
 	void drawJungle(const uc(*map)[map_row_px][map_col_px]);//绘制丛林
 	void drawBullet(Bullet& bullet);//绘制子弹
 	void drawBoom();//绘制爆炸
-	void drawInformation(int level,int left,int life);//绘制信息
+	void drawInformation(int level,int left,int life,int bastion);//绘制信息
 	void drawStart(int choosemodel);//开始信息
 	void fail();//绘制失败页面
 	void win();//绘制成功页面
