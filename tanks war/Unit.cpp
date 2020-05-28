@@ -15,11 +15,20 @@ Unit::Unit(UnitType type, Map_pos pos, Direction direction)
 		
 	}
 }
-Unit::Unit() {
-
-}
+//Unit::Unit() {
+//
+//}
 Unit::~Unit() 
 {
+}
+
+void Unit::rebronset(Map_pos pos)
+{
+	posu.r = pos.r * 2;
+	posu.c = pos.c * 2;
+	pos_xy.x = (float)pos.c * map_px;
+	pos_xy.y = (float)pos.r * map_px;
+	pos_xy_end = pos_xy;
 }
 
 /*set函数*/

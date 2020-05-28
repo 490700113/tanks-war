@@ -9,8 +9,8 @@ Tank::Tank(UnitType type, Map_pos pos, Direction direction)
 	life = max_life;
 }
 
-Tank::Tank() {
-}
+//Tank::Tank() {
+//}
 
 //void Tank::generateenemy() {
 //	Map_pos a;

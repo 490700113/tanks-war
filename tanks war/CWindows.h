@@ -40,7 +40,7 @@ protected:
 
 public:
 	CWindows();
-	Tank t[armynum+1];//存坦克数组
+	//Tank army[armynum+1];//存坦克数组
 	//Map maptank;//另开一张图存坦克坐标
 	void Loadgame();//进入游戏
 	void Playgame();//玩游戏

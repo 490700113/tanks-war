@@ -16,6 +16,8 @@ private:
 public:
 	Unit(UnitType type, Map_pos pos, Direction direction);//构造函数
 	Unit();
+	void rebronset(Map_pos pos);//重置出生点
+
 	virtual ~Unit();//虚析构函数
 	friend class CWindows;
 	/*set函数*/
