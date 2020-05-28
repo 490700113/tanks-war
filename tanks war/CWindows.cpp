@@ -306,12 +306,12 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 {
 	Map_pos mpos = unit.GetPosMap();
-	for (int i = 0; i < armynum ; i++) {
-		if (army[i].GetPosMap() == mpos) {
-			army[i].SetPosMap({ 0,0 });
-			map.map2[mpos.r][mpos.c] = 0;
-		}
-	}
+	//for (int i = 0; i < armynum ; i++) {
+	//	if (army[i].GetPosMap() == mpos) {
+	//		army[i].SetPosMap({ 0,0 });
+	//		//map.map2[mpos.r][mpos.c] = 0;
+	//	}
+	//}
 	/*for (int i = 0; i < armynum+1;i++) {
 		if (army[i].GetPosMap() == mpos) {
 			if (army[i].GetType() == player) {
@@ -359,7 +359,7 @@ void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 		if (now - shoot_time >= bullet_cd)
 		{
 			shoot_time = now;
-			shoot(unit);
+			//shoot(unit);
 		}
 	}
 }
@@ -373,20 +373,21 @@ void CWindows::shoot(const Unit& tank)
 		bullet[0].push_back(Bullet(tank));
 	}
 
-	int no;
-	//敌人坦克射击
-	Map_pos pos = tank.GetPosMap();
-	for (no = 0; no < armynum; no++)
-	{
-		if (pos == army[no].GetPosMap())
-			break;
-	}
-
 	if (tank.GetType() == computer)
-	{
+	{	
+		int no;
+		//敌人坦克射击
+		Map_pos pos = tank.GetPosMap();
+		for (no = 0; no < armynum; no++)
+		{
+			if (pos == army[no].GetPosMap())
+				break;
+		}
+
 		if (army_bullet[no] >= max_num_bullets) return;
 		army_bullet[no]++;
-		bullet[no+1].push_back(Bullet(tank));
+		no++;
+		bullet[no].push_back(Bullet(tank));
 	}
 }
 void CWindows::renewBullet()
@@ -416,7 +417,7 @@ void CWindows::renewBullet()
 							play1.life--;
 							Map_pos a;
 							a.r = 26, a.c = 10;
-							play1.rebronset(a);
+							play1.rebronset(a, D_UP);
 							map.map2[26][10] = 1;
 						}
 
@@ -430,11 +431,12 @@ void CWindows::renewBullet()
 							if (cmp == army[j].GetPosMap()) {
 								map.map2[cmp.r][cmp.c] = 0;
 								enemyleft--;
-								if (enemyleft - last <= 0) army[j].life = false;
+								if (enemyleft - last < 0) army[j].life = false;
 								Map_pos a;
 								a.r = 2, a.c = 2;
-								army[i].rebronset(a);
+								army[i].rebronset(a,D_DOWN);
 								map.map2[2][2] = 1;
+								break;
 								//for (int i = 0; i < armynum; i++) {
 								//	Map_pos cmpp = army[i].GetPosMap();
 								//	if (cmpp == cmp) {
@@ -545,8 +547,15 @@ void CWindows::checklevel()//判断关卡状态
 		FlushBatchDraw();//显示
 		Sleep(1000);
 	}
-	if (armynum == 0)
+	if (enemyleft == 0)
 	{
+		enemyleft = 10;
+		play1.life = 3;
+		play1.rebronset({ 26,10 },D_UP);
+		for (int i = 0; i < armynum; i++)
+		{
+			army[i].life = true;
+		}
 		Level++;
 		Level = Level % max_level + 1;
 		map.ChangeLevel(Level);
