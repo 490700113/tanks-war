@@ -158,6 +158,7 @@ void CWindows::renewStart()
 	{
 		if (choosemodel == 0)
 		{
+			bastion = 0;
 			canmove = 1;
 			bullet_cd = 100;
 			max_num_bullets = 2;
@@ -172,6 +173,7 @@ void CWindows::renewStart()
 		}
 		if (choosemodel == 1)
 		{
+			bastion = 0;
 			canmove = 1;
 			bullet_cd = 100;
 			max_num_bullets = 2;
@@ -184,20 +186,21 @@ void CWindows::renewStart()
 			map.map2[2][2] = 1;
 			map.map2[26][10] = 1;
 		}
-		//if (choosemodel == 2)
-		//{
-		//	canmove = 0;
-		//	bullet_cd = 50;
-		//	max_num_bullets = 10;
-		//	mod = 1;
-		//	enemyleft = 10;
-		//	play1.life = 3;
-		//	map.ChangeLevel(Level);
-		//	play1.rebronset({ 26,10 }, D_UP);
-		//	for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
-		//	map.map2[2][2] = 1;
-		//	map.map2[26][10] = 1;
-		//}
+		if (choosemodel == 2)
+		{
+			bastion = 1;
+			canmove = 0;
+			bullet_cd = 50;
+			max_num_bullets = 10;
+			mod = 1;
+			enemyleft = 10;
+			play1.life = 3;
+			map.ChangeLevel(Level);
+			play1.rebronset({ 26,10 }, D_UP);
+			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
+			map.map2[2][2] = 1;
+			map.map2[26][10] = 1;
+		}
 		game_state = true;
 	}
 }
@@ -284,6 +287,23 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		key_state = D_RIGHT;
 		flag++;
 	}
+
+	if (bastion && KEY_DOWN(K_BASTION))
+	{
+		if (canmove)
+		{
+			canmove = 0;
+			bullet_cd = 50;
+			max_num_bullets = 10;
+		}
+		else
+		{
+			canmove = 1;
+			bullet_cd = 100;
+			max_num_bullets = 2;
+		}
+	}
+
 	if (flag == 1 && canmove ==1)
 	{
 		unit.move(key_state, map);//移动坦克

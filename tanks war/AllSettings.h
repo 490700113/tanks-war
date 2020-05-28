@@ -124,7 +124,7 @@ enum Direction//方向
 enum KeyCin
 {
 	K_UP = 'W',K_LEFT = 'A',K_DOWN = 'S',K_RIGHT = 'D',K_SHOOT = 'J',
-	K_PAUSE = 'P',K_ESC = VK_ESCAPE,K_RESURRECT='R', K_IN = VK_RETURN
+	K_PAUSE = 'P', K_BASTION = 'B',K_ESC = VK_ESCAPE,K_RESURRECT='R', K_IN = VK_RETURN
 };
 
 enum MapNum//地图类型
