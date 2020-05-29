@@ -574,6 +574,7 @@ void CWindows::renewalltank()
 	for (int i = 0; i < armynum; i++)
 	{
 		Map_pos a = armypoint[i];
+		army[i].rebronset(a, D_DOWN);
 		map.map2[a.r][a.c] = 1;
 	}
 }
