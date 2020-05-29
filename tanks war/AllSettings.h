@@ -47,7 +47,7 @@ const int bullet_size = unit_size / 2;//子弹单元大小
 const int map_size = unit_size / 2;//地图单元大小
 
 //总地图数
-const int max_level = 35;
+const int max_level = 36;
 
 
 /*绘图的坐标*/
