@@ -146,7 +146,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
 		if (!touch(mapp)) u_map.r--;
-		else if (u_map.r == tempu.r && typee == 1 && !mapp.map[26][u_map.c / 2] && !mapp.map2[26][u_map.c / 2]) {
+		else if (u_map.r == tempu.r && typee == 1 && mapp.map[u_map.r / 2 - 1][u_map.c / 2] == Border && !mapp.map2[26][u_map.c / 2]) {
 			u_map.r = 52;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -158,7 +158,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c--;
-		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][26] && !mapp.map2[u_map.r / 2][26]) {
+		else if (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2][u_map.c / 2 - 1] == Border && !mapp.map2[u_map.r / 2][26]) {
 			u_map.c = 52;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -170,7 +170,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
 		if (!touch(mapp)) u_map.r++;
-		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][2] && !mapp.map2[u_map.r / 2][2]) {
+		else if (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2 + 2][u_map.c / 2] == Border && !mapp.map2[u_map.r / 2][2]) {
 			u_map.r = 4;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -182,7 +182,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c++;
-		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][2] && !mapp.map2[u_map.r / 2][2]) {
+		else if (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2][u_map.c / 2 + 2] == Border && !mapp.map2[u_map.r / 2][2]) {
 			u_map.c = 4;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
