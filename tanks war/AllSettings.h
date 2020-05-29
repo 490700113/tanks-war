@@ -49,8 +49,6 @@ const int map_size = unit_size / 2;//地图单元大小
 //总地图数
 const int max_level = 35;
 
-//敌人数
-const int armynum = 1;
 
 /*绘图的坐标*/
 typedef struct
@@ -65,8 +63,10 @@ typedef struct
 }Map_pos;
 bool operator ==(const Map_pos& a, const Map_pos& b);
 
-/*游戏开始页面显示*/
-
+//出生坐标
+const int max_armynum = 2;
+const Map_pos mypoint = { 26,10 };
+const Map_pos armypoint[3] = { {2,2},{2,26} };
 
 
 /*速率的设置*/

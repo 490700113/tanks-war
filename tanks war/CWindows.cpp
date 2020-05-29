@@ -10,19 +10,10 @@ CWindows::CWindows()
 {
 	game_state = false;
 	time::inittimer();
-	//Map_pos a;
-	//a.r = 26, a.c = 10;
-	//army[0].type = player;
-	//army[0].SetPosMap(a);
-	//army[0].life = 3;
-	//army[0].SetDirection(D_UP);
-	//a.r = 2, a.c = 2;
-	//for (int i = 1; i < armynum+1; i++) {
-	//	army[i].type = player;
-	//	army[i].SetPosMap(a);
-	//	army[i].life = 1;
-	//	army[i].SetDirection(D_DOWN);
-	//}
+	for (int i = 0; i < max_armynum; i++)
+	{
+		army[i].rebronset(armypoint[i],D_DOWN);
+	}
 }
 
 void CWindows::Loadgame()
@@ -158,6 +149,7 @@ void CWindows::renewStart()
 	{
 		if (choosemodel == 0)
 		{
+			armynum = 2;
 			bastion = 0;
 			canmove = 1;
 			bullet_cd = 100;
@@ -166,13 +158,11 @@ void CWindows::renewStart()
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
-			play1.rebronset({ 26,10 }, D_UP);
-			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
-			map.map2[2][2] = 1;
-			map.map2[26][10] = 1;
+			renewalltank();
 		}
 		if (choosemodel == 1)
 		{
+			armynum = 1;
 			bastion = 0;
 			canmove = 1;
 			bullet_cd = 100;
@@ -181,13 +171,11 @@ void CWindows::renewStart()
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
-			play1.rebronset({ 26,10 }, D_UP);
-			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
-			map.map2[2][2] = 1;
-			map.map2[26][10] = 1;
+			renewalltank();
 		}
 		if (choosemodel == 2)
 		{
+			armynum = 2;
 			bastion = 0;
 			canmove = 1;
 			bullet_cd = 100;
@@ -196,10 +184,7 @@ void CWindows::renewStart()
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
-			play1.rebronset({ 26,10 }, D_UP);
-			for (int i = 0; i < armynum; i++) army[i].rebronset({ 2,2 }, D_DOWN);
-			map.map2[2][2] = 1;
-			map.map2[26][10] = 1;
+			renewalltank();
 		}
 		game_state = true;
 	}
@@ -434,7 +419,7 @@ void CWindows::renewBullet()
 			{
 				if (it->to_next())
 				{
-					if (it->move(it->GetDirection(), map))//如果子弹有碰撞
+					if (it->move(it->GetDirection(), map,choosemodel)) //如果子弹有碰撞
 					{
 						if (it->getowner() == player)
 						{
@@ -449,11 +434,9 @@ void CWindows::renewBullet()
 						{
 							map.map2[cmp.r][cmp.c] = 0;
 							play1.life--;
-							Map_pos a;
-							a.r = 26, a.c = 10;
-							play1.rebronset(a, D_DOWN);
+							play1.rebronset(mypoint, D_DOWN);
 							//renwePicture();
-							map.map2[26][10] = 1;
+							map.map2[mypoint.r][mypoint.c] = 1;
 						}
 
 						int last = 0;
@@ -467,11 +450,10 @@ void CWindows::renewBullet()
 								map.map2[cmp.r][cmp.c] = 0;
 								enemyleft--;
 								if (enemyleft - last < 0) army[j].life = false;
-								Map_pos a;
-								a.r = 2, a.c = 2;
-								army[i].rebronset(a,D_UP);
+								Map_pos a = armypoint[j];
+								army[j].rebronset(a,D_UP);
 								//renwePicture();
-								map.map2[2][2] = 1;
+								map.map2[a.r][a.c] = 1;
 								break;
 							}
 						}
@@ -561,10 +543,7 @@ void CWindows::checklevel()//判断关卡状态
 		pictures.fail();
 		Level = 1;
 		map.ChangeLevel(Level);
-		for (int i = 0; i < 30; i++)
-			for (int j = 0; j < 32; j++) map.map2[i][j] = 0;
-		map.map2[2][2] = 1;
-		map.map2[26][10] = 1;
+		renewalltank();
 		FlushBatchDraw();//显示
 		Sleep(1000);
 	}
@@ -572,12 +551,7 @@ void CWindows::checklevel()//判断关卡状态
 	{
 		enemyleft = 10;
 		play1.life = 3;
-		play1.rebronset({ 26,10 },D_UP);
-		//renwePicture();
-		for (int i = 0; i < armynum; i++)
-		{
-			army[i].life = true;
-		}
+		renewalltank();
 		Level++;
 		Level = Level % max_level;
 		if (Level == 0) Level = 1;
@@ -585,10 +559,21 @@ void CWindows::checklevel()//判断关卡状态
 		pictures.win();
 		FlushBatchDraw();//显示
 		Sleep(1000);
-		for (int i = 0; i < 30; i++)
-			for (int j = 0; j < 32; j++) map.map2[i][j] = 0;
-		map.map2[2][2] = 1;
-		map.map2[26][10] = 1;
 	}
 }
 
+void CWindows::renewalltank()
+{
+	play1.rebronset(mypoint, D_UP);
+	for (int i = 0; i < armynum; i++)
+	{
+		army[i].life = true;
+	}
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 32; j++) map.map2[i][j] = 0;
+	for (int i = 0; i < armynum; i++)
+	{
+		Map_pos a = armypoint[i];
+		map.map2[a.r][a.c] = 1;
+	}
+}

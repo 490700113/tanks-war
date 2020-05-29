@@ -12,13 +12,14 @@
 class CWindows
 {
 private:
+	int armynum = 2;
 	Picture pictures;//图像
 	Map map;//地图
 	Player play1;//玩家
-	AI_army army[armynum];//敌军
-	vector<Bullet> bullet[armynum+1];
+	AI_army army[max_armynum];//敌军
+	vector<Bullet> bullet[max_armynum+1];
 	int play_bullet;
-	int army_bullet[armynum];
+	int army_bullet[max_armynum];
 	int bullet_cd = 100;
 	int enemyleft = 10;
 	int Level = 1;//关卡数
@@ -38,6 +39,7 @@ protected:
 	void renewBullet();//更新子弹的状态
 	void destoryWall(const Bullet& bullet);//改变地形
 	void checklevel();//判断关卡状态
+	void renewalltank();//更新坦克位置
 
 public:
 	CWindows();
