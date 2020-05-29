@@ -22,7 +22,7 @@ public:
 	//int GetTankspeed()const;//获取坦克速度
 	void retrackstate();
 	/*控制函数*/
-	virtual bool move(Direction direction, const Map& map);//坦克移动
+	virtual bool move(Direction direction, const Map& map,int type);//坦克移动
 
 };
 

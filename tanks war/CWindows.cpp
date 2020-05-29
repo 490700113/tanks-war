@@ -177,7 +177,7 @@ void CWindows::renewStart()
 			canmove = 1;
 			bullet_cd = 100;
 			max_num_bullets = 2;
-			mod = 1;//无界模式记得改一下，QAQ
+			mod = 1;
 			enemyleft = 10;
 			play1.life = 3;
 			map.ChangeLevel(Level);
@@ -188,10 +188,10 @@ void CWindows::renewStart()
 		}
 		if (choosemodel == 2)
 		{
-			bastion = 1;
-			canmove = 0;
-			bullet_cd = 50;
-			max_num_bullets = 10;
+			bastion = 0;
+			canmove = 1;
+			bullet_cd = 100;
+			max_num_bullets = 6;
 			mod = 1;
 			enemyleft = 10;
 			play1.life = 3;
@@ -293,8 +293,8 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		if (canmove)
 		{
 			canmove = 0;
-			bullet_cd = 50;
-			max_num_bullets = 10;
+			bullet_cd = 100;
+			max_num_bullets = 6;
 		}
 		else
 		{
@@ -306,7 +306,7 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 
 	if (flag == 1 && canmove ==1)
 	{
-		unit.move(key_state, map);//移动坦克
+		unit.move(key_state, map,choosemodel);//移动坦克
 	}
 	map.map2[mpos.r][mpos.c] = 0;
 	mpos = unit.GetPosMap();
@@ -366,7 +366,7 @@ void CWindows::conrrolArmy(Unit& unit, Map& map,Direction dir, bool ai_shoot)
 	}*/
 	if (dir != D_STOP)
 	{
-		unit.move(dir, map);
+		unit.move(dir, map,choosemodel);
 	}
 	map.map2[mpos.r][mpos.c] = 0;
 	mpos = unit.GetPosMap();
@@ -559,6 +559,12 @@ void CWindows::checklevel()//判断关卡状态
 		game_state = false;
 		pictures.setHome(true);
 		pictures.fail();
+		Level = 1;
+		map.ChangeLevel(Level);
+		for (int i = 0; i < 30; i++)
+			for (int j = 0; j < 32; j++) map.map2[i][j] = 0;
+		map.map2[2][2] = 1;
+		map.map2[26][10] = 1;
 		FlushBatchDraw();//显示
 		Sleep(1000);
 	}
@@ -579,7 +585,10 @@ void CWindows::checklevel()//判断关卡状态
 		pictures.win();
 		FlushBatchDraw();//显示
 		Sleep(1000);
+		for (int i = 0; i < 30; i++)
+			for (int j = 0; j < 32; j++) map.map2[i][j] = 0;
+		map.map2[2][2] = 1;
+		map.map2[26][10] = 1;
 	}
-
 }
 

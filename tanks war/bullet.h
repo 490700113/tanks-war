@@ -18,7 +18,7 @@ enum corner {//每块砖分为4个角落
 class Bullet : public Unit{
 	public:
 		Bullet(const Unit& tank);
-		virtual bool move(Direction dir, const Map& map);//子弹向前移动，发生地形碰撞就返回true
+		virtual bool move(Direction dir, const Map& map,int type=0);//子弹向前移动，发生地形碰撞就返回true
 		virtual float getspeed()const;//获得移动速度
 		virtual int touch(const Map& map);//是否碰撞
 		unsigned int getowner()const;//获取子弹所有者

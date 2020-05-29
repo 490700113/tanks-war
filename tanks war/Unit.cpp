@@ -86,12 +86,13 @@ float Unit::getspeed()const
 }
 
 /*控制类函数*/
-bool Unit::move(Direction direction,const Map& mapp)
+bool Unit::move(Direction direction,const Map& mapp,int typee)
 {
 	//Draw_pos pos = GetPosXY();
 	Direction dir = GetDirection();
 	Map_pos pos_map = GetPosMap();
 	Map_pos u_map = GetPosU();
+	Map_pos tempp = pos_map, tempu = u_map;
 	//《神·调试点》在这个点调试这么多次 决定给他一个调试专用点的称号！
 	if ((direction - dir) % 2 != 0) {//转90度时，对齐地图坐标
 		switch (dir) {
@@ -119,6 +120,7 @@ bool Unit::move(Direction direction,const Map& mapp)
 		SetPosMap(pos_map);
 		SetPosXY(GetEndPosXY());
 	}
+	tempp = pos_map, tempu = u_map;
 
 	switch (direction) {//根据移动方向再修正一次位置
 		case D_UP:
@@ -137,28 +139,62 @@ bool Unit::move(Direction direction,const Map& mapp)
 			break;
 	}
 	SetPosMap(pos_map);
+	tempp = pos_map, tempu = u_map;
 
 	switch (direction)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
-		if(!touch(mapp)) u_map.r--;
+		if (!touch(mapp)) u_map.r--;
+		else if (u_map.r == tempu.r && typee == 1 && !mapp.map[26][u_map.c / 2] && !mapp.map2[26][u_map.c / 2]) {
+			u_map.r = 52;
+			pos_map.r = u_map.r / 2;
+			pos_map.c = u_map.c / 2;
+			SetPosU(u_map);
+			SetPosMap(pos_map);
+			SetPosXY(GetEndPosXY());
+		}
 		break;
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c--;
+		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][26] && !mapp.map2[u_map.r / 2][26]) {
+			u_map.c = 52;
+			pos_map.r = u_map.r / 2;
+			pos_map.c = u_map.c / 2;
+			SetPosU(u_map);
+			SetPosMap(pos_map);
+			SetPosXY(GetEndPosXY());
+		}
 		break;
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
 		if (!touch(mapp)) u_map.r++;
+		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][2] && !mapp.map2[u_map.r / 2][2]) {
+			u_map.r = 4;
+			pos_map.r = u_map.r / 2;
+			pos_map.c = u_map.c / 2;
+			SetPosU(u_map);
+			SetPosMap(pos_map);
+			SetPosXY(GetEndPosXY());
+		}
 		break;
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c++;
+		else if (u_map.c == tempu.c && typee == 1 && !mapp.map[u_map.r / 2][2] && !mapp.map2[u_map.r / 2][2]) {
+			u_map.c = 4;
+			pos_map.r = u_map.r / 2;
+			pos_map.c = u_map.c / 2;
+			SetPosU(u_map);
+			SetPosMap(pos_map);
+			SetPosXY(GetEndPosXY());
+		}
 		break;
 	default:
 		break;
 	}
+
 	if(u_map==GetPosU()) return true;//有碰撞
 	SetPosU(u_map);
 	dir = GetDirection();
@@ -179,8 +215,7 @@ bool Unit::move(Direction direction,const Map& mapp)
 			break;
 	}
 	SetPosMap(pos_map);
-	
-	
+	//SetPosXY(GetEndPosXY());
 	return false;
 }
 

@@ -46,7 +46,7 @@ Bullet::Bullet(const Unit& tank) :
 	}
 }
 
-bool Bullet::move(Direction dir, const Map& map) {
+bool Bullet::move(Direction dir, const Map& map,int type) {
 	Map_pos posu = GetPosU();
 	Map_pos posm = GetPosMap();
 	switch (dir) {//修正posm
@@ -66,7 +66,6 @@ bool Bullet::move(Direction dir, const Map& map) {
 			break;
 	}
 	SetPosMap(posm);
-	
 	switch (dir) {//开始移动
 		case D_UP:
 			if (!touch(map)) posu.r--;

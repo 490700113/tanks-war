@@ -37,10 +37,10 @@ bool Tank::GetTrackState() const//获取履带状态
 }
 
 /*控制函数*/
-bool Tank::move(Direction direction, const Map& map)//坦克移动
+bool Tank::move(Direction direction, const Map& map,int typee)//坦克移动
 {
 	retrackstate();
-	return Unit::move(direction, map);
+	return Unit::move(direction, map,typee);
 }
 
 void Tank::retrackstate() {
