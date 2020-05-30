@@ -84,6 +84,10 @@ void CWindows::Playgame()
 			HWND pause = GetHWnd();
 			int button = MessageBox(pause, _T("是否要继续游戏？"), _T("继续游戏"), MB_YESNO | MB_ICONQUESTION);
 			time::resysclk();
+			if (button == IDNO)
+			{
+				game_state = false;
+			}
 		}
 
 
@@ -176,7 +180,7 @@ void CWindows::renewStart()
 		if (choosemodel == 2)
 		{
 			armynum = 2;
-			bastion = 0;
+			bastion = 1;
 			canmove = 1;
 			bullet_cd = 100;
 			max_num_bullets = 6;
@@ -272,6 +276,11 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		key_state = D_RIGHT;
 		flag++;
 	}
+	if (flag == 1 && canmove ==1)
+	{
+		unit.move(key_state, map,choosemodel);//移动坦克
+	}
+
 
 	if (bastion && KEY_DOWN(K_BASTION))
 	{
@@ -289,10 +298,6 @@ void CWindows::controlUnit(Unit& unit, Map& map)
 		}
 	}
 
-	if (flag == 1 && canmove ==1)
-	{
-		unit.move(key_state, map,choosemodel);//移动坦克
-	}
 	map.map2[mpos.r][mpos.c] = 0;
 	mpos = unit.GetPosMap();
 	play1.SetPosMap(mpos);
