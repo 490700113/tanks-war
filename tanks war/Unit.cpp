@@ -141,12 +141,13 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	SetPosMap(pos_map);
 	tempp = pos_map, tempu = u_map;
 
+
 	switch (direction)
 	{
 	case D_UP:
 		SetDirection(D_UP);//修改坦克朝向
 		if (!touch(mapp)) u_map.r--;
-		else if (u_map.c / 2 != 12 && u_map.c / 2 != 13 && u_map.c / 2 != 14 && u_map.c / 2  != 15 && u_map.c / 2 != 16  && u_map.r == tempu.r && typee == 1 && mapp.map[u_map.r / 2 - 1][u_map.c / 2] == Border && !mapp.map2[26][u_map.c / 2]) {
+		else if (typee == 1 && u_map.r == tempu.r && mapp.map[u_map.r / 2 - 1][u_map.c / 2] == Border &&  noborder(mapp,D_UP,u_map)) {
 			u_map.r = 52;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -158,7 +159,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_LEFT:
 		SetDirection(D_LEFT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c--;
-		else if (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2][u_map.c / 2 - 1] == Border && !mapp.map2[u_map.r / 2][26]) {
+		else if (typee == 1 && u_map.c == tempu.c && mapp.map[u_map.r / 2][u_map.c / 2 - 1] == Border && noborder(mapp, D_LEFT, u_map)) {
 			u_map.c = 52;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -170,7 +171,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_DOWN:
 		SetDirection(D_DOWN);//修改坦克朝向
 		if (!touch(mapp)) u_map.r++;
-		else if ((typee == 1 && u_map.r / 2 == 26) || (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2 + 2][u_map.c / 2] == Border && !mapp.map2[u_map.r / 2][2])) {
+		else if (typee == 1 && u_map.c == tempu.c && mapp.map[u_map.r / 2 + 2][u_map.c / 2] == Border && noborder(mapp, D_DOWN, u_map)) {
 			u_map.r = 4;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -182,7 +183,7 @@ bool Unit::move(Direction direction,const Map& mapp,int typee)
 	case D_RIGHT:
 		SetDirection(D_RIGHT);//修改坦克朝向
 		if (!touch(mapp)) u_map.c++;
-		else if (u_map.c == tempu.c && typee == 1 && mapp.map[u_map.r / 2][u_map.c / 2 + 2] == Border && !mapp.map2[u_map.r / 2][2]) {
+		else if (typee == 1 && mapp.map[u_map.r / 2][u_map.c / 2 + 2] == Border && u_map.c == tempu.c && noborder(mapp, D_RIGHT, u_map)) {
 			u_map.c = 4;
 			pos_map.r = u_map.r / 2;
 			pos_map.c = u_map.c / 2;
@@ -334,4 +335,38 @@ bool Unit::touch(const Map& mapp)const
 		else if (cmp > Empty && cmp <= Water || cmp >= Home_Live_LU && cmp <= Home_Die_RD||cmp==computer||cmp==player) return true;
 	}
 	return false;
+}
+
+
+bool Unit::noborder(const Map& mapp, Direction dir, Map_pos u_map)
+{
+	if (dir == D_UP)
+	{
+		if ((mapp.map[27][u_map.c / 2] > Empty && mapp.map[27][u_map.c / 2] <= Water) || (mapp.map[27][u_map.c / 2 + 1] > Empty && mapp.map[27][u_map.c / 2 + 1] <= Water)) return false;
+		if ((mapp.map[26][u_map.c / 2] > Empty && mapp.map[26][u_map.c / 2] <= Water) || (mapp.map[26][u_map.c / 2 + 1] > Empty && mapp.map[26][u_map.c / 2 + 1] <= Water)) return false;
+		if (mapp.map[27][u_map.c / 2] >= Home_Live_LU && mapp.map[27][u_map.c / 2] <= Home_Die_RD) return false;
+		if (mapp.map2[26][u_map.c / 2] || mapp.map2[26][u_map.c / 2 - 1] || mapp.map2[26][u_map.c / 2 + 1]) return false;
+	}
+	if (dir == D_LEFT)
+	{
+		if ((mapp.map[u_map.r / 2][27] > Empty && mapp.map[u_map.r / 2][27] <= Water) || (mapp.map[u_map.r / 2 + 1][27] > Empty && mapp.map[u_map.r / 2 + 1][27] <= Water)) return false;
+		if ((mapp.map[u_map.r / 2][26] > Empty && mapp.map[u_map.r / 2][26] <= Water) || (mapp.map[u_map.r / 2 + 1][26] > Empty && mapp.map[u_map.r / 2 + 1][26] <= Water)) return false;
+		if (mapp.map[u_map.r / 2][27] >= Home_Live_LU && mapp.map[u_map.r / 2][27] <= Home_Die_RD) return false;
+		if (mapp.map2[u_map.r / 2][26] || mapp.map2[u_map.r / 2 - 1][26] || mapp.map2[u_map.r / 2 + 1][26]) return false;
+	}
+	if (dir == D_DOWN)
+	{
+		if ((mapp.map[2][u_map.c / 2] > Empty && mapp.map[2][u_map.c / 2] <= Water) || (mapp.map[2][u_map.c / 2 + 1] > Empty && mapp.map[2][u_map.c / 2 + 1] <= Water)) return false;
+		if ((mapp.map[3][u_map.c / 2] > Empty && mapp.map[3][u_map.c / 2] <= Water) || (mapp.map[3][u_map.c / 2 + 1] > Empty && mapp.map[3][u_map.c / 2 + 1] <= Water)) return false;
+		if (mapp.map[2][u_map.c / 2] >= Home_Live_LU && mapp.map[2][u_map.c / 2] <= Home_Die_RD) return false;
+		if (mapp.map2[2][u_map.c / 2] || mapp.map2[2][u_map.c / 2 - 1] || mapp.map2[2][u_map.c / 2 + 1]) return false;
+	}
+	if (dir == D_RIGHT)
+	{
+		if ((mapp.map[u_map.r / 2][2] > Empty && mapp.map[u_map.r / 2][2] <= Water) || (mapp.map[u_map.r / 2 + 1][2] > Empty && mapp.map[u_map.r / 2 + 1][2] <= Water)) return false;
+		if ((mapp.map[u_map.r / 2][3] > Empty && mapp.map[u_map.r / 2][3] <= Water) || (mapp.map[u_map.r / 2 + 1][3] > Empty && mapp.map[u_map.r / 2 + 1][3] <= Water)) return false;
+		if (mapp.map[u_map.r / 2][2] >= Home_Live_LU && mapp.map[u_map.r / 2][2] <= Home_Die_RD) return false;
+		if (mapp.map2[u_map.r / 2][2] || mapp.map2[u_map.r / 2 - 1][2] || mapp.map2[u_map.r / 2 + 1][2]) return false;
+	}
+	return true;
 }

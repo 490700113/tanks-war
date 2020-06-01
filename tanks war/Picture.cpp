@@ -42,7 +42,8 @@ Picture::Picture() {
 			for(int trackn = 0; trackn < 2; trackn++)//履带
 			{
 				int x = (dir * 2 + trackn) * sour_unit_px;//左上角x值
-				int y = (camp * 4) * sour_unit_px;//左上角y值，4位装甲数
+				int y = (camp * 4 + 2) * sour_unit_px;//左上角y值，4位装甲数
+				//int y = (camp * 4) * sour_unit_px;//左上角y值，4位装甲数
 				getimage(&TankPic[camp][dir][trackn], x, y, sour_unit_px, sour_unit_px);
 			}
 		}

@@ -41,4 +41,5 @@ public:
 	virtual bool move(Direction direction, const Map& map,int typee) = 0;//移动函数
 	virtual bool to_next();//判断能否进行下一步移动
 	virtual bool touch(const Map& map)const;//判断是否有碰撞
+	bool noborder(const Map& map, Direction dir, Map_pos pos);
 };
