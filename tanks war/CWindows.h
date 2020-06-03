@@ -12,7 +12,7 @@
 class CWindows
 {
 private:
-	int armynum = 2;
+	int armynum = 2;//敌军数量
 	Picture pictures;//图像
 	Map map;//地图
 	Player play1;//玩家
@@ -21,8 +21,8 @@ private:
 	int play_bullet;
 	int army_bullet[max_armynum];
 	int bullet_cd = 100;
-	int enemyleft = 10;
-	int Level = 1;//关卡数
+	int enemyleft = 3;//敌军总生命数
+	int Level = 3;//关卡数
 	bool game_state;//游戏状态
 	int choosemodel = 0;//模式选择
 	int bastion = 0;//堡垒模式

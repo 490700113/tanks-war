@@ -546,7 +546,7 @@ void CWindows::checklevel()//判断关卡状态
 		game_state = false;
 		pictures.setHome(true);
 		pictures.fail();
-		Level = 1;
+		//Level = 1;
 		map.ChangeLevel(Level);
 		renewalltank();
 		FlushBatchDraw();//显示
